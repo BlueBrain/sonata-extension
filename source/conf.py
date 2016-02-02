@@ -24,6 +24,9 @@ VERSION = '0.0.1'
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
+local_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(local_path, 'extensions'))
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -34,6 +37,7 @@ VERSION = '0.0.1'
 # ones.
 extensions = [
     'sphinx.ext.todo',
+    'blueconfig_sphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

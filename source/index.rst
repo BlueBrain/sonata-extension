@@ -11,6 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   blueconfig
    mvd2
    mvd3
 

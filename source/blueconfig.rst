@@ -1,0 +1,975 @@
+BlueConfig File Format
+======================
+
+Objective
+---------
+
+`BlueConfigs` are text files used for storing circuit and simulation parameters,
+(like stimulus injection and simulation output), and paths to files (like
+morphologies, models).
+
+History
+-------
+
+- Have been around since at least 2007
+
+
+File Format
+-----------
+
+The general structure is a C-like braced system.  The config file contains one
+or more configuration `Sections`, that have a `Type`, and a `Name`.
+Within an entry, there are multiple key value pairs: the key is a series of
+ASCII characters, followed by whitespace.  These are called `Values`
+
+::
+
+  Type0 Name0                 |         |
+  {                           |         |
+      key0 value0   | Value   | Section |
+      key1 value1             |         |
+  }                           |         |
+  Type1 Name1                           | File
+  {                                     |
+      key0 value0                       |
+      key1 value1                       |
+  }                                     |
+
+
+.. note:: Names can currently be reused for multiple stanzas.
+
+.. note:: Commenting out the `Type Name` comments out the following block.  EX:
+
+    ::
+
+        #Foo Bar
+        {
+          #Nothing in here is used
+        }
+
+Section Types
+-------------
+
+The following section types are defined for BlueConfigs.  The authoritative
+parser lives in
+Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/lib/hoclib/ConfigParser.hoc?h=HEAD>`_
+
+.. blueconfig_section_index::
+
+
+.. blueconfig_section:: Run
+    :description:
+     Defines the versioning, data sources, and simulation-wide parameters
+
+    .. blueconfig_value:: ForwardSkip
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         Run without Stimulus or Reports for a given duration using a large
+         timestep. This is to get the cells past any initial transience.
+
+    .. blueconfig_value:: CurrentDir
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         Simulation execution directory. Will be prepended to other Run
+         parameters if they do not use an absolute path: OutputRoot, TargetFile
+
+    .. blueconfig_value:: Restore
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Restore the state of the simulation described saved in that file.
+         feature not ready
+
+    .. blueconfig_value:: MeshPath
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         Location of mesh files for 3D visualization
+
+    .. blueconfig_value:: NumBonusFiles
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         Temporary support for allowing synapses from external sources (e.g.
+         Thalamocortical input). Superseded by Projection section
+
+    .. blueconfig_value:: TargetFile
+        :type: abspath
+        :required: True
+        :unit:
+        :description:
+         Parameter giving location of custom user targets stored in the named
+         file (referred to as user.target in remainder of document).
+
+    .. blueconfig_value:: Note
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Description field for adding details about the simulation. Recommended
+         topics might be purpose of the sim, changes from other sims, paper
+         references if trying to duplicate experiments, etc.
+
+    .. blueconfig_value:: Duration
+        :type: int
+        :required: True
+        :unit:
+        :description:
+         Simulation duration in milliseconds (ms)
+
+    .. blueconfig_value:: svnPath
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         URL from where bglib simulation files can be downloaded
+
+    .. blueconfig_value:: Version
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Revision number of bglib to take from git/svn
+
+    .. blueconfig_value:: OutputRoot
+        :type: abspath
+        :required: True
+        :unit:
+        :description:
+         Location where report files should be written
+
+    .. blueconfig_value:: Time
+        :type: time
+        :required: False
+        :unit:
+        :description:
+         Time of config creation/modification with format hh:mm:ss
+
+    .. blueconfig_value:: gitPath
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         URL from where bglib simulation files can be downloaded
+
+    .. blueconfig_value:: ElectrodesPath
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         File path
+
+    .. blueconfig_value:: SaveTime
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Save the state of the simulation after this duration. feature not
+         ready.
+
+    .. blueconfig_value:: METypePath
+        :type: abspath
+        :required: True
+        :unit:
+        :description:
+         Location of metypes or CCells, the files defining morphological and
+         electrical combinations used by the simulation.
+
+    .. blueconfig_value:: MorphologyPath
+        :type: abspath
+        :required: True
+        :unit:
+        :description:
+         Location of morphology files. Note that there should be two
+         subdirectories, ascii and h5.
+
+    .. blueconfig_value:: Save
+        :type: path
+        :required: False
+        :unit:
+        :description:
+         name of the file where the state of the simulation will be stored
+         after a duration of "SaveTime". feature not ready.
+
+    .. blueconfig_value:: BioName
+        :type: string
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: CircuitPath
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         Location of circuit.mvd2 file containing general circuit geometry
+
+    .. blueconfig_value:: BaseSeed
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         For random sequences, the BaseSeed is added in order to give the user
+         the capacity to change the sequences.
+
+    .. blueconfig_value:: nrnPath
+        :type: abspath
+        :required: True
+        :unit:
+        :description:
+         Location of nrn synapse file and additional circuit description files:
+         start.ncs and start.target
+
+    .. blueconfig_value:: NumSynapseFiles
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         The number of synapse files. To be made obsolete once better metadata
+         handling is added.
+
+    .. blueconfig_value:: RunMode
+        :type: RunMode
+        :required: False
+        :unit:
+        :description:
+         Optional parameter which currently accepts WholeCell and LoadBalance
+         as a valid value. Neurons will be distributed round-robin, otherwise.
+
+    .. blueconfig_value:: Prefix
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         Root file path which may be prepended to other Run parameters if they
+         do not use an absolute path: MorphologyPath, METypePath,MeshPath,
+         CircuitPath, nrnPath
+
+    .. blueconfig_value:: SynapseMode
+        :type: string
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: CentralHyperColumn
+        :type: string
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Date
+        :type: date
+        :required: False
+        :unit:
+        :description:
+         Day of config creation/modification with format dd:mm:yy
+
+    .. blueconfig_value:: Dt
+        :type: float
+        :required: True
+        :unit:
+        :description:
+         Length of a single integration timestep in milliseconds (ms)
+
+    .. blueconfig_value:: ProspectiveHosts
+        :type: int
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: BonusSynapseFile
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         Use Projection instead
+
+    .. blueconfig_value:: CircuitTarget
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Optional parameter which will restrict the neurons instantiated to
+         those in the named target. Target can be from start.target or target
+         file given to TargetFile paramter.)
+
+.. blueconfig_section:: Stimulus
+    :description:
+     Describes one pattern of stimulus that can be injected into multiple
+     locations using one or more StimulusInject sections
+
+    .. blueconfig_value:: NumOfSynapses
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         For NPoisson Stimulus. The number of synapses to create
+
+    .. blueconfig_value:: Name
+        :type: string
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Functions
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         deprecated
+
+    .. blueconfig_value:: PercentLess
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For Subthreshold stimulus, each cell has a defined amount of current
+         which will trigger one spike in 2 seconds. This pattern will use that
+         defined current and scale it according to the PercentLess value
+
+    .. blueconfig_value:: Pattern
+        :type: Pattern
+        :required: True
+        :unit:
+        :description:
+         Type of stimulus: Linear, RelativeLinear, Pulse, NPoisson,
+         NPoissonInhomogeneus, Sinusoidal(deprecated), Subthreshold, Noise,
+         SynapseReplay, Hyperpolarizing, ReplayVoltageTrace, SEClamp
+
+    .. blueconfig_value:: SynapseConfigure
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         For NPoisson Stimuli, allows the user to specify a Synapse object type
+         which is available to the simulator. The default is ExpSyn. Possible
+         values are : ProbAMPANMDA_EMS, ProbGABAAB_EMS, and ExpSyn.
+
+    .. blueconfig_value:: PercentStart
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For RelativeLinear, the percentage of a cell's threshold current to
+         inject at the start of the injection
+
+    .. blueconfig_value:: DataSetLabel
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         For ReplayVoltageTrace, the dataset which is to be opened and read to
+         get voltage data
+
+    .. blueconfig_value:: Delay
+        :type: float
+        :required: True
+        :unit: ms
+        :description:
+         Time when stimulus commences
+
+    .. blueconfig_value:: Width
+        :type: float
+        :required: False
+        :unit: ms
+        :description:
+         For Pulse Stimulus, the duration in ms of a single pulse
+
+    .. blueconfig_value:: relAmp
+        :type: float
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Mode
+        :type: Mode
+        :required: True
+        :unit:
+        :description:
+         Current is used for most stimuli.  Exceptions include
+         ReplayVoltageTrace and SEClamp which then use "Voltage" instead
+
+    .. blueconfig_value:: Table
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         File path
+
+    .. blueconfig_value:: Var
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         deprecated
+
+    .. blueconfig_value:: Variance
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For Noise stimuli, the variance around the mean
+
+    .. blueconfig_value:: Parameter
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         deprecated
+
+    .. blueconfig_value:: Lambda
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For NPoisson Stimulus to configure the random distribution
+
+    .. blueconfig_value:: MeanPercent
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For Noise stimulus, the mean value of current to inject is a
+         percentage of a cell's threshold current.  Used instead of 'Mean'
+
+    .. blueconfig_value:: AmpStart
+        :type: float
+        :required: False
+        :unit: mA
+        :description:
+         The amount of current initially injected when the stimulus activates
+
+    .. blueconfig_value:: PhaseShift
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For Sine (deprecated)
+
+    .. blueconfig_value:: Weight
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For NPoisson Stimulus. The strength of the created synapse
+
+    .. blueconfig_value:: Format
+        :type: Format
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: PercentEnd
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For RelativeLinear, the percentage of a cell's threshold current to
+         inject at the end of the injection
+
+    .. blueconfig_value:: Resume
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         deprecated
+
+    .. blueconfig_value:: TBins
+        :type: string
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: AmpEnd
+        :type: float
+        :required: False
+        :unit: mA
+        :description:
+         The final current when a stimulus concludes. Used by Linear
+
+    .. blueconfig_value:: WaitingTime
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         deprecated
+
+    .. blueconfig_value:: SynapseType
+        :type: string
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Rate
+        :type: string
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Frequency
+        :type: float
+        :required: False
+        :unit: Hz
+        :description:
+         For Pulse Stimulus, the frequency of pulse trains
+
+    .. blueconfig_value:: VerticalTranslation
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For Sine (deprecated)
+
+    .. blueconfig_value:: Voltage
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For SEClamp, specifies the membrane voltage the targeted cells should
+         be held at.
+
+    .. blueconfig_value:: File
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         File path
+
+    .. blueconfig_value:: Offset
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For Pulse Stimulus, a std dev value each cell will apply to the Delay
+         in order to add variation to the stimulation.
+
+    .. blueconfig_value:: Duration
+        :type: float
+        :required: True
+        :unit: ms
+        :description:
+         Time length of stimulus duration
+
+    .. blueconfig_value:: SpikeFile
+        :type: path
+        :required: False
+        :unit:
+        :description:
+         For SynapseReplay, indicates the location of the file with the spike
+         info for injection
+
+    .. blueconfig_value:: Dt
+        :type: float
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Mean
+        :type: float
+        :required: False
+        :unit: mA
+        :description:
+         For Noise stimulus, the mean value of current to inject
+
+    .. blueconfig_value:: Electrode
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Electrode section to use
+
+    .. blueconfig_value:: H5File
+        :type: path
+        :required: False
+        :unit:
+        :description:
+         For ReplayVoltageTrace, path to hdf5 file where voltage info is to be
+         read so that it can be applied to corresponding cells in the
+         simulation.
+
+.. blueconfig_section:: StimulusInject
+    :description:
+     Pairs a Stimulus with a Target so that the stimulus is applied to the
+     cells that make up the target.
+
+    .. blueconfig_value:: Stimulus
+        :type: string
+        :required: True
+        :unit:
+        :description:
+         Named stimulus
+
+    .. blueconfig_value:: Target
+        :type: target
+        :required: True
+        :unit:
+        :description:
+         Name of a target in start.target or user.target toreceive the
+         stimulation
+
+.. blueconfig_section:: Modification
+    :description:
+     Applies the necessary steps to simulate a chosen tissue manipulation
+     from those available
+
+    .. blueconfig_value:: Type
+        :type: string
+        :required: True
+        :unit:
+        :description:
+         Name of one of the available Tissue Manipulations. Currently
+         available: TTX
+
+    .. blueconfig_value:: Target
+        :type: target
+        :required: True
+        :unit:
+        :description:
+         Name of the target in start.target or user.target to receive the
+         manipulation
+
+.. blueconfig_section:: NeuronConfigure
+    :description:
+     Allows a snippet of hoc code to be defined and executed on a Target.
+     Useful for simple changes that are currently not handled under the
+     repertoire of Modification sections.
+
+    .. blueconfig_value:: Target
+        :type: target
+        :required: True
+        :unit:
+        :description:
+         Name of the target in start.target or user.target to receive the
+         configuration
+
+    .. blueconfig_value:: Configure
+        :type: string
+        :required: True
+        :unit:
+        :description:
+         Snippet of hoc code which will be applied to the sections of the cell
+         objects in the designated target
+
+.. blueconfig_section:: Spine
+    :description:
+     Unknown Description
+
+    .. blueconfig_value:: Target
+        :type: target
+        :required: True
+        :unit:
+        :description:
+         neuron target (defined in start.target or user.target)
+
+    .. blueconfig_value:: Delay
+        :type: int
+        :required: True
+        :unit:
+        :description:
+
+    .. blueconfig_value:: OnlyStim
+        :type: int
+        :required: False
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Frequency
+        :type: float
+        :required: True
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Amplitude
+        :type: float
+        :required: True
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Factor
+        :type: float
+        :required: True
+        :unit:
+        :description:
+
+    .. blueconfig_value:: Duration
+        :type: int
+        :required: True
+        :unit:
+        :description:
+
+.. blueconfig_section:: Report
+    :description:
+     Controls data collection during the simulation to collect things like
+     compartment voltage.
+
+    .. blueconfig_value:: Scaling
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         For Summation reports, the user can specify the handling of density
+         values: "None" disables all scaling, "Area" (default) converts density
+         to area values. This makes them compatible with values from point
+         processes such as synapses.
+
+    .. blueconfig_value:: Electrode
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Name of an electrode section
+
+    .. blueconfig_value:: Target
+        :type: target
+        :required: True
+        :unit:
+        :description:
+         Defines what is to be reported. Note that cell targets versus
+         compartment targets can influence report behavior
+
+    .. blueconfig_value:: StartTime
+        :type: float
+        :required: True
+        :unit:
+        :description:
+         Time to start reporting
+
+    .. blueconfig_value:: Format
+        :type: string
+        :required: True
+        :unit:
+        :description:
+         ASCII, HDF5 or Bin defining report output format
+
+    .. blueconfig_value:: ReportOn
+        :type: string
+        :required: True
+        :unit:
+        :description:
+         The NEURON variable to access
+
+    .. blueconfig_value:: Dt
+        :type: float
+        :required: True
+        :unit:
+        :description:
+         Frequency of reporting in milliseconds
+
+    .. blueconfig_value:: EndTime
+        :type: float
+        :required: True
+        :unit:
+        :description:
+         Time to stop reporting
+
+    .. blueconfig_value:: Type
+        :type: string
+        :required: True
+        :unit:
+        :description:
+         Compartment, Summation, or Synapse. Compartment means that each
+         compartment outputs separately in the report file.Summation will sum
+         up the compartments and write a single value to the report. Synapse
+         indicates that each synapse will have a separate entry in the report
+
+    .. blueconfig_value:: Unit
+        :type: string
+        :required: True
+        :unit:
+        :description:
+         String to output as descriptive test for unit recorded. Not validated
+         for correctness
+
+.. blueconfig_section:: Connection
+    :description:
+     Adjusts the synaptic strength between two sets of cells.
+
+    .. blueconfig_value:: CorrectionThreshold
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         Only apply synaptic correction if path distance of original synaptic
+         location to middle of soma is bigger than this value in um.
+
+    .. blueconfig_value:: Destination
+        :type: target
+        :required: True
+        :unit:
+        :description:
+         Target defining postsynaptic cells
+
+    .. blueconfig_value:: SynapseConfigure
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Provide a snippet of hoc code which is to be executed on the synapse
+         objects created under this Connection section
+
+    .. blueconfig_value:: Correct_New_Import3d
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Correct for discrepancy when correction functions have been estimated
+         with new Import3D where all dendrites are connected to soma(0.5) and
+         not soma(0) which is the legacy case.
+
+    .. blueconfig_value:: Delay
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         The weight modifications of this Connection can be applied after a
+         specified delay has elapsed. Note that only Weight modifications are
+         applied and no other features of Connection sections
+
+    .. blueconfig_value:: Source
+        :type: target
+        :required: True
+        :unit:
+        :description:
+         Target defining presynaptic cells
+
+    .. blueconfig_value:: SynapseID
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Temporary feature to allow finer granularity of synapse selection.
+         Takes the integer id given by circuit building for synapses. Note that
+         this makes the Config file highly dependent on the recipe file used
+         since the integer id is generated based on the recipe. Future
+         implementations of this feature need to remove this dependency.
+
+    .. blueconfig_value:: Weight
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         Scalar used to adjust synaptic strength
+
+    .. blueconfig_value:: SomaSynCorrectionPath
+        :type: path
+        :required: False
+        :unit:
+        :description:
+         Path to additional .h5 file where synaptic correction functions are
+         stored.
+
+    .. blueconfig_value:: ApplyCorrection
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Synaptic correction will only be applied if True.
+
+    .. blueconfig_value:: UseSTDP
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Activates the synapse to use plasticity. Options include Doublet or
+         Triplet
+
+    .. blueconfig_value:: SpontMinis
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         During simulation, Synapses created under this Connection section will
+         spontaneously trigger with the given rate
+
+    .. blueconfig_value:: SynapseToSoma
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Move all synapses to soma if True.
+
+    .. blueconfig_value:: ModOverride
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Override synaptic helper function (GABAABHelper.hoc or
+         AMPANMDAHelper.hoc) with this new helper function. Only give prefix,
+         e.g. "Newfun" uses NewfunHelper.hoc
+
+.. blueconfig_section:: Electrode
+    :description:
+     Unknown Description
+
+    .. blueconfig_value:: y
+        :type: float
+        :required: True
+        :unit: um
+        :description:
+         y position
+
+    .. blueconfig_value:: x
+        :type: float
+        :required: True
+        :unit: um
+        :description:
+         x position
+
+    .. blueconfig_value:: z
+        :type: float
+        :required: True
+        :unit: um
+        :description:
+         z position
+
+    .. blueconfig_value:: Version
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         version of the reader to use
+
+    .. blueconfig_value:: File
+        :type: path
+        :required: True
+        :unit:
+        :description:
+         file name under the electrodePath directory
+
+.. blueconfig_section:: Projection
+    :description:
+     Designed to take into account axons projecting to and from different
+     areas of the brain. It can also be used to take gap junctions into
+     account.
+
+    .. blueconfig_value:: Path
+        :type: abspath
+        :required: True
+        :unit:
+        :description:
+         Location of data files with additional connectivity info
+
+    .. blueconfig_value:: Type
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Distinguishes "Synaptic" projections from "GapJunction" projections.
+         If omitted, Synaptic is assumed.
+
+    .. blueconfig_value:: Source
+        :type: target
+        :required: False
+        :unit:
+        :description:
+         Optional. Provides new gids if the connection sources are external to
+         the main circuit
+
+
