@@ -13,7 +13,6 @@ Contents:
 
    mvd2
    mvd3
-   glossary
 
 
 Indices and tables
