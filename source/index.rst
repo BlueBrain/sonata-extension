@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    blueconfig
+   circuit_files
    mvd2
    mvd3
 

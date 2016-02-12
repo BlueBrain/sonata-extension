@@ -1,3 +1,5 @@
+.. _mvd3:
+
 MVD version 3 circuit definition description
 ============================================
 
