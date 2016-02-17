@@ -118,11 +118,11 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          references if trying to duplicate experiments, etc.
 
     .. blueconfig_value:: Duration
-        :type: int
+        :type: float
         :required: True
-        :unit:
+        :unit: ms
         :description:
-         Simulation duration in milliseconds (ms)
+         Simulation duration
 
     .. blueconfig_value:: svnPath
         :type: string
