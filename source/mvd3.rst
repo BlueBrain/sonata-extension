@@ -57,6 +57,9 @@ Text-based properties where most of the entires will be duplicated (like
 - One containing an index into the first one for each cell under
    `/cells/properties/*`
 
+.. note:: String types are currently encoded as variable length UTF-8
+    (H5T_CSET_UTF8 in `HDF5`)
+
 `version` is an attribute defining major and minor version of the format.
 `format` is a string attribute defining the format itself.
 
