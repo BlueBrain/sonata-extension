@@ -619,6 +619,14 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
      Applies the necessary steps to simulate a chosen tissue manipulation
      from those available
 
+    .. blueconfig_value:: GifParamsPath
+        :type: abspath
+        :required: False
+        :unit:
+        :description:
+         Description: Define path to .h5 file where parameters for simplified
+         GIF neurons are stored
+
     .. blueconfig_value:: Type
         :type: string
         :required: True
