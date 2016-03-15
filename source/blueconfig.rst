@@ -241,7 +241,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Optional parameter which currently accepts WholeCell and LoadBalance
-         as a valid value. Neurons will be distributed round-robin, otherwise.
+         as a valid values. Neurons will be distributed round-robin, otherwise.
 
     .. blueconfig_value:: Prefix
         :type: abspath
@@ -274,31 +274,34 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     .. blueconfig_value:: Dt
         :type: float
         :required: True
-        :unit:
+        :unit: ms
         :description:
-         Length of a single integration timestep in milliseconds (ms)
+         Length of a single integration timestep
 
     .. blueconfig_value:: ProspectiveHosts
         :type: int
         :required: False
         :unit:
         :description:
+         deprecated
 
     .. blueconfig_value:: BonusSynapseFile
         :type: abspath
         :required: False
         :unit:
         :description:
-         Use Projection instead
+         Use Projection instead. Name of additional files containing synapse
+         data. This is useful for introducing synapses from "external" sources
+         such as long range connections from other brain regions.
 
     .. blueconfig_value:: CircuitTarget
         :type: string
         :required: False
         :unit:
         :description:
-         Optional parameter which will restrict the neurons instantiated to
-         those in the named target. Target can be from start.target or target
-         file given to TargetFile paramter.)
+         Parameter which will restrict the neurons instantiated to those in the
+         named target. Target can be from start.target or target file given to
+         TargetFile paramter.)
 
 .. blueconfig_section:: Stimulus
     :description:
@@ -972,6 +975,14 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Distinguishes "Synaptic" projections from "GapJunction" projections.
          If omitted, Synaptic is assumed.
 
+    .. blueconfig_value:: NumSynapseFiles
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         The number of synapse files. To be made obsolete once better metadata
+         handling is added.
+
     .. blueconfig_value:: Source
         :type: target
         :required: False
@@ -979,5 +990,4 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Optional. Provides new gids if the connection sources are external to
          the main circuit
-
 
