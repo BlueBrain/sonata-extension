@@ -1,0 +1,10 @@
+{
+  "name": "Circuit Documentation",
+  "description": "Circuit Documentation",
+  "repository": {
+    "url": "ssh://bbpcode.epfl.ch/common/circuit-documentation"
+  },
+  "author": "NSE Team (bbp-ou-nse@groupes.epfl.ch)",
+  "contributors": ["BBP"],
+  "license": "BBP-internal-confidential"
+}
