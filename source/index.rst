@@ -15,6 +15,7 @@ Contents:
    circuit_files
    mvd2
    mvd3
+   recipe
    sonata
 
 
