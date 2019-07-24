@@ -49,17 +49,24 @@ Examples::
 
 Connectivity between these populations is directional, and edges will be
 contained in populations specifying `source` and `target` node populations
-as well as synapse type::
+as well as connection type::
 
-    /edges/${source_population}__${target_population}__${synapse_type}
+    /edges/${source_population}__${target_population}__${connection_type}
 
 If `source` and `target` population are identical, a single population may
 also be bi-directional.
 
-Currently, the following synapse types are supported:
+Currently, the following connection types are supported:
 
- - `electrical`, also known as gap-junctions
- - `chemical`
+ - `electrical`
+   this includes gap junctions for instance.
+ - `chemical_synapse`
+   this would include the following possible subtypes: glutamatergic, gabaergic, dopaminergic, serotinergic, adrenergic
+ - `synapse_astrocyte`
+   this manages the connection from an astrocyte to a particular synapse
+ - `endfoot`
+   this manages the connection between a vasculature and an astrocyte
+
 
 Examples::
 
@@ -98,16 +105,39 @@ Legacy fields that are not supported any longer:
 
  - `layer`, now contained within `mtype`
 
-Fields for electrical synapses
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fields for chemical synapses
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fields for electrical_synapse connection type edges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Fields for chemical connection type edges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- `source_node_id`
+- `target_node_id`
+- `delay` the axonal delay
+  NaN for dendro-dendritic synapses
+
+Fields for synapse_astrocyte connection type edges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- `source_node_id` the node id of the astrocyte
+- `target_node_id` the node id of the post synaptic neuron
+- `efferent_section_id` the astrocyte section id
+- `efferent_section_pos` the position along the length of the efferent section of the astrocyte (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
+- `edge_id` the edge id of the synapse
+
+Fields for endfoot connection type edges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- `source_node_id` the node id of the astrocyte
+- `target_node_id` the node id of the vasculature
+- `efferent_section_id` the astrocyte section id
+- `efferent_section_pos` the position along the length of the efferent section of the astrocyte (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
+- `afferent_section_id` the vasculature section id
+- `afferent_section_pos` the position along the length of the afferent section of the vasculature (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
 
 Consumers
 ---------
 
- - TouchDetector. Fields utilized:
+ - TouchDetector. Node fields utilized:
 
     - `x`, `y`, `z`
     - `orientation_w`, `orientation_x`, `orientation_y`, `orientation_z`
@@ -115,7 +145,7 @@ Consumers
     - `region`
     - `mtype`
 
- - Spykfunc. Fields utilized:
+ - Spykfunc. Node fields utilized:
 
     - `morphology`
     - `etype`
