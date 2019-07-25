@@ -196,6 +196,11 @@ Two optional attributes may be set:
  - ``neuralTransmitterReleaseDelay`` with a default of 0.1
  - ``axonalConductionVelocity`` with a default of 300 m/s
 
+These two attributes may also be present in the ``SynapsesProperties``
+element, setting default values for all ``synapse`` elements::
+
+    <SynapsesProperties neuralTransmitterReleaseDelay="10.5" axonalConductionVelocity="123.0">
+
 SynapsesClassification
 ~~~~~~~~~~~~~~~~~~~~~~
 
