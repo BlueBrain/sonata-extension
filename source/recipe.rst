@@ -142,19 +142,30 @@ Allowed rule classes:
  - ``sClassRule`` to apply rules between synapse classes
  - ``layerRule`` to apply rules between layers (*to be deprecated*)
 
-Properties:
+Mandatory properties:
 
  - ``from`` the pre-synaptic matching requirement
  - ``to`` the post-synaptic matching requirement
 
- - ``bouton_reduction_factor``
- - ``active_fraction``
+In addition to ``from`` and ``to``, exactly three of the following
+constraints have to be used:
 
- - ``cv_syns_connection``
- - ``mean_syns_connection``
- - ``stdev_syns_connection``
+ - ``bouton_reduction_factor``, the fraction of synapses to be removed in
+   all three pruning steps
+ - ``active_fraction``, the fraction of synapses to be removed in the third
+   pruning step
 
- - ``probability``
+Only up to two of the following:
+
+ - ``cv_syns_connection``, the target value for the coefficient of
+   variation of the distribution of synapses per connection distribution of
+   synapses per connections
+ - ``mean_syns_connection``, the target value for the mean of the
+   distribution of synapses per connections
+ - ``stdev_syns_connection``, the target value for the standard deviation
+   of the distribution of synapses per connection
+
+ - ``probability``, the target connection probability. To be deprecated.
 
 SynapsesProperties
 ~~~~~~~~~~~~~~~~~~
@@ -228,12 +239,15 @@ The following properties are supported, with the mean specified by the
 property name, and the standard deviation by appending ``SD`` to the
 property name:
 
- - `gsyn`, following a Gamma distribution
- - `d`, following a Gamma distribution
- - `f`, following a Gamma distribution
- - `u`, following a truncated Normal distribution
- - `dtc`, following a truncated Normal distribution
- - `nrrp`, following a Poisson distribution
+ - `gsyn`, the peak conductance (in nS) for a single synaptic contact, following a Gamma distribution
+ - `d`, time constant  (in ms) for recovery from depression, following a Gamma distribution
+ - `f`, time constant  (in ms) for recovery from facilitation, following a Gamma distribution
+ - `u`, utilization of synaptic efficacy, following a truncated Normal distribution
+ - `dtc`, decay time constant (in ms), following a truncated Normal distribution
+ - `nrrp`, number of vesicles in readily releasable pool, following a Poisson distribution
+
+Truncated Normal distributions are limited to the central value ±σ and are
+re-rolled until positive values has been obtained.
 
 SynapsesReposition
 ~~~~~~~~~~~~~~~~~~
