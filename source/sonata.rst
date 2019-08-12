@@ -83,6 +83,11 @@ The following attributes are mandatory as per specification and are used in the 
  - `morphology` name, without file ending. The current implementation of
    connectome building expects a file ending in ``.h5``.
 
+ - `exc_mini_frequency`, `inh_mini_frequency` stored as float:
+       Mini-frequencies are associated with incoming connections of a cell, and
+       depend on the incoming connection's synapse type, and the receiving cell's
+       layer.
+
 Furthermore, the following fields are required to be stored as an
 `enumeration`_:
 

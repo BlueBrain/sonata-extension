@@ -41,7 +41,10 @@ by different tools:
  - synapse_class: inhibitory/excitatory.
  - morphology: morphology name (i.e. the `.h5` or `.asc` filename without
    the extension).
-
+ - exc_mini_frequency: mini-frequency of a cell in response to an incoming excitatory
+   connection, with a value that depends on the receiving cell's layer.
+ - inh_mini_frequency: mini-frequency of a cell in response to an incoming inhibitory
+   connection, with a value that is constant across all layers.
 Additional fields can be added (optionals) as static parameters for the circuit
 generation. These parameters are located under the group `/circuit` 
 (e.g `/circuit/seeds` )
@@ -70,24 +73,26 @@ cell properties:
 
 ::
 
-/                               Group                            DataType
-/version                        Attribute. value being [3, 0]    (an array with [mayor, minor])
-/format                         Attribute. value being "MVD"     (vlen string)
-/circuit                        Group
-/circuit/seeds                  Dataset {4}                      double float
-/cells                          Group
-/cells/orientations             Dataset {N, 4}                   double float
-/cells/positions                Dataset {N, 3}                   double float
-/cells/properties               Group
-/cells/properties/etype         Dataset {N}                      unsigned int
-/cells/properties/morphology    Dataset {N}                      unsigned int
-/cells/properties/mtype         Dataset {N}                      unsigned int
-/cells/properties/synapse_class Dataset {N}                      unsigned int
-/library                        Group
-/library/etype                  Dataset {E}                      vlen string
-/library/morphology             Dataset {M}                      vlen string
-/library/mtype                  Dataset {T}                      vlen string
-/library/synapse_class          Dataset {S}                      vlen string
+/                                       Group                            DataType
+/version                                Attribute. value being [3, 0]    (an array with [mayor, minor])
+/format                                 Attribute. value being "MVD"     (vlen string)
+/circuit                                Group
+/circuit/seeds                          Dataset {4}                      double float
+/cells                                  Group
+/cells/orientations                     Dataset {N, 4}                   double float
+/cells/positions                        Dataset {N, 3}                   double float
+/cells/properties                       Group
+/cells/properties/etype                 Dataset {N}                      unsigned int
+/cells/properties/morphology            Dataset {N}                      unsigned int
+/cells/properties/mtype                 Dataset {N}                      unsigned int
+/cells/properties/synapse_class         Dataset {N}                      unsigned int
+/cells/properties/exc_mini_frequency    Dataset {N}                      double float
+/cells/properties/inh_mini_frequency    Dataset {N}                      double float
+/library                                Group
+/library/etype                          Dataset {E}                      vlen string
+/library/morphology                     Dataset {M}                      vlen string
+/library/mtype                          Dataset {T}                      vlen string
+/library/synapse_class                  Dataset {S}                      vlen string
 
 
 
@@ -108,9 +113,10 @@ Consumers
 ---------
 
 - TouchDetector_. Required fields are positions, orientations, morphology
-- Functionalizer_. Required fields are positions, orientations, morphology,
+- Functionalizer_. Required fields are positions, orientations, morphology
   etype, mtype, synapse_class
 - Brion_.
+- Neurodamus_.  Required fields are exc_mini_frequency, inh_mini_frequency, mtype
 
 .. _TouchDetector: https://collab.humanbrainproject.eu/#/collab/161/nav/2979
 .. _Functionalizer: https://collab.humanbrainproject.eu/#/collab/161/nav/2980
