@@ -98,8 +98,8 @@ The `TouchRules` create a filter to refine the touch space used by
 `TouchDetector`. They take the following form::
 
     <TouchRules>
-        <touchRule fromLayer="*" fromMType="*PC" toLayer="*" toMType="*" type="soma" />
-        <touchRule fromLayer="*" fromMType="*PC" toLayer="*" toMType="*" type="dendrite" />
+        <touchRule fromMType="*PC" toMType="*" fromBranchType="*" toBranchType="soma" />
+        <touchRule fromMType="*PC" toMType="*" fromBranchType="*" toBranchType="dendrite" />
     </TouchRules>
 
 where ``*`` denotes a wildcard to match anything. In this example, touches
@@ -110,13 +110,10 @@ post-synaptic side.
 
 Allowed parameters:
 
- - ``fromLayer`` the layer of the pre-synaptic cell (*to be deprecated*)
- - ``toLayer`` the layer of the post-synaptic cell (*to be deprecated*)
-
  - ``fromMType`` the `mtype` of the pre-synaptic cell
  - ``toMType`` the `mtype` of the post-synaptic cell
 
- - ``type`` the classification of the post-synaptic branch. May be one of
+ - ``fromBranchType`` the classification of the pre-synaptic branch. May be one of
    the following:
 
     - ``*`` to match all branches
@@ -124,6 +121,8 @@ Allowed parameters:
     - ``dendrite`` to match all dendrites
     - ``basal`` for basal dendrites
     - ``apical`` for apical dendrites
+ - ``toBranchType`` the classification of the post-synaptic branch. May
+   also be referred to as ``type``, for backwards compatibility.
 
 ConnectionRules
 ~~~~~~~~~~~~~~~
