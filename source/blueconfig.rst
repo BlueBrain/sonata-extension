@@ -82,8 +82,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         Restore the state of the simulation described saved in that file.
-         feature not ready
+         Restore the state of the simulation saved in the provided file/directory.
 
     .. blueconfig_value:: MeshPath
         :type: abspath
@@ -152,6 +151,31 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Time of config creation/modification with format hh:mm:ss
 
+    .. blueconfig_value:: RNGMode
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Random number generator used for simulation : MCellRan4 (default) or Random123
+
+    .. blueconfig_value:: Simulator
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Simulator engine used for execution : NEURON (default) or CORENEURON
+
+    .. blueconfig_value:: ModelBuildingSteps
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         Number of steps used by NEURON to construct a model. If a given network model
+         can not be loaded into memory, NEURON can divide a model into smaller pieces
+         and then pass all pieces to CORENEURON for simulation. For example, with given
+         number of compute nodes if NEURON can only simulate half of the model (due to
+         limited memory), ModelBuildingSteps can be set to 2.
+
     .. blueconfig_value:: gitPath
         :type: string
         :required: False
@@ -165,14 +189,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          File path
-
-    .. blueconfig_value:: SaveTime
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         Save the state of the simulation after this duration. feature not
-         ready.
 
     .. blueconfig_value:: METypePath
         :type: abspath
@@ -195,8 +211,8 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         name of the file where the state of the simulation will be stored
-         after a duration of "SaveTime". feature not ready.
+         name of the file or directory where the state of the simulation will be stored
+         after a duration of "Time".
 
     .. blueconfig_value:: BioName
         :type: string
@@ -242,6 +258,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Optional parameter which currently accepts WholeCell and LoadBalance
          as a valid values. Neurons will be distributed round-robin, otherwise.
+         If CORENEURON simulator is being used, WholeCell should be used.
 
     .. blueconfig_value:: Prefix
         :type: abspath
@@ -276,14 +293,14 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit: ms
         :description:
-         Length of a single integration timestep
+         Duration of a single integration timestep
 
     .. blueconfig_value:: ProspectiveHosts
         :type: int
         :required: False
         :unit:
         :description:
-         deprecated
+         deprecated, use ModelBuildingSteps instead
 
     .. blueconfig_value:: BonusSynapseFile
         :type: abspath
