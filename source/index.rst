@@ -17,6 +17,7 @@ Contents:
    mvd3
    recipe
    sonata
+   faq
 
 
 Indices and tables

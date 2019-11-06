@@ -45,6 +45,7 @@ by different tools:
    connection, with a value that depends on the receiving cell's layer.
  - inh_mini_frequency: mini-frequency of a cell in response to an incoming inhibitory
    connection, with a value that is constant across all layers.
+
 Additional fields can be added (optionals) as static parameters for the circuit
 generation. These parameters are located under the group `/circuit` 
 (e.g `/circuit/seeds` )
