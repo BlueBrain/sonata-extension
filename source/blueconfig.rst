@@ -462,7 +462,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     .. blueconfig_value:: AmpStart
         :type: float
         :required: False
-        :unit: mA
+        :unit: nA
         :description:
          The amount of current initially injected when the stimulus activates
 
@@ -510,7 +510,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     .. blueconfig_value:: AmpEnd
         :type: float
         :required: False
-        :unit: mA
+        :unit: nA
         :description:
          The final current when a stimulus concludes. Used by Linear
 
@@ -594,7 +594,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     .. blueconfig_value:: Mean
         :type: float
         :required: False
-        :unit: mA
+        :unit: nA
         :description:
          For Noise stimulus, the mean value of current to inject
 
@@ -1008,3 +1008,16 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Optional. Provides new gids if the connection sources are external to
          the main circuit
 
+    .. blueconfig_value:: PopulationID
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         Defines an ID for the population for RNG seeding purposes.
+         Default is 0, which is used by circuit connections (e.g. nrn.h5) so using 0 for projections
+         would create overlapping streams. User should set it to 1 or greater.
+         Should they be unique?  It depends on if the projections should be considered as coming
+         from the same 'source'. If the user creates multiple projections from a population to
+         different destination groups, then it would make sense to reuse the same populationID.
+         This should be considered a temporary fix until we fully support SONATA population labels
+         NOTE: With MCellRan4, the max value accepted is 255 and for Random123 it is 65535.
