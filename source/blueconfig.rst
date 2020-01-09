@@ -225,7 +225,8 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         Location of circuit.mvd2 file containing general circuit geometry
+         Root location of the circuit, where start.target and cell geometry info
+         (MVD / SONATA nodes) should be found.
 
     .. blueconfig_value:: BaseSeed
         :type: int
@@ -240,8 +241,13 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit:
         :description:
-         Location of nrn synapse file and additional circuit description files:
-         start.ncs and start.target
+         Location of connectvity file(s): nrn.h5, syn2 or SONATA edges.
+
+         NOTES:
+           - DEPRECATED: Having start.ncs or start.target in this location.
+             They should be within CircuitPath instead.
+           - DEPRECATED: Giving the path to a folder containing multiple connectivity formats.
+             For newer formats prefer giving the full path to a single file.
 
     .. blueconfig_value:: NumSynapseFiles
         :type: int
