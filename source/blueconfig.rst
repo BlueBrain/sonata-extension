@@ -228,6 +228,15 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Root location of the circuit, where start.target and cell geometry info
          (MVD / SONATA nodes) should be found.
 
+    .. blueconfig_value:: CellLibraryFile
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Specify the file containing cell geometry info. Default is start.ncs.
+         "start.ncs" is searched within nrnPath, "circuit.mvd3" within CircuitPath. Any other value
+         is interpreted as a path to a format readable by MVDtool, namely SONATA nodes.
+
     .. blueconfig_value:: BaseSeed
         :type: int
         :required: False
