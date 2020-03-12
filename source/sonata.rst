@@ -110,17 +110,18 @@ Legacy fields that are not supported any longer:
 
  - `layer`, now contained within `mtype`
 
-
 Fields for electrical_synapse connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 Fields for chemical connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - `source_node_id`
 - `target_node_id`
-- `delay` the axonal delay
-  NaN for dendro-dendritic synapses
+- `delay` the axonal delay (in ms, `NaN` for dendro-dendritic synapses)
+- `conductance_scale_factor` (no unit), equivalent to the `gsynSRSF` of the
+  :ref:`recipe_properties`
+- `u_hill_coefficient` (no unit), equivalent to the `uHillCoefficient` of
+  the :ref:`recipe_properties`
 
 Fields for synapse_astrocyte connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

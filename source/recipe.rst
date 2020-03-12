@@ -211,6 +211,8 @@ element, setting default values for all ``synapse`` elements::
 
     <SynapsesProperties neuralTransmitterReleaseDelay="10.5" axonalConductionVelocity="123.0">
 
+.. _recipe_properties:
+
 SynapsesClassification
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -239,14 +241,33 @@ property name, and the standard deviation by appending ``SD`` to the
 property name:
 
  - `gsyn`, the peak conductance (in nS) for a single synaptic contact, following a Gamma distribution
- - `d`, time constant  (in ms) for recovery from depression, following a Gamma distribution
- - `f`, time constant  (in ms) for recovery from facilitation, following a Gamma distribution
+ - `d`, time constant (in ms) for recovery from depression, following a Gamma distribution
+ - `f`, time constant (in ms) for recovery from facilitation, following a Gamma distribution
  - `u`, utilization of synaptic efficacy, following a truncated Normal distribution
  - `dtc`, decay time constant (in ms), following a truncated Normal distribution
  - `nrrp`, number of vesicles in readily releasable pool, following a Poisson distribution
 
 Truncated Normal distributions are limited to the central value ±σ and are
 re-rolled until positive values has been obtained.
+
+Two optional attributes can be specified, where each attribute will have to
+be given for all `SynapsesClassification` elements:
+
+ - `gsynSRSF`, the scale factor for the conductance
+ - `uHillCoefficient`, a coefficient describing the scaling of `u` to be
+   done by the simulator:
+
+   .. math::
+
+      u_\text{final} = u \cdot y \cdot \frac{ca^4}{u_\text{Hill}^4 + ca^4}
+
+   where :math:`ca` denotes the simulated calcium concentration in
+   millimolar and :math:`y` a scalar such that at
+   :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
+
+These attributes will be copied for each synapse corresponding to its
+classification.  If they are not specified, no corresponding columns will
+be created in the output.
 
 SynapsesReposition
 ~~~~~~~~~~~~~~~~~~
@@ -274,9 +295,9 @@ Consumers and invocation order
 
     - `StructuralType` or any other entity with the attributes
 
-        - `id` to describe the `mtype` 
+        - `id` to describe the `mtype`
         - `spineLength` given in μm to increase the overlap detection
-          radius for both basal and apical dendrites.
+          radius for both basal and apical dendrites
 
     - `InterBoutonInterval`_
 

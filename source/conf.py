@@ -37,6 +37,7 @@ sys.path.insert(0, os.path.join(local_path, 'extensions'))
 # ones.
 extensions = [
     'sphinx.ext.todo',
+    'sphinx.ext.mathjax',
     'blueconfig_sphinx',
 ]
 
