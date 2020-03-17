@@ -1,1 +1,2 @@
-sphinx==1.1.3
+sphinx
+sphinx-bluebrain-theme

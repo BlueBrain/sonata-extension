@@ -11,7 +11,7 @@ morphologies, models).
 History
 -------
 
-- Have been around since at least 2007
+Has been around since at least 2007
 
 
 File Format

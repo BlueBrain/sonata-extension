@@ -37,8 +37,8 @@ For nodes, the following naming scheme is proposed::
 Where ``${part}`` may be `NCX` for the neocortex, and ``${type}`` can
 presently take the following values:
 
- - `neurons`
- - `astrocytes`
+- `neurons`
+- `astrocytes`
 
 Examples::
 
@@ -58,13 +58,13 @@ also be bi-directional.
 
 Currently, the following connection types are supported:
 
- - `electrical`
+``electrical``
    this includes gap junctions for instance.
- - `chemical_synapse`
+``chemical_synapse``
    this would include the following possible subtypes: glutamatergic, gabaergic, dopaminergic, serotinergic, adrenergic
- - `synapse_astrocyte`
+``synapse_astrocyte``
    this manages the connection from an astrocyte to a particular synapse
- - `endfoot`
+``endfoot``
    this manages the connection between a vasculature and an astrocyte
 
 
@@ -77,86 +77,85 @@ Fields for Nodes
 
 The following attributes are mandatory as per specification and are used in the pipeline:
 
- - `x`, `y`, `z` stored as float in μm:
+``x``, ``y``, ``z`` stored as float in μm:
+    The position of the center of the soma in the local world.
 
-       The position of the center of the soma in the local world.
+``orientation_w``, ``orientation_x``, ``orientation_y``, ``orientation_z`` stored as float:
+    Quaternion with the local world rotation of the morphology around the
+    soma center.
 
- - `orientation_w`, `orientation_x`, `orientation_y`, `orientation_z`
-   stored as float:
+``morphology``:
+   Morphology file name, without file extension.
+   The current implementation of connectome building expects a file ending in ``.h5``.
 
-       Quaternion with the local world rotation of the morphology around the
-       soma center.
-
- - `morphology` name, without file ending. The current implementation of
-   connectome building expects a file ending in ``.h5``.
-
- - `exc_mini_frequency`, `inh_mini_frequency` stored as float:
-       Mini-frequencies are associated with incoming connections of a cell, and
-       depend on the incoming connection's synapse type, and the receiving cell's
-       layer.
+``exc_mini_frequency``, ``inh_mini_frequency`` stored as float:
+    Mini-frequencies are associated with incoming connections of a cell, and
+    depend on the incoming connection's synapse type, and the receiving cell's
+    layer.
 
 Furthermore, the following fields are required to be stored as an
 `enumeration`_:
 
- - `etype`
- - `mtype`
- - `region`
- - `synapse_class`
+- ``etype``
+- ``mtype``
+- ``region``
+- ``synapse_class``
 
-As per `SONATA` specification, these values should be stored as integer
+As per ``SONATA`` specification, these values should be stored as integer
 values and be resolved to strings.
 
 Legacy fields that are not supported any longer:
 
- - `layer`, now contained within `mtype`
+- ``layer``, now contained within ``mtype``
 
 Fields for electrical_synapse connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Fields for chemical connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- `source_node_id`
-- `target_node_id`
-- `delay` the axonal delay (in ms, `NaN` for dendro-dendritic synapses)
-- `conductance_scale_factor` (no unit), equivalent to the `gsynSRSF` of the
-  :ref:`recipe_properties`
-- `u_hill_coefficient` (no unit), equivalent to the `uHillCoefficient` of
-  the :ref:`recipe_properties`
+
+- ``source_node_id``
+- ``target_node_id``
+- ``delay`` the axonal delay (in ms, ``NaN`` for dendro-dendritic synapses)
+- ``conductance_scale_factor`` (no unit), equivalent to the ``gsynSRSF`` of the
+  :ref:``recipe_properties``
+- ``u_hill_coefficient`` (no unit), equivalent to the ``uHillCoefficient`` of
+  the :ref:``recipe_properties``
 
 Fields for synapse_astrocyte connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- `source_node_id` the node id of the astrocyte
-- `target_node_id` the node id of the post synaptic neuron
-- `efferent_section_id` the astrocyte section id
-- `efferent_section_pos` the position along the length of the efferent section of the astrocyte (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
-- `edge_id` the edge id of the synapse
+
+- ``source_node_id`` the node id of the astrocyte
+- ``target_node_id`` the node id of the post synaptic neuron
+- ``efferent_section_id`` the astrocyte section id
+- ``efferent_section_pos`` the position along the length of the efferent section of the astrocyte (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
+- ``edge_id`` the edge id of the synapse
 
 Fields for endfoot connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- `source_node_id` the node id of the astrocyte
-- `target_node_id` the node id of the vasculature
-- `efferent_section_id` the astrocyte section id
-- `efferent_section_pos` the position along the length of the efferent section of the astrocyte (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
-- `afferent_section_id` the vasculature section id
-- `afferent_section_pos` the position along the length of the afferent section of the vasculature (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
+
+- ``source_node_id`` the node id of the astrocyte
+- ``target_node_id`` the node id of the vasculature
+- ``efferent_section_id`` the astrocyte section id
+- ``efferent_section_pos`` the position along the length of the efferent section of the astrocyte (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
+- ``afferent_section_id`` the vasculature section id
+- ``afferent_section_pos`` the position along the length of the afferent section of the vasculature (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section)
 
 Consumers
 ---------
 
- - TouchDetector. Node fields utilized:
+- TouchDetector. Node fields utilized:
+   - ``x``, ``y``, ``z``
+   - ``orientation_w``, ``orientation_x``, ``orientation_y``, ``orientation_z``
+   - ``morphology``
+   - ``region``
+   - ``mtype``
 
-    - `x`, `y`, `z`
-    - `orientation_w`, `orientation_x`, `orientation_y`, `orientation_z`
-    - `morphology`
-    - `region`
-    - `mtype`
-
- - Spykfunc. Node fields utilized:
-
-    - `morphology`
-    - `etype`
-    - `mtype`
-    - `synapse_class`
+- Spykfunc. Node fields utilized:
+   - ``morphology``
+   - ``etype``
+   - ``mtype``
+   - ``synapse_class``
 
 .. _specification: https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md
 .. _enumeration: https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md#nodes---enum-datatypes

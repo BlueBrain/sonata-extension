@@ -6,23 +6,15 @@
 Circuit files format documentation
 ===================================
 
-Contents:
+This documentation covers the format of Blue Brain Project circuit file formats.
 
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
+   Home <self>
    blueconfig
    circuit_files
-   mvd2
-   mvd3
+   circuit-description
    recipe
    sonata
    faq
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-

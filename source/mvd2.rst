@@ -1,7 +1,7 @@
 .. _mvd2:
 
-MVD version 2 circuit definition description
-============================================
+MVD version 2
+=============
 The circuit.mvd2 file contains metadata regarding the cells in the network and
 minicolumn metadata
 

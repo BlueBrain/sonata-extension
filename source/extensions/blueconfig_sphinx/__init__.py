@@ -92,7 +92,6 @@ class BlueConfigSection(Directive):
         resultnode += [nodes.title(text=name),
                        nodes.paragraph(text=description),
                        self._make_table(children),
-                       nodes.line()
                        ]
 
         return [resultnode]
