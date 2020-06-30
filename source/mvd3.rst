@@ -122,4 +122,4 @@ Consumers
 .. _TouchDetector: https://collab.humanbrainproject.eu/#/collab/161/nav/2979
 .. _Functionalizer: https://collab.humanbrainproject.eu/#/collab/161/nav/2980
 .. _Brion: https://collab.humanbrainproject.eu/#/collab/161/nav/2973
-
+.. _Neurodamus: https://bbpteam.epfl.ch/documentation/projects/neurodamus-py/latest/index.html

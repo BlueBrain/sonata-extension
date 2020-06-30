@@ -14,8 +14,7 @@
 
 import sys
 import os
-
-VERSION = '0.0.4'
+import json
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -25,10 +24,10 @@ VERSION = '0.0.4'
 local_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(local_path, 'extensions'))
 
-# -- General configuration ------------------------------------------------
+with open(os.path.join(local_path, "../package.json")) as fp:
+    VERSION = json.load(fp)["version"]
 
-# If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.0'
+# -- General configuration ------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -38,15 +37,6 @@ extensions = [
     'sphinx.ext.mathjax',
     'blueconfig_sphinx',
 ]
-
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
-
-# The suffix of source filenames.
-source_suffix = '.rst'
-
-# The master toctree document.
-master_doc = 'index'
 
 # General information about the project.
 project = u'circuit-documentation'
@@ -60,23 +50,16 @@ version = VERSION
 # The full version, including alpha/beta/rc tags.
 release = VERSION
 
-# The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
-
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 html_theme = 'sphinx-bluebrain-theme'
+html_theme_options = {'metadata_file': '../package.json'}
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 html_title = 'Circuit documentation'
-
-# The name of an image file (within the static path) to use as favicon of the
-# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
-#html_favicon = None
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -85,47 +68,3 @@ html_static_path = ['_static']
 
 # If true, links to the reST sources are added to the pages.
 html_show_sourcelink = False
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'circuitdoc'
-
-# -- Options for LaTeX output ---------------------------------------------
-
-latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
-
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
-
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
-}
-
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto/manual]).
-latex_documents = [
-  ('index', 'circuit.tex', u'circuit Documentation',
-   u'courcol', 'manual'),
-]
-
-# -- Options for manual page output ---------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'circuit', u'circuit Documentation',
-     [u'courcol'], 1)
-]
-
-# -- Options for Texinfo output -------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-  ('index', 'circuit', u'circuit Documentation',
-   u'courcol', 'circuit', 'One line description of project.',
-   'Miscellaneous'),
-]
