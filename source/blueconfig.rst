@@ -203,8 +203,21 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit:
         :description:
-         Location of morphology files. Note that there should be two
-         subdirectories, ascii and h5.
+         Location of morphology files. If MorphologyType is not specified,
+         '/ascii' is automatically appended to the path and morphology loading
+         assumes 'asc' type (legacy handling).
+
+    .. blueconfig_value:: MorphologyType
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Type of morphology files. This is required if you wish to specify the
+         morphology type (asc, swc, h5, hoc). NOTE: if this option is set, then
+         MorphologyPath is not suffixed with '/ascii' anymore. For example:
+          MorphologyPath /path/to/swc/v1
+          MorphologyType swc
+
 
     .. blueconfig_value:: Save
         :type: path
@@ -251,7 +264,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Location of connectvity file(s): nrn.h5, syn2 or SONATA edges.
-
          NOTES:
            - DEPRECATED: Having start.ncs or start.target in this location.
              They should be within CircuitPath instead.
