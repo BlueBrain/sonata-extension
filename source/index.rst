@@ -18,3 +18,4 @@ This documentation covers the format of Blue Brain Project circuit file formats.
    recipe
    sonata
    faq
+
