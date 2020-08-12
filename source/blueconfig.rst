@@ -176,6 +176,15 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          number of compute nodes if NEURON can only simulate half of the model (due to
          limited memory), ModelBuildingSteps can be set to 2.
 
+    .. blueconfig_value:: KeepModelData
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Keep the CORENEURON model data if this parameter is set to True.
+         By default, the CORENEURON model data is deleted after simulation except for
+         the save/restore process.
+
     .. blueconfig_value:: gitPath
         :type: string
         :required: False
@@ -346,6 +355,16 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Parameter which will restrict the neurons instantiated to those in the
          named target. Target can be from start.target or target file given to
          TargetFile paramter.)
+
+    .. blueconfig_value:: ExtracellularCalcium
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         Extracellular calcium concentration.
+         This parameter, together with the uHill parameter of synapses,
+         is used to scale the U parameter of synapses,
+         and is working for py-neurodamus not hoc-neurodamus.
 
 .. blueconfig_section:: Stimulus
     :description:
