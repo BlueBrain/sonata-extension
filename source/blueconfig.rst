@@ -273,6 +273,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Location of connectvity file(s): nrn.h5, syn2 or SONATA edges.
+         Option: specify a population name after the path, format "path:population".
          NOTES:
            - DEPRECATED: Having start.ncs or start.target in this location.
              They should be within CircuitPath instead.
@@ -355,6 +356,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Parameter which will restrict the neurons instantiated to those in the
          named target. Target can be from start.target or target file given to
          TargetFile paramter.)
+         Option: specify a population name before the target name, format "population:target_name".
 
     .. blueconfig_value:: ExtracellularCalcium
         :type: float
@@ -1029,6 +1031,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Location of data files with additional connectivity info
+         Option: specify a population name after the path, format "path:population".
 
     .. blueconfig_value:: Type
         :type: string
