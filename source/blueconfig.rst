@@ -74,8 +74,9 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         Simulation execution directory. Will be prepended to other Run
-         parameters if they do not use an absolute path: OutputRoot, TargetFile
+         | Simulation execution directory. Will be prepended to other Run parameters if they do not use an absolute path: E.g.: OutputRoot, TargetFile. 
+         | Default value: Path to BlueConfig
+         | NOTE: Relative paths are not allowed, the only exception being "." strictly for test jobs.
 
     .. blueconfig_value:: Restore
         :type: string
@@ -100,12 +101,13 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Thalamocortical input). Superseded by Projection section
 
     .. blueconfig_value:: TargetFile
-        :type: abspath
+        :type: path
         :required: True
         :unit:
         :description:
          Parameter giving location of custom user targets stored in the named
          file (referred to as user.target in remainder of document).
+         Use of relative paths is discouraged and DEPRECATED unless CurrentDir is also set.
 
     .. blueconfig_value:: Note
         :type: string
@@ -142,7 +144,8 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit:
         :description:
-         Location where report files should be written
+         Location where output files should be written, namely spikes and reports.
+         Prefer using absolute paths. Relative paths are interpreted relative to CurrentDir.
 
     .. blueconfig_value:: Time
         :type: time
@@ -272,13 +275,12 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit:
         :description:
-         Location of connectvity file(s): nrn.h5, syn2 or SONATA edges.
-         Option: specify a population name after the path, format "path:population".
-         NOTES:
-           - DEPRECATED: Having start.ncs or start.target in this location.
-             They should be within CircuitPath instead.
-           - DEPRECATED: Giving the path to a folder containing multiple connectivity formats.
-             For newer formats prefer giving the full path to a single file.
+         | Location of connectvity file(s): SONATA Edges or older Syn2, Nrn formats.
+         | Option: specify a population name after the path, format "path:population".
+         | NOTES:
+         |  - For compat reasons, users can provide a path to a folder, in which case it will look for SONATA files, followed by syn2 and nrn. Such usage is DEPRECATED and file paths should be used.
+         |  - DEPRECATED: Having start.ncs or start.target in this location.
+         |    They should be within CircuitPath instead.
 
     .. blueconfig_value:: NumSynapseFiles
         :type: int
@@ -353,9 +355,8 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         Parameter which will restrict the neurons instantiated to those in the
-         named target. Target can be from start.target or target file given to
-         TargetFile paramter.)
+         Parameter which will restrict the neurons instantiated to those in the named target.
+         Target can be from start.target or target file given in the TargetFile parameter.
          Option: specify a population name before the target name, format "population:target_name".
 
     .. blueconfig_value:: ExtracellularCalcium
