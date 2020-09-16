@@ -93,6 +93,11 @@ The following attributes are mandatory as per specification and are used in the 
     depend on the incoming connection's synapse type, and the receiving cell's
     layer.
 
+``threshold_current`` stored as float: The minimal amplitude (in nA) of a step current clamp injection that triggers one action potential
+
+``holding_current`` stored as float: The current clamp amplitude (in nA) necessary to hold the cell at a predefined holding voltage (typically around -85 mV for BBP)
+
+
 Furthermore, the following fields are required to be stored as an
 `enumeration`_:
 
