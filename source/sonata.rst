@@ -97,6 +97,8 @@ The following attributes are mandatory as per specification and are used in the 
 
 ``holding_current`` stored as float: The current clamp amplitude (in nA) necessary to hold the cell at a predefined holding voltage (typically around -85 mV for BBP)
 
+``AIS_scaler`` stored as float: Multiplicative factor to scale AIS (morphology dependent and optional, used only for synthesis)
+
 
 Furthermore, the following fields are required to be stored as an
 `enumeration`_:
