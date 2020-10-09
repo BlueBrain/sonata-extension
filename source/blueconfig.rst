@@ -1083,3 +1083,13 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          different destination groups, then it would make sense to reuse the same populationID.
          This should be considered a temporary fix until we fully support SONATA population labels
          NOTE: With MCellRan4, the max value accepted is 255 and for Random123 it is 65535.
+
+    .. blueconfig_value:: AppendBasePopulation
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         When using a Sonata projection file containing legacy gid-offset connections,
+         in order to merge connections with base connectivity and avoid creating a new
+         PopulationID (implying different seeding), this option should be set to 1.
+         Default is disabled (0)
