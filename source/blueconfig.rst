@@ -369,6 +369,18 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          is used to scale the U parameter of synapses,
          and is working for py-neurodamus not hoc-neurodamus.
 
+    .. blueconfig_value:: SecondOrder
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         Selects the NEURON/CoreNEURON integration method.
+         This parameter sets the NEURON global variable h.secondorder.
+         The allowed values are '0' for default implicit backward euler,
+         '1' for crank-nocholson and '2' for crank-nocholson with fixed
+         ion currents. For more info see:
+         https://www.neuron.yale.edu/neuron/static/py_doc/simctrl/programmatic.html?highlight=second%20order#secondorder
+
 .. blueconfig_section:: Stimulus
     :description:
      Describes one pattern of stimulus that can be injected into multiple
