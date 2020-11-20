@@ -87,7 +87,7 @@ Populations
 
 To distinguish between nodes and edges contained or connecting different
 brain parts, `polulations` are used as per the `SONATA` specification.
-For detailed information see the next section :ref:`sonata_population`.
+For detailed information see the next section :ref:`here <sonata_population>`.
 
 
 .. _specification: https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md
@@ -96,7 +96,7 @@ Groups
 ------
 
 As per the `SONATA` specification it is possible to define several node groups, but within BBP we restrict to a single group ``0``.
-Therefore, the sonata-fields ``node_group_id`` and ``node_group_index`` are **not used** (see :ref:`sonata_tech` for details about the fields).
+Therefore, the sonata-fields ``node_group_id`` and ``node_group_index`` are **not used** (see :ref:`here <sonata_tech>` for details about the fields).
 
 This decision has been taken to reduce the number of indirection to access the different attributes of the nodes and edges in order to improve the performance.
 

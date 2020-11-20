@@ -124,7 +124,7 @@ Key "networks"
 ~~~~~~~~~~~~~~
 
 In the ``networks`` section the path to the network files are specified.
-These are the ``nodes`` and ``edges`` file described in the section :ref:`sonata_tech`.
+These are the ``nodes`` and ``edges`` file described in the section :ref:`here <sonata_tech>`.
 
 
 The Simulation Config
@@ -226,7 +226,7 @@ corresponding nodes.
 
 In the example above, there is only one node set named ``"Excitatory"``.
 This node set will select all the nodes with a field ``"synapse_class"`` equal to the
-value: ``"EXC"`` (see also :ref:`sonata_tech`).
+value: ``"EXC"`` (see also :ref:`here <sonata_tech>`).
 
 You can have multiple node sets with selections based on all sonata fields:
 
