@@ -381,6 +381,46 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          ion currents. For more info see:
          https://www.neuron.yale.edu/neuron/static/py_doc/simctrl/programmatic.html?highlight=second%20order#secondorder
 
+    .. blueconfig_value:: V_Init
+        :type: float
+        :required: False
+        :unit: mV
+        :description:
+         Initial voltage value for cells.
+         This value is used in finitialize() function in Neuron.
+
+    .. blueconfig_value:: Celsius
+        :type: float
+        :required: False
+        :unit: degrees centigrade
+        :description:
+         Temperature of the simulation in degrees centigrade (celsius).
+
+    .. blueconfig_value:: SpikeLocation
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         The spike detection location.
+         Can be either 'SOMA' for detecting spikes in the soma or 'AIS' for
+         detecting spikes on the AIS.
+
+    .. blueconfig_value:: SpikeThreshold
+        :type: float
+        :required: False
+        :unit: mV
+        :description:
+         The spike detection threshold.
+         A spike is detected whenever the voltage in the spike detection location
+         goes over the spike threshold value.
+
+    .. blueconfig_value:: MinisSingleVesicle
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         Spont minis to use a single release vesicle, as discussed in BBPBGLIB-660.
+
 .. blueconfig_section:: Stimulus
     :description:
      Describes one pattern of stimulus that can be injected into multiple
