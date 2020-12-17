@@ -49,10 +49,10 @@ The group ``@library`` is reserved for this purpose.
     ``layer``                       text       Names the layer for the morphology.
     ``model_template``              text       See details below
     ``model_type``                  text       Has 4 valid values: `biophysical`, `virtual`, `single_compartment`, and `point_neuron`.
-    ``morph_class``                 text       Used to define the morphology classification,. ... ***TBD***
+    ``morph_class``                 text       Used to define the morphology classification,. whether they are PYR or INT, for example.
     ``etype``                       text       Defines the electrical type of the node.
     ``mtype``                       text       Defines the morphological type of the node.
-    ``synapse_class``               text       Defines the synapse type of the node () ... ***TBD***
+    ``synapse_class``               text       Defines the synapse type of the node; whether the neuron is inhibitory or excitatory. For historical reasons, theses are encoded as an integer: inhibitory < 100 or excitatory >= 100
     ``region``                      text       Attribute assigning a brain region to the associated cell.
     ``threshold_current``           float      The minimal amplitude (in nA) of a step current clamp injection that triggers an action potential.
     ``holding_current``             float      The current clamp amplitude (in nA) necessary to hold the cell at a predefined holding voltage (typically around -85 mV for BBP).
@@ -99,28 +99,28 @@ For the type ``enum``, see details above.
     ``afferent_surface_[x|y|z]``   float      Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell.
     ``afferent_section_id``        int        The specific section on the target node where a synapse is placed.
     ``afferent_section_pos``       float      Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
-    ``afferent_section_type``      int        ???
+    ``afferent_section_type``      int        Neurite or soma type of the afferent.
     ``afferent_segment_id``        int        Numerical index of the section of the cell (soma is index 0).
-    ``afferent_segment_offset``    float      ???
-    ``conductance``                float      The conductance of ??? in ??? .
-    ``decay_time``                 float      ???
-    ``delay``                      float      the axonal delay (in ms; ``NaN`` for dendro-dendritic synapses).
-    ``depression_time``            float      ???
+    ``afferent_segment_offset``    float      If triple synapse addressing is being used, the offset within the segment in um.  See :ref:`faq`.
     ``efferent_center_[x|y|z``     float      Same as ``afferent_center_[x|y|z]``, but for the synapse position at the axon of the presynaptic cell.
     ``efferent_surface_[x|y|z]``   float      Same as ``efferent_center_[x|y|z]``, but the for the synapse location on the axon surface.
     ``efferent_section_id``        int        Same as ``afferent_section_id``, but for source node.
     ``efferent_section_pos``       float      Same as ``afferent_section_pos``, but for source node.
-    ``efferent_section_type``      int        ???
+    ``efferent_section_type``      int        Neurite or soma type of the afferent.
     ``efferent_segment_id``        int        Numerical index of the section of the cell (soma is index 0).
-    ``efferent_segment_offset``    float      ???
-    ``faciliation_time``           float      ???
-    ``n_rrp_vesicles``             int        ???
+    ``efferent_segment_offset``    float      If triple synapse addressing is being used, the offset within the segment in um.  See :ref:`faq`.
+    ``delay``                      float      The axonal delay (milliseconds; ``NaN`` for dendro-dendritic synapses)
+    ``conductance``                float      The conductance of the synapse (nanosiemens); also referred to as ``g_syn``
+    ``decay_time``                 float      The decay time of the synapse (milliseconds).
+    ``depression_time``            float      The depression time constant of the synapse (milliseconds), also referred to as ``f_syn``.
+    ``faciliation_time``           float      The facilitation time constant (milliseconds) of the synapse.
+    ``u_syn``                      float      The ``u`` parameter in the `Tsodyks Markram Model`_.
+    ``n_rrp_vesicles``             int        Number of ``readily releasable pool`` of vesicles
     ``spline_length``              float      Distance between the two surface positions (in unit ???).
-    ``syn_type_id``                int        ???
-    ``u_syn``                      float      ???
-    ``edge_type_id``               int        ???
-    ``source_node_id``             int        see below
-    ``target_node_id``             int        see below
+    ``syn_type_id``                int        TBD
+    ``edge_type_id``               int        Links an edge to the underlying CSV file; not used at BBP
+    ``source_node_id``             int        See below
+    ``target_node_id``             int        See below
     =============================  ========== =========================================================================================
 
 
@@ -182,3 +182,4 @@ Required fields for ``Spykfunc``:
 
 .. _specification: https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md
 .. _enumeration: https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md#nodes---enum-datatypes
+.. _Tsodyks Markram Model: https://www.pnas.org/content/94/2/719

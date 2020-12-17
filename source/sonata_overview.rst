@@ -78,8 +78,7 @@ directed multigraphs. It means:
 * multiple edges between two nodes are allowed
 * the edges are oriented (A->B is different than B->A)
 
-Moreover, the format is specialized to compactify the representation
-of graphs with a lot of connections between two nodes.
+Moreover, the format is specialized to compactly represent graphs with a lot of connections between two nodes.
 
 
 Populations
