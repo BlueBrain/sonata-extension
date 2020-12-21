@@ -106,8 +106,9 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Parameter giving location of custom user targets stored in the named
-         file (referred to as user.target in remainder of document).
-         Use of relative paths is discouraged and DEPRECATED unless CurrentDir is also set.
+         file, referred to as user.target in the remainder of the document. The
+         file contains descriptions for Cell/Compartment/Section targets. Use of
+         relative paths is discouraged and DEPRECATED, unless CurrentDir is also set.
 
     .. blueconfig_value:: Note
         :type: string
@@ -420,6 +421,32 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Spont minis to use a single release vesicle, as discussed in BBPBGLIB-660.
+
+    .. blueconfig_value:: RandomizeGabaRiseTime
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         A global parameter to skip randomizing the GABA_A rise time in the helper functions.
+
+.. blueconfig_section:: Conditions
+    :description:
+     Specifies global parameters.
+
+    .. blueconfig_value:: randomize_Gaba_risetime
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         An option to skip randomizing the GABA_A rise time in the helper functions,
+         the same as RandomizeGabaRiseTime in the Run section.
+
+    .. blueconfig_value:: SYNAPSES__init_depleted
+        :type: boolean(1/0)
+        :required: False
+        :unit:
+        :description:
+         An option to initialize synapses in depleted state.
 
 .. blueconfig_section:: Stimulus
     :description:
@@ -860,8 +887,11 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit:
         :description:
-         Defines what is to be reported. Note that cell targets versus
-         compartment targets can influence report behavior
+         Defines what is to be reported. Note that cell targets versus compartment
+         targets can influence report behavior. The same applies to section targets,
+         that could request axon, dend, or apic inside the user.target file. Note
+         that CoreNEURON has limited support for section targets (i.e., only one
+         subtarget is allowed per section target).
 
     .. blueconfig_value:: StartTime
         :type: float
@@ -1032,6 +1062,14 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Override synaptic helper function (GABAABHelper.hoc or
          AMPANMDAHelper.hoc) with this new helper function. Only give prefix,
          e.g. "Newfun" uses NewfunHelper.hoc
+
+    .. blueconfig_value:: SynDelayOverride
+        :type: float
+        :required: False
+        :unit: ms
+        :description:
+         Value to override the synaptic delay time originally set in the edge file,
+         and to be given to netcon object.
 
 .. blueconfig_section:: Electrode
     :description:
