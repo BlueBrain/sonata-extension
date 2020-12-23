@@ -1114,7 +1114,8 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     :description:
      Designed to take into account axons projecting to and from different
      areas of the brain. It can also be used to take gap junctions into
-     account.
+     account. In order to enable a Projection, you also need to activate it
+     with Stimulus and StimulusInject blocks. For details see BlueConfig Projection example.
 
     .. blueconfig_value:: Path
         :type: abspath
