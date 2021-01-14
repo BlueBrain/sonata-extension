@@ -144,24 +144,31 @@ Mandatory properties:
 - ``from`` the pre-synaptic matching requirement
 - ``to`` the post-synaptic matching requirement
 
-In addition to ``from`` and ``to``, exactly three of the following
-constraints have to be used:
+In addition to ``from`` and ``to``, exactly one set of constraints have to
+be used:
 
-- ``bouton_reduction_factor``, the fraction of synapses to be removed in
-  all three pruning steps
+- ``mean_syns_connection``, ``stdev_syns_connection``, and ``active_fraction``
+- ``bouton_reduction_factor``, ``cv_syns_connection``, and ``active_fraction``
+- ``bouton_reduction_factor``, ``cv_syns_connection``, and ``mean_syns_connection``
+- ``bouton_reduction_factor``, ``cv_syns_connection``, and ``probability``
+- ``bouton_reduction_factor``, ``pMu_A``, and ``p_A``
+
+Where the constraints signify:
+
 - ``active_fraction``, the fraction of synapses to be removed in the third
   pruning step
-
-Only up to two of the following:
-
+- ``bouton_reduction_factor``, the fraction of synapses to be removed in
+  all three pruning steps
 - ``cv_syns_connection``, the target value for the coefficient of
   variation of the distribution of synapses per connection distribution of
   synapses per connections
 - ``mean_syns_connection``, the target value for the mean of the
   distribution of synapses per connections
+- ``p_A``, the reduction factor
+- ``pMu_A``, used as input to the survival rate
+- ``probability``, the target connection probability. To be deprecated.
 - ``stdev_syns_connection``, the target value for the standard deviation
   of the distribution of synapses per connection
-- ``probability``, the target connection probability. To be deprecated.
 
 SynapsesProperties
 ~~~~~~~~~~~~~~~~~~
