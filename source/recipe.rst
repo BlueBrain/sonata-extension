@@ -257,7 +257,7 @@ re-rolled until positive values has been obtained.
 Two optional attributes can be specified, where each attribute will have to
 be given for all `SynapsesClassification` elements:
 
-- `gsynSRSF`, the scale factor for the conductance
+- `gsynSRSF`, the scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'
 - `uHillCoefficient`, a coefficient describing the scaling of `u` to be
   done by the simulator:
 
