@@ -126,13 +126,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Simulation duration
 
-    .. blueconfig_value:: svnPath
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         URL from where bglib simulation files can be downloaded
-
     .. blueconfig_value:: Version
         :type: string
         :required: False
@@ -283,14 +276,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          |  - DEPRECATED: Having start.ncs or start.target in this location.
          |    They should be within CircuitPath instead.
 
-    .. blueconfig_value:: NumSynapseFiles
-        :type: int
-        :required: False
-        :unit:
-        :description:
-         The number of synapse files. To be made obsolete once better metadata
-         handling is added.
-
     .. blueconfig_value:: RunMode
         :type: RunMode
         :required: False
@@ -299,34 +284,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Optional parameter which currently accepts WholeCell and LoadBalance
          as a valid values. Neurons will be distributed round-robin, otherwise.
          If CORENEURON simulator is being used, WholeCell should be used.
-
-    .. blueconfig_value:: Prefix
-        :type: abspath
-        :required: False
-        :unit:
-        :description:
-         Root file path which may be prepended to other Run parameters if they
-         do not use an absolute path: MorphologyPath, METypePath,MeshPath,
-         CircuitPath, nrnPath
-
-    .. blueconfig_value:: SynapseMode
-        :type: string
-        :required: False
-        :unit:
-        :description:
-
-    .. blueconfig_value:: CentralHyperColumn
-        :type: string
-        :required: False
-        :unit:
-        :description:
-
-    .. blueconfig_value:: Date
-        :type: date
-        :required: False
-        :unit:
-        :description:
-         Day of config creation/modification with format dd:mm:yy
 
     .. blueconfig_value:: Dt
         :type: float
@@ -378,7 +335,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Selects the NEURON/CoreNEURON integration method.
          This parameter sets the NEURON global variable h.secondorder.
          The allowed values are '0' for default implicit backward euler,
-         '1' for crank-nocholson and '2' for crank-nocholson with fixed
+         '1' for Crank-Nicolson and '2' for Crank-Nicolson with fixed
          ion currents. For more info see:
          https://www.neuron.yale.edu/neuron/static/py_doc/simctrl/programmatic.html?highlight=second%20order#secondorder
 
@@ -458,20 +415,13 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         For NPoisson Stimulus. The number of synapses to create
+         For NPoisson Stimulus. The number of synapses to create. Not for SONATA config.
 
     .. blueconfig_value:: Name
         :type: string
         :required: False
         :unit:
         :description:
-
-    .. blueconfig_value:: Functions
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         deprecated
 
     .. blueconfig_value:: PercentLess
         :type: float
@@ -508,14 +458,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          For RelativeLinear, the percentage of a cell's threshold current to
          inject at the start of the injection
 
-    .. blueconfig_value:: DataSetLabel
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         For ReplayVoltageTrace, the dataset which is to be opened and read to
-         get voltage data
-
     .. blueconfig_value:: Delay
         :type: float
         :required: True
@@ -530,12 +472,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          For Pulse Stimulus, the duration in ms of a single pulse
 
-    .. blueconfig_value:: relAmp
-        :type: float
-        :required: False
-        :unit:
-        :description:
-
     .. blueconfig_value:: Mode
         :type: Mode
         :required: True
@@ -543,13 +479,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Current is used for most stimuli.  Exceptions include
          ReplayVoltageTrace and SEClamp which then use "Voltage" instead
-
-    .. blueconfig_value:: Table
-        :type: abspath
-        :required: False
-        :unit:
-        :description:
-         File path
 
     .. blueconfig_value:: Var
         :type: float
@@ -565,20 +494,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          For Noise stimuli, the variance around the mean
 
-    .. blueconfig_value:: Parameter
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         deprecated
-
-    .. blueconfig_value:: Lambda
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         For NPoisson Stimulus to configure the random distribution
-
     .. blueconfig_value:: MeanPercent
         :type: float
         :required: False
@@ -593,13 +508,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit: nA
         :description:
          The amount of current initially injected when the stimulus activates
-
-    .. blueconfig_value:: PhaseShift
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         For Sine (deprecated)
 
     .. blueconfig_value:: Weight
         :type: float
@@ -622,19 +530,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          For RelativeLinear, the percentage of a cell's threshold current to
          inject at the end of the injection
 
-    .. blueconfig_value:: Resume
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         deprecated
-
-    .. blueconfig_value:: TBins
-        :type: string
-        :required: False
-        :unit:
-        :description:
-
     .. blueconfig_value:: AmpEnd
         :type: float
         :required: False
@@ -642,38 +537,12 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          The final current when a stimulus concludes. Used by Linear
 
-    .. blueconfig_value:: WaitingTime
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         deprecated
-
-    .. blueconfig_value:: SynapseType
-        :type: string
-        :required: False
-        :unit:
-        :description:
-
-    .. blueconfig_value:: Rate
-        :type: string
-        :required: False
-        :unit:
-        :description:
-
     .. blueconfig_value:: Frequency
         :type: float
         :required: False
         :unit: Hz
         :description:
          For Pulse Stimulus, the frequency of pulse trains
-
-    .. blueconfig_value:: VerticalTranslation
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         For Sine (deprecated)
 
     .. blueconfig_value:: Voltage
         :type: float
@@ -696,7 +565,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          For Pulse Stimulus, a std dev value each cell will apply to the Delay
-         in order to add variation to the stimulation.
+         in order to add variation to the stimulation. Not for SONATA config.
 
     .. blueconfig_value:: Duration
         :type: float
@@ -733,15 +602,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Electrode section to use
 
-    .. blueconfig_value:: H5File
-        :type: path
-        :required: False
-        :unit:
-        :description:
-         For ReplayVoltageTrace, path to hdf5 file where voltage info is to be
-         read so that it can be applied to corresponding cells in the
-         simulation.
-
 .. blueconfig_section:: StimulusInject
     :description:
      Pairs a Stimulus with a Target so that the stimulus is applied to the
@@ -764,7 +624,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
 
 .. blueconfig_section:: Modification
     :description:
-     Applies the necessary steps to simulate a chosen tissue manipulation
+     (Deprecated, will need a new version for SONATA) Applies the necessary steps to simulate a chosen tissue manipulation
      from those available
 
     .. blueconfig_value:: GifParamsPath
@@ -790,75 +650,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Name of the target in start.target or user.target to receive the
          manipulation
-
-.. blueconfig_section:: NeuronConfigure
-    :description:
-     Allows a snippet of hoc code to be defined and executed on a Target.
-     Useful for simple changes that are currently not handled under the
-     repertoire of Modification sections.
-
-    .. blueconfig_value:: Target
-        :type: target
-        :required: True
-        :unit:
-        :description:
-         Name of the target in start.target or user.target to receive the
-         configuration
-
-    .. blueconfig_value:: Configure
-        :type: string
-        :required: True
-        :unit:
-        :description:
-         Snippet of hoc code which will be applied to the sections of the cell
-         objects in the designated target
-
-.. blueconfig_section:: Spine
-    :description:
-     Unknown Description
-
-    .. blueconfig_value:: Target
-        :type: target
-        :required: True
-        :unit:
-        :description:
-         neuron target (defined in start.target or user.target)
-
-    .. blueconfig_value:: Delay
-        :type: int
-        :required: True
-        :unit:
-        :description:
-
-    .. blueconfig_value:: OnlyStim
-        :type: int
-        :required: False
-        :unit:
-        :description:
-
-    .. blueconfig_value:: Frequency
-        :type: float
-        :required: True
-        :unit:
-        :description:
-
-    .. blueconfig_value:: Amplitude
-        :type: float
-        :required: True
-        :unit:
-        :description:
-
-    .. blueconfig_value:: Factor
-        :type: float
-        :required: True
-        :unit:
-        :description:
-
-    .. blueconfig_value:: Duration
-        :type: int
-        :required: True
-        :unit:
-        :description:
 
 .. blueconfig_section:: Report
     :description:
@@ -950,14 +741,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     :description:
      Adjusts the synaptic strength between two sets of cells.
 
-    .. blueconfig_value:: CorrectionThreshold
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         Only apply synaptic correction if path distance of original synaptic
-         location to middle of soma is bigger than this value in um.
-
     .. blueconfig_value:: Destination
         :type: target
         :required: True
@@ -972,15 +755,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Provide a snippet of hoc code which is to be executed on the synapse
          objects created under this Connection section
-
-    .. blueconfig_value:: Correct_New_Import3d
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         Correct for discrepancy when correction functions have been estimated
-         with new Import3D where all dendrites are connected to soma(0.5) and
-         not soma(0) which is the legacy case.
 
     .. blueconfig_value:: Delay
         :type: float
@@ -998,46 +772,12 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Target defining presynaptic cells
 
-    .. blueconfig_value:: SynapseID
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         Temporary feature to allow finer granularity of synapse selection.
-         Takes the integer id given by circuit building for synapses. Note that
-         this makes the Config file highly dependent on the recipe file used
-         since the integer id is generated based on the recipe. Future
-         implementations of this feature need to remove this dependency.
-
     .. blueconfig_value:: Weight
         :type: float
         :required: False
         :unit:
         :description:
          Scalar used to adjust synaptic strength
-
-    .. blueconfig_value:: SomaSynCorrectionPath
-        :type: path
-        :required: False
-        :unit:
-        :description:
-         Path to additional .h5 file where synaptic correction functions are
-         stored.
-
-    .. blueconfig_value:: ApplyCorrection
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         Synaptic correction will only be applied if True.
-
-    .. blueconfig_value:: UseSTDP
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         Activates the synapse to use plasticity. Options include Doublet or
-         Triplet
 
     .. blueconfig_value:: SpontMinis
         :type: float
@@ -1046,13 +786,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          During simulation, Synapses created under this Connection section will
          spontaneously trigger with the given rate
-
-    .. blueconfig_value:: SynapseToSoma
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         Move all synapses to soma if True.
 
     .. blueconfig_value:: ModOverride
         :type: string
@@ -1073,7 +806,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
 
 .. blueconfig_section:: Electrode
     :description:
-     Unknown Description
+     Will not be used for SONATA config.
 
     .. blueconfig_value:: y
         :type: float
@@ -1116,6 +849,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
      areas of the brain. It can also be used to take gap junctions into
      account. In order to enable a Projection, you also need to activate it
      with Stimulus and StimulusInject blocks. For details see BlueConfig Projection example.
+     For Sonata config, projections are additional edge files in "networks" (circuit_config file).
 
     .. blueconfig_value:: Path
         :type: abspath
