@@ -6,6 +6,24 @@ SONATA Technical description
 
 The following is the definition of the file format used in the SONATA file.
 
+Sonata Files
+------------
+
+A Sonata circuit possesses multiple files which contain the different network data. This includes
+at least a node file and an edge file. Each file can contain multiple populations (see below)
+of nodes and edges.
+
+At BBP, we decided to use the file extension ``.h5`` for all the sonata files. That is: the node,
+edge, spike report and frame report files. This follows the official recommendations.
+
+Even if technically possible, we decided not to mix the node and edge populations inside the same
+file.
+
+The name convention for the files outputted from ``circuit-build`` is :
+  - ``nodes.h5`` for the node file
+  - ``edges.h5`` for the edge file
+
+
 Node File
 ---------
 
