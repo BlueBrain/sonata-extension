@@ -129,22 +129,46 @@ These rules determine the distribution of synapses. They may take the
 following form::
 
     <ConnectionRules>
-      <mTypeRule from="L1_NGC-DA" to="*" bouton_reduction_factor= "0.114" active_fraction= "0.50" cv_syns_connection= "0.25" />
-      <mTypeRule from="L1_HAC" to="*" bouton_reduction_factor= "0.13" active_fraction= "0.50" cv_syns_connection= "0.25" />
+      <rule fromMType="L1_NGC-DA" toMType="*" bouton_reduction_factor= "0.114" active_fraction= "0.50" cv_syns_connection= "0.25" />
+      <rule fromMType="L1_HAC" toMType="L1_DAC" bouton_reduction_factor= "0.13" active_fraction= "0.50" cv_syns_connection= "0.25" />
     </ConnectionRules>
 
-Allowed rule classes:
+.. note::
+   In older recipes, the rules take the form of:
+   ::
 
-- ``mTypeRule`` to apply rules between `mtype`
-- ``sClassRule`` to apply rules between synapse classes
-- ``layerRule`` to apply rules between layers (*to be deprecated*)
+      <mTypeRule from="L1_HAC" to="L1_DAC" />
 
-Mandatory properties:
+   which will be translated into:
+   ::
 
-- ``from`` the pre-synaptic matching requirement
-- ``to`` the post-synaptic matching requirement
+      <rule fromMType="L1_HAC" toMType="L1_DAC" />
 
-In addition to ``from`` and ``to``, exactly one set of constraints have to
+   automatically.
+
+Every rule can be used to select a subset of connections using attributes
+with the prefixes:
+
+- ``from`` for the pre-synaptic matching requirement
+- ``to`` for the post-synaptic matching requirement
+
+And the following stems:
+
+- ``MType`` to filter by the `mtype` column of the node file(s)
+- ``EType`` to filter by the `etype` column of the node file(s)
+- ``SClass`` to filter by the synaptic classification of the cell
+  (customarily either ``EXC`` or ``INH``)
+- ``Region`` to filter by the `region` column of the node file(s)
+
+The order of the rules matters, later rules may override earlier ones if
+they are at least as specific as the earlier ones.
+I.e., the number of wildcards matching all of an attribute needs to be less
+or equal the rule to be overwritten.
+For example, ``<rule fromMType="bar" …/>`` will be superseded by ``<rule
+fromMType="b*" …?>`` as the constraints are similar, but it will not be
+replaced by ``<rule fromMType="*" …/>``, as that one is broader.
+
+In addition to the selection attributes, exactly one set of constraints have to
 be used:
 
 - ``mean_syns_connection``, ``stdev_syns_connection``, and ``active_fraction``
