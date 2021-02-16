@@ -45,3 +45,21 @@ As it stands, the ``(population_name, node_id)`` are globally unique, and should
 Relying on other IDs may make using reports, simulators, etc harder.
 
 SNAP handles it like this, as described `here <https://github.com/BlueBrain/snap/commit/c211d79ccc01bf2b0dcc621d12a5bba054a03ff7>`_.
+
+
+What do I do about a 'missing the 'node_population' attribute' errors?
+----------------------------------------------------------------------
+
+Depending on the vintage of your circuit edge files, it's possible they don't conform exactly to the SONATA spec.
+Once can fix this error by setting the attributes to the correct values.
+
+For instance, with python and h5py:
+
+.. code-block:: python
+
+   with h5py.File(..., 'r+') as h5:
+       h5['/edges/$edge_population/source_node_id'].attrs['node_population'] = '$related_source_population_name'
+       h5['/edges/$edge_population/target_node_id'].attrs['node_population'] = '$related_target_population_name'
+
+
+Where `$edge_population` is the name HDF5 dataset, and the `$related_source_population_name` and `$related_target_population_name` are the names of the source and target populations in the `nodes.h5` file.
