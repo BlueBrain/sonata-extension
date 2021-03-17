@@ -5,19 +5,8 @@ Recipe Description
 
 .. highlight:: xml
 
-TODO
-----
-
-- Exact definition of `mtype`
-- Exact definition of `etype`
-
-History
--------
-
-Objective
----------
-
-Specify all parameters required to generate the connectome of a circuit.
+This document should specify all parameters required to generate the
+connectome of a circuit.
 
 File Format
 -----------
@@ -74,6 +63,40 @@ Thus the parameters are:
   region`
 - ``regionGap``: the minimum distance between two areas designated as
   `touch regions`.
+
+StructuralSpineLengths
+~~~~~~~~~~~~~~~~~~~~~~
+
+The `StructuralSpineLengths` group is used to determine the initial
+*maximum* distance for spines, measured in µm.
+`TouchDetector` will use these attributes to enlarge the radius of the
+cylindrical representation of branches identified as dendrites.
+Touches will then be generated along the intersecting parts of cylinders
+from different cells.
+
+To specify the spine length allowed for a morphological type, use the
+following form:
+::
+
+      <StructuralSpineLengths>
+          <rule mType="L6_CHC" spineLength="2.5"/>
+      </StructuralSpineLengths>
+
+.. note::
+   The legacy format contained more information and may require pruning.
+   The following structure is also acceptable:
+   ::
+
+      <NeuronTypes>
+          <StructuralType id="L6_CHC" spineLength="2.5"/>
+      </NeuronTypes>
+
+   Where the value of ``id`` identifies the morphology type to be
+   associated with the spine length.
+
+.. warning::
+   No pattern expansion will be performed for this part of the recipe.
+   One rule per `mtype` present in the circuit is required.
 
 InitialBoutonInterval
 ~~~~~~~~~~~~~~~~~~~~~
@@ -320,10 +343,7 @@ Consumers and invocation order
 ------------------------------
 
 - TouchDetector. Uses the following parts:
-   - `StructuralType` or any other entity with the attributes
-       - `id` to describe the `mtype`
-       - `spineLength` given in μm to increase the overlap detection
-         radius for both basal and apical dendrites
+   - `StructuralSpineLengths`_
    - `InterBoutonInterval`_
 - Spykfunc. Uses the following parts:
    - `Seeds`_
