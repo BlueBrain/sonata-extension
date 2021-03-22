@@ -6,6 +6,7 @@ SONATA Circuit description
 
 
    sonata_overview
+   sonata_config
    sonata_population
-   bluepysnap_sonata
+   sonata_nodeset
    sonata_tech
