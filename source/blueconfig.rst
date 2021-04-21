@@ -440,7 +440,8 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Type of stimulus: Linear, RelativeLinear, Pulse, NPoisson,
          NPoissonInhomogeneus, Sinusoidal(deprecated), Subthreshold, Noise,
-         SynapseReplay, Hyperpolarizing, ReplayVoltageTrace, SEClamp
+         SynapseReplay, Hyperpolarizing, ReplayVoltageTrace, SEClamp,
+         ShotNoise, RelativeShotNoise
 
     .. blueconfig_value:: SynapseConfigure
         :type: string
@@ -493,15 +494,17 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         For Noise stimuli, the variance around the mean
+         For Noise stimuli, the variance around the mean of current to inject
+         as a percentage of a cell's threshold current
 
     .. blueconfig_value:: MeanPercent
         :type: float
         :required: False
         :unit:
         :description:
-         For Noise stimulus, the mean value of current to inject is a
-         percentage of a cell's threshold current.  Used instead of 'Mean'
+         For Noise and RelativeShotNoise stimuli, the mean value of current to
+         inject as a percentage of a cell's threshold current.
+         Used instead of 'Mean' in Noise stimulus
 
     .. blueconfig_value:: AmpStart
         :type: float
@@ -548,7 +551,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     .. blueconfig_value:: Voltage
         :type: float
         :required: False
-        :unit:
+        :unit: mV
         :description:
          For SEClamp, specifies the membrane voltage the targeted cells should
          be held at.
@@ -586,8 +589,10 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     .. blueconfig_value:: Dt
         :type: float
         :required: False
-        :unit:
+        :unit: ms
         :description:
+         For Noise, ShotNoise and RelativeShotNoise stimuli, the timestep of
+         the current to inject
 
     .. blueconfig_value:: Mean
         :type: float
@@ -602,6 +607,67 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Electrode section to use
+
+    .. blueconfig_value:: RiseTime
+        :type: float
+        :required: False
+        :unit: ms
+        :description:
+         For ShotNoise and RelativeShotNoise stimuli, the rise time of the
+         bi-exponential shots
+
+    .. blueconfig_value:: DecayTime
+        :type: float
+        :required: False
+        :unit: ms
+        :description:
+         For ShotNoise and RelativeShotNoise stimuli, the decay time of the
+         bi-exponential shots
+
+    .. blueconfig_value:: Seed
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         For ShotNoise and RelativeShotNoise stimuli, override the random seed
+         (to introduce correlations between cells)
+
+    .. blueconfig_value:: Rate
+        :type: float
+        :required: False
+        :unit: Hz
+        :description:
+         For ShotNoise stimulus, the rate of Poisson events
+
+    .. blueconfig_value:: AmpMean
+        :type: float
+        :required: False
+        :unit: nA
+        :description:
+         For ShotNoise stimulus, the mean of gamma-distributed amplitudes
+
+    .. blueconfig_value:: AmpVar
+        :type: float
+        :required: False
+        :unit: nA^2
+        :description:
+         For ShotNoise stimulus, the variance of gamma-distributed amplitudes
+
+    .. blueconfig_value:: AmpCV
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For RelativeShotNoise stimulus, the coefficient of variation (sd/mean)
+         of gamma-distributed amplitudes
+
+    .. blueconfig_value:: SDPercent
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For RelativeShotNoise Stimulus, the std dev of the current to inject as
+         a percent of a cell's threshold current
 
 .. blueconfig_section:: StimulusInject
     :description:
@@ -620,7 +686,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit:
         :description:
-         Name of a target in start.target or user.target toreceive the
+         Name of a target in start.target or user.target to receive the
          stimulation
 
 .. blueconfig_section:: Modification
