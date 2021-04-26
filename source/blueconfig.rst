@@ -684,6 +684,15 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Named stimulus
 
+    .. blueconfig_value:: Source
+        :type: target
+        :required: False
+        :unit:
+        :description:
+         Name of a target in start.target or user.target to replay spikes from
+         The target can be set as <population_name>:<target_name>.
+         If not defined default target is None and all cells are selected for replay.
+
     .. blueconfig_value:: Target
         :type: target
         :required: True
@@ -691,6 +700,21 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Name of a target in start.target or user.target to receive the
          stimulation
+         The target can be set as <population_name>:<target_name>
+
+    .. blueconfig_value:: Type
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Type of the connectivity between the Source and Target of the StimulusInject.
+         Used to select the proper edge manager in neurodamus-py.
+         Valid types are: [`Synaptic`, `GapJunction`, `NeuroGlial`, `GlioVascular`]
+         Default value is `Synaptic`.
+         Additional types can be specified in the ConnectionTypes member of additional plug-in
+         Engines. For example the PointEngine included in neurodamus-py defines also `Point` type.
+         This nomenclature of the types is specific to Neurodamus and corresponds to the SONATA
+         types [`chemical`, `electrical`, `synapse_astrocyte`, `endfoot`].
 
 
 .. blueconfig_section:: Modification
