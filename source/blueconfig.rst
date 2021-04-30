@@ -20,7 +20,8 @@ File Format
 The general structure is a C-like braced system.  The config file contains one
 or more configuration `Sections`, that have a `Type`, and a `Name`.
 Within an entry, there are multiple key value pairs: the key is a series of
-ASCII characters, followed by whitespace.  These are called `Values`
+ASCII characters, followed by whitespace (space and tab characters).
+These are called `Values`, also composed of ASCII characters.
 
 ::
 
