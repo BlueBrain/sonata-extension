@@ -202,20 +202,37 @@ be used:
 
 Where the constraints signify:
 
-- ``active_fraction``, the fraction of synapses to be removed in the third
-  pruning step
-- ``bouton_reduction_factor``, the fraction of synapses to be removed in
-  all three pruning steps
-- ``cv_syns_connection``, the target value for the coefficient of
-  variation of the distribution of synapses per connection distribution of
-  synapses per connections
-- ``mean_syns_connection``, the target value for the mean of the
-  distribution of synapses per connections
+.. _active_fraction:
+
+- ``active_fraction``, the fraction of synapses to be removed in the third pruning step
+
+.. _bouton_reduction_factor:
+
+- ``bouton_reduction_factor``, the fraction of synapses to be removed in all three pruning steps
+
+.. _cv_syns_connection:
+
+- ``cv_syns_connection``, the target value for the coefficient of variation of the distribution of synapses per connection distribution of synapses per connections
+
+.. _mean_syns_connection:
+
+- ``mean_syns_connection``, the target value for the mean of the distribution of synapses per connections
+
+.. _p_A:
+
 - ``p_A``, the reduction factor
+
+.. _pMu_A:
+
 - ``pMu_A``, used as input to the survival rate
+
+.. _probability:
+
 - ``probability``, the target connection probability. To be deprecated.
-- ``stdev_syns_connection``, the target value for the standard deviation
-  of the distribution of synapses per connection
+
+.. _stdev_syns_connection:
+
+- ``stdev_syns_connection``, the target value for the standard deviation of the distribution of synapses per connection
 
 SynapsesProperties
 ~~~~~~~~~~~~~~~~~~
