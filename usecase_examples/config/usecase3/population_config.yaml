@@ -1,0 +1,44 @@
+nodes:
+  - filepath: nodes_A.h5
+    populations:
+      - name: CircuitA
+        type: biophysical
+        size: 3
+        morphologies_asc: CircuitA/morphologies/asc
+        morphologies_swc: CircuitA/morphologies/swc
+        biophysical_neuron_models_dir: CircuitA/hoc
+        
+  - filepath: nodes_B.h5
+    populations:
+      - name: CircuitB
+        type: biophysical
+        size: 2
+        morphologies_asc: CircuitB/morphologies/asc
+        morphologies_swc: CircuitB/morphologies/swc
+        biophysical_neuron_models_dir: CircuitB/hoc
+
+edges:
+  - filepath: local_edges_A.h5
+    populations:
+      - source: CircuitA
+        target: CircuitA
+        type: chemical
+        size: 4
+  - filepath: local_edges_B.h5
+    populations:
+      - source: CircuitB
+        target: CircuitB
+        type: chemical
+        size: 4
+  - filepath: edges_AB.h5
+    populations:
+      - source: CircuitA
+        target: CircuitB
+        type: chemical
+        size: 4
+      - source: CircuitB
+        target: CircuitA
+        type: chemical
+        size: 4
+
+
