@@ -5,6 +5,7 @@ import numpy as np
 import pytest
 import sonata_generator.generators as generators
 import sonata_generator.writer as writer
+from morphio import PointLevel, SectionType
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_DATA_DIR = os.path.join(TEST_DIR, "data")
@@ -13,7 +14,6 @@ np.random.seed(1)
 
 def create_simple_morph():
     import morphio.mut
-    from morphio import PointLevel, SectionType
 
     morpho = morphio.mut.Morphology()
     morpho.soma.points = [[0, 0, 0]]
@@ -63,7 +63,7 @@ def test_get_surface_point():
 
 def test_create_synapse():
     m = create_simple_morph()
-    pre_section_id, pre_segment_id, pre_point, pre_offset, pre_surface = generators.create_synapse(
+    pre_section_id, pre_segment_id, pre_point, pre_offset, pre_surface, pre_section_type = generators.create_synapse(
         m, "pre")
     assert (0 < pre_section_id < 3)
     assert (0 <= pre_segment_id < 3)
@@ -78,7 +78,8 @@ def test_create_synapse():
     # check surface point orthogonal to segment
     assert (np.dot(np.array([10, 0, 0]) - pre_point,
                    pre_surface - pre_point) == pytest.approx(0))
-    post_section_id, post_segment_id, post_point, post_offset, post_surface = generators.create_synapse(
+    assert (pre_section_type == SectionType.axon)
+    post_section_id, post_segment_id, post_point, post_offset, post_surface, post_section_type = generators.create_synapse(
         m, "post")
     assert (2 < post_section_id < 5)
     assert (0 <= post_segment_id < 3)
@@ -95,6 +96,7 @@ def test_create_synapse():
     assert (np.dot(
         np.array([0, 10, 0]) - post_point,
         post_surface - post_point) == pytest.approx(0))
+    assert (post_section_type == SectionType.basal_dendrite)
 
 
 def test_generate_edge_datasets():
@@ -228,6 +230,8 @@ def test_generate_edge_datasets():
             'afferent_surface_x',
             'afferent_surface_y',
             'afferent_surface_z',
+            'efferent_section_type',
+            'afferent_section_type',
             'source_node_id',
             'target_node_id',
             'edge_type_id',

@@ -65,7 +65,7 @@ def create_synapse(morph, pre_or_post="pre"):
     ''' create  a random synapse on morph.
     "pre" will be placed on "axon"
     "post" will be placed on basal or apical dendrite
-    section_id, segment_id, point_position, offset and surface contact.
+    section_id, segment_id, point_position, offset, surface contact and section_type.
     '''
     filter_ = [SectionType.axon]
     if pre_or_post == "post":
@@ -82,8 +82,7 @@ def create_synapse(morph, pre_or_post="pre"):
     ratio = offset / segment_length
     final_point = point_1 + ratio * direction
     surface_point = get_surface_point(direction, final_point, diameter / 2)
-
-    return selected_section.id + 1, segment_id, final_point, offset, surface_point
+    return selected_section.id + 1, segment_id, final_point, offset, surface_point, selected_section.type
 
 
 def get_point_space_position(point, x, y, z, o_x, o_y, o_z, o_w):
@@ -105,7 +104,7 @@ def generate_synapse_data(node_values,
     )
     morph = utils.get_morphology(components_path, morphology_path,
                                  node_values['morphology'][node_id])
-    section_id, segment_id, point, offset, surface_point = create_synapse(
+    section_id, segment_id, point, offset, surface_point, section_type = create_synapse(
         morph, pre_or_post)
 
     point_position = get_point_space_position(
@@ -125,7 +124,8 @@ def generate_synapse_data(node_values,
         "segment_id": segment_id,
         "offset": offset,
         "point_position": point_position,
-        "surface_point_position": surface_point_position
+        "surface_point_position": surface_point_position,
+        "section_type": section_type
     }
 
 
@@ -182,7 +182,8 @@ def generate_computed_properties_dataset(edge_config, population_config,
             synapse_data['efferent_surface_z'].append(
                 efferent_data['surface_point_position'][2])
             #TODO manage section type
-            synapse_data['efferent_section_type'] = 3
+            synapse_data['efferent_section_type'].append(
+                int(efferent_data['section_type']))
             #TODO efferent_section_pos
             synapse_data['efferent_segment_offset'].append(
                 efferent_data['offset'])
@@ -206,8 +207,8 @@ def generate_computed_properties_dataset(edge_config, population_config,
             afferent_data['surface_point_position'][1])
         synapse_data['afferent_surface_z'].append(
             afferent_data['surface_point_position'][2])
-        #TODO use morphio type ?
-        synapse_data['afferent_section_type'].append(2)
+        synapse_data['afferent_section_type'].append(
+            int(afferent_data['section_type']))
         #TODO afferent_section_pos
         synapse_data['afferent_segment_offset'].append(afferent_data['offset'])
     synapse_data['source_node_id'] = source_node_ids
