@@ -140,8 +140,13 @@ def generate_source_target_ids(edge_population_config,
                                         edge_population_config['size'])
     target_node_ids = np.random.randint(0, target_node_size,
                                         edge_population_config['size'])
-    #TODO group nodes properly (by efferent iirc)
-    return source_node_ids, target_node_ids
+    #FIXME these 2 should not be under the group
+    l = list(zip(source_node_ids, target_node_ids))
+    # use stable order to sort by afferent then by efferent
+    l.sort()
+    l.sort(key=lambda a: a[1])
+    sorted_source_node_ids, sorted_target_node_ids = zip(*l)
+    return sorted_source_node_ids, sorted_target_node_ids
 
 
 # efferent: source, pre_synaptic

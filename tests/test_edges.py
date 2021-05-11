@@ -237,3 +237,7 @@ def test_generate_edge_datasets():
             'edge_type_id',
     ]:
         assert (len(edge_values[prop]) == 4)
+
+    # target_node_ids should be sorted
+    l = edge_values['target_node_id']
+    assert (np.all(np.diff(l) >= 0))
