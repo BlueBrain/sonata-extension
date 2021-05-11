@@ -11,7 +11,13 @@ setup(
     url="https://bbpteam.epfl.ch/documentation/projects/my-project",
     license="BBP-internal-confidential",
     install_requires=[
-        "numpy", "loguru", "h5py", "morphio", "scipy", "click", "pyyaml"
+        "numpy",
+        "loguru",
+        "h5py",
+        "morphio",
+        "scipy",
+        "click",
+        "pyyaml"
     ],
     packages=find_packages(),
     python_requires=">=3.6",

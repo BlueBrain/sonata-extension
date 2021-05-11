@@ -114,7 +114,7 @@ def create_edges_files(edges_config, populations_config, node_values,
 @click.argument('edges_config_file', type=click.File('r'))
 @click.argument('populations_config_file', type=click.File('r'))
 @click.argument('components_path', type=click.Path(exists=True))
-@click.argument('output_dir', type=click.Path(exists=True))
+@click.argument('output_dir', type=click.Path(dir_okay=True))
 @click.option('-v', '--verbosity', default="ERROR")
 def create_sample_data(nodes_config_file, edges_config_file,
                        populations_config_file, components_path, output_dir,
@@ -140,6 +140,8 @@ def create_sample_data(nodes_config_file, edges_config_file,
     logger.info(
         f"configuration is {nodes_config_file},{edges_config_file},{populations_config_file},{output_dir},{verbosity}"
     )
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
     nodes_config = yaml.full_load(nodes_config_file)
     edges_config = yaml.full_load(edges_config_file)
     populations_config = yaml.full_load(populations_config_file)
