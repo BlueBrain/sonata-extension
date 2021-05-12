@@ -3,8 +3,10 @@ base_path=usecase_examples
 
 for usecase_id in {1..4}
 do
+    echo Processing usecase ${usecase_id}
     mkdir -p ./results/usecase${usecase_id}
     python ./sonata_generator/circuit_generator.py ./$base_path/config/nodes_configuration.yaml ./$base_path/config/edges_configuration.yaml ./$base_path/config/usecase${usecase_id}/population_config.yaml $PWD/$base_path/components ./results/usecase${usecase_id} 
+    python ./sonata_generator/report_generator.py  ./$base_path/config/usecase${usecase_id}/population_config.yaml ./results/usecase${usecase_id} -v DEBUG
     [ $? -eq 0 ] || exit 1
 
     for h5_file in `ls -1 ./results/usecase${usecase_id}/*.h5`
