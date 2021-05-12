@@ -47,8 +47,19 @@ def write_node_population(node_values, population_config, node_config,
     write_properties_datasets(group_0, node_config, node_values)
 
 
-def write_edge_population(edge_values, population_config, edge_config,
-                          edge_file):
+def write_edge_population(edge_values, population_config, edge_config, edge_file):
     population_name = utils.get_edge_population_name(population_config)
-    group = edge_file.create_group('/edges/%s' % population_name)
-    write_properties_datasets(group, edge_config, edge_values)
+    source_name = population_config['source']
+    target_name = population_config['target']
+    pop_group = edge_file.create_group('/edges/%s' % population_name)
+
+    pop_group.create_dataset("source_node_id", data=edge_values['source_node_id'], dtype=np.uint64)
+    pop_group['source_node_id'].attrs['node_population'] = source_name
+
+    pop_group.create_dataset("target_node_id",data=edge_values['target_node_id'],  dtype=np.uint64)
+    pop_group['target_node_id'].attrs['node_population'] = target_name
+
+    pop_group.create_dataset("edge_type_id", data=edge_values['edge_type_id'], dtype=np.int64)
+
+    property_group = pop_group.create_group('0')
+    write_properties_datasets(property_group, edge_config, edge_values)

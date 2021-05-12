@@ -17,7 +17,8 @@ setup(
         "morphio",
         "scipy",
         "click",
-        "pyyaml"
+        "pyyaml",
+        "libsonata"
     ],
     packages=find_packages(),
     python_requires=">=3.6",

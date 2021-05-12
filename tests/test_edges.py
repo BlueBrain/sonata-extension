@@ -4,7 +4,6 @@ import tempfile
 import numpy as np
 import pytest
 import sonata_generator.generators as generators
-import sonata_generator.writer as writer
 from morphio import PointLevel, SectionType
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -120,18 +119,6 @@ def test_generate_edge_datasets():
         "propDerived": {
             "type": "float",
             "values": "derived"
-        },
-        "source_node_id": {
-            "type": "int",
-            "values": "derived"
-        },
-        "target_node_id": {
-            "type": "int",
-            "values": "derived"
-        },
-        "edge_type_id": {
-            "type": "int",
-            "values": "derived"
         }
     }
     edge_population_config = {
@@ -232,9 +219,6 @@ def test_generate_edge_datasets():
             'afferent_surface_z',
             'efferent_section_type',
             'afferent_section_type',
-            'source_node_id',
-            'target_node_id',
-            'edge_type_id',
     ]:
         assert (len(edge_values[prop]) == 4)
 

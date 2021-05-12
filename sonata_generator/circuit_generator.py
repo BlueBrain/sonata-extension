@@ -1,7 +1,9 @@
 import json
 import os
 import sys
+from collections import namedtuple
 
+import libsonata
 import click
 import h5py
 import yaml
@@ -82,14 +84,18 @@ def create_nodes_files(nodes_config, populations_config, components_path,
     return all_population_values
 
 
+IndexingProperties = namedtuple("IndexingProperties", ["filename", "population", "source_size", "target_size"])
+
+
 def create_edges_files(edges_config, populations_config, node_values,
                        components_path, output_dir):
     ''' create edge files based on the populations_config with the datasets defined by edges_config_file
     '''
     logger.info('create_edges_files')
+    indexing_properties = []
     for edge_file in populations_config['edges']:
-        with h5py.File(os.path.join(output_dir, edge_file['filepath']),
-                       'w') as edge_h5:
+        filepath = os.path.join(output_dir, edge_file['filepath'])
+        with h5py.File(filepath, 'w') as edge_h5:
             for edge_population_config in edge_file['populations']:
                 edge_type_config = edges_config[edge_population_config['type']]
                 #TODO retrieve source and target morphology path
@@ -107,6 +113,19 @@ def create_edges_files(edges_config, populations_config, node_values,
                 writer.write_edge_population(generated_edge_values,
                                              edge_population_config,
                                              edge_type_config, edge_h5)
+
+                indexing_properties.append(IndexingProperties(filepath,
+                                                              utils.get_edge_population_name(edge_population_config),
+                                                              source_population_node_config["size"],
+                                                              target_population_node_config["size"]))
+
+    for indexing in indexing_properties:
+        libsonata.EdgePopulation.write_indices(
+            indexing.filename,
+            indexing.population,
+            indexing.source_size,
+            indexing.target_size,
+        )
 
 
 @click.command()

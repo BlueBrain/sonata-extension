@@ -35,10 +35,10 @@ def get_edge_population_name(population_config):
 
 def get_morphology(component_path, path_to_morphology, morphology_name):
     ''' return a morphio object for a swc file '''
-    m = Morphology(
+    morph = Morphology(
         os.path.join(component_path, path_to_morphology,
                      morphology_name + '.swc'))
-    return m
+    return morph
 
 
 def get_node_population_config(node_population_name, populations_config):
@@ -52,6 +52,6 @@ def get_node_population_config(node_population_name, populations_config):
         if npc['name'] == node_population_name
     ]
     if len(node_config) != 1:
-        raise InputError(
+        raise ValueError(
             f"invalid number of node configuration for {node_population_name}")
     return node_config[0]

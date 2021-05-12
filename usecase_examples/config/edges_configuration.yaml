@@ -93,12 +93,3 @@ chemical:
   delay:
     type: float
     values: [0, 10.0]
-  source_node_id:
-    type: int
-    values: derived
-  target_node_id:
-    type: int
-    values: derived
-  edge_type_id:
-    type: int
-    values: derived
