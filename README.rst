@@ -59,8 +59,5 @@ TODO
 
 - decide between 3-uple or 2-uple for synapses
 - decide between rotation angle and quaternions
-- add metadata in h5 for source and target populations
-- sort properly edges and compute indices 
-- integrate section type in edges based on decision
 - decide if hoc files needs to match EType and morphologies (scientifically correct or not).
-- reports generation
+- soma and compartment reports generation
