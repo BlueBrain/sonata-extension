@@ -1,7 +1,7 @@
 nodes:
   - filepath: nodes.h5
     populations:
-      - name: CircuitA
+      - name: NodeA
         type: biophysical
         size: 2
         morphologies_asc: CircuitA/morphologies/asc
@@ -14,14 +14,14 @@ nodes:
 edges:
   - filepath: edges.h5
     populations:
-      - source: CircuitA
-        target: CircuitA
+      - source: NodeA
+        target: NodeA
         type: chemical
         size: 4
   - filepath: projections.h5
     populations:
       - source: VirtualPopA
-        target: CircuitA
+        target: NodeA
         type: chemical
         size: 4
 

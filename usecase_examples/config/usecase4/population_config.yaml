@@ -1,7 +1,7 @@
 nodes:
   - filepath: nodes_A.h5
     populations:
-      - name: CircuitA
+      - name: NodeA
         type: biophysical
         size: 3
         morphologies_asc: CircuitA/morphologies/asc
@@ -16,7 +16,7 @@ nodes:
 
   - filepath: nodes_B.h5
     populations:
-      - name: CircuitB
+      - name: NodeB
         type: biophysical
         size: 2
         morphologies_asc: CircuitB/morphologies/asc
@@ -31,36 +31,36 @@ nodes:
 edges:
   - filepath: local_edges_A.h5
     populations:
-      - source: CircuitA
-        target: CircuitA
+      - source: NodeA
+        target: NodeA
         type: chemical
         size: 4
   - filepath: local_edges_B.h5
     populations:
-      - source: CircuitB
-        target: CircuitB
+      - source: NodeB
+        target: NodeB
         type: chemical
         size: 4
   - filepath: edges_AB.h5
     populations:
-      - source: CircuitA
-        target: CircuitB
+      - source: NodeA
+        target: NodeB
         type: chemical
         size: 4
-      - source: CircuitB
-        target: CircuitA
+      - source: NodeB
+        target: NodeA
         type: chemical
         size: 4
   - filepath: projections_A.h5
     populations:
       - source: VirtualPopA
-        target: CircuitA
+        target: NodeA
         type: chemical
         size: 4
   - filepath: projections_B.h5
     populations:
       - source: VirtualPopB
-        target: CircuitB
+        target: NodeB
         type: chemical
         size: 4
 
