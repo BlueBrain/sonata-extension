@@ -132,10 +132,10 @@ Group column represents the HDF group where the dataset is located under /<popul
     Group      Field                        Type       Requirement Description
     ========= ============================= ========== =========== =========================================================================================
     /0        ``afferent_center_[x|y|z]``   float      Mandatory   Position on the `axis` of the cell's section/segment.
-    /0        ```afferent_surface_[x|y|z]`` float      Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell.
+    /0        ``afferent_surface_[x|y|z]``  float      Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell.
     /0        ``afferent_section_id``       int        Mandatory   The specific section on the target node where a synapse is placed.
     /0        ``afferent_section_pos``      float      Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
-    /0        ``afferent_section_type``     int        Mandatory   Neurite or soma type of the afferent.
+    /0        ``afferent_section_type``     int        Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
     /0        ``afferent_segment_id``       int        Mandatory   Numerical index of the section of the cell (soma is index 0).
     /0        ``afferent_segment_offset``   float      Mandatory   If triple synapse addressing is being used, the offset within the segment in um.  See :ref:`faq`.
     /0        ``efferent_center_[x|y|z]``   float      Mandatory   Same as ``afferent_center_[x|y|z]``, but for the synapse position at the axon of the presynaptic cell.
