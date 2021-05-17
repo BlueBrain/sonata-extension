@@ -8,6 +8,8 @@ import numpy.testing as npt
 import shutil
 from contextlib import contextmanager
 
+import pytest
+
 import sonata_generator.report_generator as tested
 
 
@@ -37,6 +39,21 @@ def tmp_file(content, cleanup=True):
         finally:
             if cleanup:
                 os.remove(filepath)
+
+
+def test_spike_generator():
+    spike_count, pop_size, tstart, tstop, dt = 15, 3, 0., 1., 0.1
+    times, nodes = tested.spike_generator(spike_count, pop_size, tstart, tstop, dt)
+    assert len(times) == len(nodes) == spike_count
+
+    spike_count = 30
+    times, nodes = tested.spike_generator(spike_count, pop_size, tstart, tstop, dt)
+    assert len(times) == len(nodes) == spike_count
+
+    with pytest.raises(RuntimeError):
+        spike_count_fail = 31
+        # cannot populate 31 spikes with population of 3 nodes and only 10 possible timesteps
+        tested.spike_generator(spike_count_fail, pop_size, tstart, tstop, dt)
 
 
 def test_create_spikes_report():
