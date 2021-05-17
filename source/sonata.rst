@@ -7,6 +7,7 @@ SONATA Circuit description
 
    sonata_overview
    sonata_config
+   sonata_simulation
    sonata_population
    sonata_nodeset
    sonata_tech
