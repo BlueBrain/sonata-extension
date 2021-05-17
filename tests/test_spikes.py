@@ -1,44 +1,17 @@
 import os
-import tempfile
-import uuid
-
 import h5py
+
 import numpy as np
 import numpy.testing as npt
-import shutil
-from contextlib import contextmanager
-
 import pytest
 
 import sonata_generator.report_generator as tested
+from utils import tmp_file
 
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_DATA_DIR = os.path.join(TEST_DIR, "data")
 np.random.seed(1)
-
-
-@contextmanager
-def setup_tempdir(cleanup=True):
-    temp_dir = tempfile.mkdtemp()
-    try:
-        yield temp_dir
-    finally:
-        if cleanup:
-            shutil.rmtree(temp_dir)
-
-
-@contextmanager
-def tmp_file(content, cleanup=True):
-    with setup_tempdir(cleanup=cleanup) as dirpath:
-        _, filepath = tempfile.mkstemp(suffix=".yaml", prefix=str(uuid.uuid4()), dir=dirpath)
-        with open(filepath, "r+") as fd:
-            fd.write(content)
-        try:
-            yield dirpath, filepath
-        finally:
-            if cleanup:
-                os.remove(filepath)
 
 
 def test_spike_generator():
@@ -61,6 +34,7 @@ def test_create_spikes_report():
     spikes_count = 15
     name_a = "nodeA"
     name_b = "nodeB"
+    name_c = "nodeC"
     node_a_size = 2
     node_b_size = 25
     content = f"""
@@ -68,9 +42,20 @@ nodes:
   - filepath: nodes.h5
     populations:
       - name: {name_a}
-        size: 2
+        size: {node_a_size}
+        type: biophysical
+        morphologies_asc: dummy
+        morphologies_swc: dummy
+        biophysical_neuron_models_dir: dummy
       - name: {name_b}
-        size: 3
+        size: {node_b_size}
+        type: biophysical
+        morphologies_asc: dummy
+        morphologies_swc: dummy
+        biophysical_neuron_models_dir: dummy
+      - name: {name_c}
+        size: 42
+        type: not_biophysical
 
 simulations:
   globals:
@@ -83,7 +68,7 @@ simulations:
     spikes_count: {spikes_count}
 """
     with tmp_file(content, cleanup=True) as (dirpath, setup_file):
-        tested.create(setup_file, dirpath, "")
+        tested.create(setup_file, dirpath, dirpath, "")
         with h5py.File(os.path.join(dirpath, "reporting", "spikes.h5")) as h5:
             assert set(pop for pop in h5["spikes"]) == {name_a, name_b}
             time_a = h5["spikes/nodeA/timestamps"][:]

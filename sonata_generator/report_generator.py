@@ -5,10 +5,12 @@ import yaml
 import h5py
 import numpy as np
 from collections import namedtuple
+import morphio
+from loguru import logger
 
 
 def create_config_file(simulation_config_file, output_dir):
-    """Create a simulation SONATA configuration file based on the simulation_config"""
+    """Create a simulation SONATA configuration file based on the simulation_config."""
     config = {'version': 1,
               'manifest': {"$OUTPUT_DIR": "./" + simulation_config_file["globals"]["output_dir"],
                            "$INPUT_DIR": "./"
@@ -41,7 +43,33 @@ def create_config_file(simulation_config_file, output_dir):
     return config
 
 
-NodePopulation = namedtuple('NodePopulation', ["name", "size"])
+NodePopulationInfos = namedtuple('NodePopulationInfos', ["filepath", "name", "type", "size",
+                                                         "morphologies_asc", "morphologies_swc",
+                                                         "biophysical_neuron_models_dir"])
+
+
+def collect_biophysical_node_population_infos(usecase_config, components_path, output_dir):
+    """Collection information from the usecase config and reformat it in a more usable class.
+
+    The paths are absolute and adds the output directory as the base directory.
+    """
+    concat = os.path.join
+    node_populations = []
+    for file in usecase_config["nodes"]:
+        for population in file['populations']:
+            type_ = population["type"]
+            if type_ != "biophysical":
+                continue
+            filepath = concat(output_dir, file["filepath"])
+            name = population["name"]
+            size = population["size"]
+            morphologies_asc = concat(components_path, population["morphologies_asc"])
+            morphologies_swc = concat(components_path, population["morphologies_swc"])
+            biophysical_neuron_models_dir = concat(output_dir, population["biophysical_neuron_models_dir"])
+            node = NodePopulationInfos(filepath, name, type_, size,
+                                       morphologies_asc, morphologies_swc, biophysical_neuron_models_dir)
+            node_populations.append(node)
+    return node_populations
 
 
 def spike_generator(spike_count, pop_size, tstart, tstop, dt):
@@ -60,7 +88,7 @@ def spike_generator(spike_count, pop_size, tstart, tstop, dt):
     Notes:
         The algorithm is naive and does not scale. It is meant for small dataset only.
     """
-    step_count = int((tstop - tstart)/dt)
+    step_count = int((tstop - tstart) / dt)
     if spike_count > step_count * pop_size:
         raise RuntimeError("Impossible to populate the report too many spikes: spike_count >= step_count * pop_size.")
     available_values = dict()
@@ -82,7 +110,17 @@ def spike_generator(spike_count, pop_size, tstart, tstop, dt):
     return zip(*sorted(zip(times, nodes)))
 
 
-def create_spikes_report(usecase_config, output_dir):
+def create_spikes_report(usecase_config, components_path, output_dir):
+    """Create the spike report for all biophysical node populations.
+
+    The report is created in such a way the node ids should not be reported twice during the same timestamp.
+
+    Args:
+        usecase_config(dict): the usecase config parsed by yaml lib.
+        components_path(str): the component directory.
+        output_dir(str): the output directory.
+    """
+    logger.info("Starts the spike report creation.")
     config = usecase_config["simulations"]["globals"]
     tstart = config["tstart"]
     tstop = config["tstop"]
@@ -90,11 +128,7 @@ def create_spikes_report(usecase_config, output_dir):
     spike_count = config["spikes_count"]
     reporting_dir = os.path.join(output_dir, config["output_dir"])
     filepath = os.path.join(reporting_dir, config["spikes_file"])
-
-    node_populations = []
-    for files in usecase_config["nodes"]:
-        for population in files['populations']:
-            node_populations.append(NodePopulation(population["name"], population["size"]))
+    node_populations = collect_biophysical_node_population_infos(usecase_config, components_path, output_dir)
 
     sorting_type = h5py.enum_dtype({"none": 0, "by_id": 1, "by_time": 2})
 
@@ -108,7 +142,93 @@ def create_spikes_report(usecase_config, output_dir):
             pop_spikes.create_dataset('node_ids', data=node_ids, dtype=np.uint64)
 
 
-def create(usecase_config, output_dir, verbosity="ERROR"):
+def load_morphology(node_population, node_id):
+    """Load a morphology for a given node id from a given population.
+
+    Args:
+        node_population(NodePopulationInfos): a NodePopulationInfos containing the information about the population.
+        node_id(int): the node id you want to access.
+
+    Returns:
+        morphio.Morphology: A morphio immutable morphology.
+    """
+    with h5py.File(node_population.filepath, "r") as h5:
+        filename = h5[f'nodes/{node_population.name}/0/morphology'].asstr()[node_id] + ".swc"
+        filepath = os.path.join(node_population.morphologies_swc, filename)
+        return morphio.Morphology(filepath)
+
+
+def create_compartment_report(usecase_config, components_path, output_dir):
+    """Compartment report creation for biophysical node populations.
+
+    It can be used for soma or compartment reports. Both are the same except the soma report only have a single
+    compartment per node.
+
+    A random number between 3 and 8 is used as the number of compartments per sections. This random number is renewed
+    at every compartment of each node.
+    The values for each frames are taken at random and are between 0 and 1.
+
+    Args:
+        usecase_config(dict): the usecase config parsed by yaml lib.
+        components_path(str): the component directory.
+        output_dir(str): the output directory.
+    """
+    logger.info("Starts the compartment report creation.")
+    config = usecase_config["simulations"]["globals"]
+    tstart = config["tstart"]
+    tstop = config["tstop"]
+    dt = config["dt"]
+    reporting_dir = os.path.join(output_dir, config["output_dir"])
+    node_populations = collect_biophysical_node_population_infos(usecase_config, components_path, output_dir)
+
+    report_configs = usecase_config["simulations"]["reports"]
+    string_dtype = h5py.special_dtype(vlen=str)
+
+    for report_config in report_configs:
+        filepath = os.path.join(reporting_dir, report_config["name"] + ".h5")
+        sections = report_config["sections"]
+        times = (tstart, tstop, dt)
+        with h5py.File(filepath, 'w') as h5f:
+            h5f.create_group('report')
+
+            for node_population in node_populations:
+                node_ids = np.arange(node_population.size)
+                index_pointers = []
+                element_ids = []
+                total_size = 0
+                frame_count = int((tstop - tstart) / dt)
+                # don t use the nodesets yet so I am using all the node_ids.
+                for node_id in node_ids:
+                    index_pointers.append(total_size)
+                    if sections == "soma":
+                        total_size += 1
+                        element_ids.append(0)
+                    else:
+                        morph = load_morphology(node_population, node_id)
+                        for i in range(len(morph.sections)):
+                            nb_compartment = np.random.randint(3, 8)
+                            total_size += nb_compartment
+                            element_ids.extend([i for _ in range(nb_compartment)])
+
+                index_pointers.append(total_size)  # need to add the last one at the end
+                full_data = np.random.random((frame_count, total_size)) * 90 - 80  # uniform between -80 and 10
+
+                pop_report = h5f.create_group('report/' + node_population.name)
+                data = pop_report.create_dataset('data', data=full_data, dtype=np.float32)
+                data.attrs.create('units', data="mV", dtype=string_dtype)
+
+                mapping = h5f.create_group('report/' + node_population.name + '/mapping')
+                nodes = mapping.create_dataset('node_ids', data=node_ids, dtype=np.uint64)
+                nodes.attrs.create('sorted', data=True, dtype=np.uint8)
+
+                mapping.create_dataset('index_pointers', data=index_pointers, dtype=np.uint64)
+                mapping.create_dataset('element_ids', data=element_ids, dtype=np.uint32)
+
+                dtimes = mapping.create_dataset('time', data=times, dtype=np.double)
+                dtimes.attrs.create('units', data="ms", dtype=string_dtype)
+
+
+def create(usecase_config, components_path, output_dir, verbosity="ERROR"):
     usecase_config = yaml.full_load(open(usecase_config))
     simulation_config = usecase_config.get("simulations", None)
     if simulation_config is None:
@@ -117,15 +237,19 @@ def create(usecase_config, output_dir, verbosity="ERROR"):
     report_output_dir = os.path.join(output_dir, simulation_config["globals"]["output_dir"])
     if not os.path.exists(report_output_dir):
         os.mkdir(report_output_dir)
-    create_spikes_report(usecase_config, output_dir)
+    create_spikes_report(usecase_config, components_path, output_dir)
+
+    if "reports" in simulation_config:
+        create_compartment_report(usecase_config, components_path, output_dir)
 
 
 @click.command()
 @click.argument('usecase_config', type=click.Path(file_okay=True))
+@click.argument('components_path', type=click.Path(file_okay=True))
 @click.argument('output_dir', type=click.Path(dir_okay=True))
 @click.option('-v', '--verbosity', default="ERROR")
-def create_sample_data(usecase_config, output_dir, verbosity):
-    create(usecase_config, output_dir, verbosity=verbosity)
+def create_sample_data(usecase_config, components_path, output_dir, verbosity):
+    create(usecase_config, components_path, output_dir, verbosity=verbosity)
 
 
 if __name__ == '__main__':
