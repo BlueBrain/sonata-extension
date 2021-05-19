@@ -1,13 +1,15 @@
 from collections import namedtuple
+import logging
+
 import os
 import json
 
-import click
 import h5py
-from loguru import logger
 import morphio
 import numpy as np
 import yaml
+
+L = logging.getLogger("Reports")
 
 NodePopulationInfos = namedtuple('NodePopulationInfos', ["filepath", "name", "type", "size",
                                                          "morphologies_asc", "morphologies_swc",
@@ -120,7 +122,7 @@ def create_spikes_report(usecase_config, components_path, output_dir):
         components_path(str): the component directory.
         output_dir(str): the output directory.
     """
-    logger.info("Starts the spike report creation.")
+    L.info("Starts the spike report creation.")
     config = usecase_config["simulations"]["globals"]
     tstart = config["tstart"]
     tstop = config["tstop"]
@@ -173,7 +175,7 @@ def create_compartment_report(usecase_config, components_path, output_dir):
         components_path(str): the component directory.
         output_dir(str): the output directory.
     """
-    logger.info("Starts the compartment report creation.")
+    L.info("Starts the compartment report creation.")
     config = usecase_config["simulations"]["globals"]
     tstart = config["tstart"]
     tstop = config["tstop"]
@@ -228,7 +230,8 @@ def create_compartment_report(usecase_config, components_path, output_dir):
                 dtimes.attrs.create('units', data="ms", dtype=string_dtype)
 
 
-def create(usecase_config, components_path, output_dir, verbosity="ERROR", seed=0):
+def create(usecase_config, components_path, output_dir, seed=0):
+    """Create the report files using the usecase_config."""
     np.random.seed(seed)
     usecase_config = yaml.full_load(open(usecase_config))
     simulation_config = usecase_config.get("simulations", None)
@@ -237,22 +240,8 @@ def create(usecase_config, components_path, output_dir, verbosity="ERROR", seed=
     create_config_file(simulation_config, output_dir)
     report_output_dir = os.path.join(output_dir, simulation_config["globals"]["output_dir"])
     if not os.path.exists(report_output_dir):
-        os.mkdir(report_output_dir)
+        os.makedirs(report_output_dir)
     create_spikes_report(usecase_config, components_path, output_dir)
 
     if "reports" in simulation_config:
         create_compartment_report(usecase_config, components_path, output_dir)
-
-
-@click.command()
-@click.argument('usecase_config', type=click.Path(file_okay=True))
-@click.argument('components_path', type=click.Path(file_okay=True))
-@click.argument('output_dir', type=click.Path(dir_okay=True))
-@click.option('-v', '--verbosity', default="ERROR")
-@click.option('-s', '--seed', type=int, default=0)
-def create_sample_data(usecase_config, components_path, output_dir, verbosity, seed):
-    create(usecase_config, components_path, output_dir, verbosity=verbosity, seed=seed)
-
-
-if __name__ == '__main__':
-    create_sample_data()

@@ -1,28 +1,32 @@
+import logging
+
 import numpy as np
-from loguru import logger
 from morphio import SectionType
 
 import sonata_generator.utils as utils
 
+L = logging.getLogger("Circuit")
+
 
 def generate_properties_dataset(
-    properties_config,
-    population_config,
-    components_path=None,
+        properties_config,
+        population_config,
+        components_path=None,
 ):
-    ''' generate properties for a population config
+    """Generate properties for a population config.
+
     "derived" values are ignored as they are generated as a post process
     "morphology", "emodel" values have their own specific generator.
-    the rest is randomly generated based on the range given by "values" property
-    '''
-    logger.debug(
+    the rest is randomly generated based on the range given by "values" property.
+    """
+    L.debug(
         f"properties_config: {properties_config}, population_config: {population_config}, components_path: {components_path}"
     )
     ret_values = {}
     values = None
     pop_size = population_config['size']
     for prop_name, prop_definition in properties_config.items():
-        logger.debug(f" generate dataset for {prop_name} {prop_definition}")
+        L.debug(f" generate dataset for {prop_name} {prop_definition}")
         if prop_definition['values'] == 'derived':
             continue
         if prop_definition['values'] == 'morphology':
@@ -52,7 +56,7 @@ def generate_properties_dataset(
 
 
 def get_surface_point(direction, point, distance):
-    ''' get a point orthogonal to a line defined by (direction, point) at a distance of point '''
+    """Get a point orthogonal to a line defined by (direction, point) at a distance of point."""
     a, b, c = direction
     orth_direction = np.array([-b, a, 0])
     # TODO check non collinear
@@ -62,11 +66,12 @@ def get_surface_point(direction, point, distance):
 
 
 def create_synapse(morph, pre_or_post="pre"):
-    ''' create  a random synapse on morph.
+    """Create  a random synapse on morph.
+
     "pre" will be placed on "axon"
     "post" will be placed on basal or apical dendrite
     section_id, segment_id, point_position, offset, surface contact and section_type.
-    '''
+    """
     filter_ = [SectionType.axon]
     if pre_or_post == "post":
         filter_ = [SectionType.basal_dendrite, SectionType.apical_dendrite]
@@ -86,8 +91,11 @@ def create_synapse(morph, pre_or_post="pre"):
 
 
 def get_point_space_position(point, x, y, z, o_x, o_y, o_z, o_w):
-    ''' get the position of a morphology point knowing the soma position (x,y,z)
-    and the rotation defined by a quaternion o_x, o_y, o_z, o_w'''
+    """Get the position of a morphology point.
+
+    The position is derived using the soma position (x,y,z) and the rotation defined by a
+    quaternion o_x, o_y, o_z, o_w
+    """
     from scipy.spatial.transform import Rotation as R
     r = R.from_quat([o_x, o_y, o_z, o_w])
     rotated_point = r.apply(point)
@@ -99,9 +107,8 @@ def generate_synapse_data(node_values,
                           morphology_path,
                           components_path,
                           pre_or_post="pre"):
-    logger.debug(
-        f"{node_values}, {node_id}, {morphology_path}, {components_path}, {pre_or_post}"
-    )
+    L.debug(f"{node_values}, {node_id}, {morphology_path}, {components_path}, {pre_or_post}")
+
     morph = utils.get_morphology(components_path, morphology_path,
                                  node_values['morphology'][node_id])
     section_id, segment_id, point, offset, surface_point, section_type = create_synapse(
@@ -132,7 +139,6 @@ def generate_synapse_data(node_values,
 def generate_source_target_ids(edge_population_config,
                                source_node_population_config,
                                target_node_population_config):
-
     source_node_size = source_node_population_config['size']
     target_node_size = target_node_population_config['size']
 
@@ -140,7 +146,7 @@ def generate_source_target_ids(edge_population_config,
                                         edge_population_config['size'])
     target_node_ids = np.random.randint(0, target_node_size,
                                         edge_population_config['size'])
-    #FIXME these 2 should not be under the group
+    # FIXME these 2 should not be under the group
     l = list(zip(source_node_ids, target_node_ids))
     # use stable order to sort by afferent then by efferent
     l.sort()
@@ -159,9 +165,8 @@ def generate_computed_properties_dataset(edge_config, population_config,
                                          source_population_node_config,
                                          target_population_node_config,
                                          components_path):
-    ''' post processing function to add computed properties on edges
-    '''
-    #TODO manage edge_config and virtual nodes and so on
+    """Post processing function to add computed properties on edges."""
+    # TODO manage edge_config and virtual nodes and so on
     from collections import defaultdict
     synapse_data = defaultdict(list)
     if source_population_node_config['type'] == 'biophysical':
@@ -186,10 +191,10 @@ def generate_computed_properties_dataset(edge_config, population_config,
                 efferent_data['surface_point_position'][1])
             synapse_data['efferent_surface_z'].append(
                 efferent_data['surface_point_position'][2])
-            #TODO manage section type
+            # TODO manage section type
             synapse_data['efferent_section_type'].append(
                 int(efferent_data['section_type']))
-            #TODO efferent_section_pos
+            # TODO efferent_section_pos
             synapse_data['efferent_segment_offset'].append(
                 efferent_data['offset'])
 
@@ -214,7 +219,7 @@ def generate_computed_properties_dataset(edge_config, population_config,
             afferent_data['surface_point_position'][2])
         synapse_data['afferent_section_type'].append(
             int(afferent_data['section_type']))
-        #TODO afferent_section_pos
+        # TODO afferent_section_pos
         synapse_data['afferent_segment_offset'].append(afferent_data['offset'])
     synapse_data['source_node_id'] = source_node_ids
     synapse_data['target_node_id'] = target_node_ids
@@ -225,7 +230,7 @@ def generate_computed_properties_dataset(edge_config, population_config,
 def generate_edge_datasets(edge_type_config, edge_population_config,
                            node_values, source_population_node_config,
                            target_population_node_config, components_path):
-    ''' generate a dict of dataset for each element of edge_type_config '''
+    """Generate a dict of dataset for each element of edge_type_config."""
     generated_dataset = generate_properties_dataset(edge_type_config,
                                                     edge_population_config)
     source_node_ids, target_node_ids = generate_source_target_ids(

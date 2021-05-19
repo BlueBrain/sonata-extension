@@ -1,16 +1,18 @@
+import logging
+
 import h5py
 import numpy as np
-from loguru import logger
 
 import sonata_generator.utils as utils
 
+L = logging.getLogger("Circuit")
+
 
 def write_properties_datasets(group, properties_config, prop_values):
-    ''' write the generated datasets into the h5 file
-    '''
+    """Write the generated datasets into the h5 file."""
     for prop_name, prop_definition in properties_config.items():
         if prop_name not in prop_values:
-            logger.debug(f"{prop_name} not present in input values. Ignored")
+            L.warning(f"{prop_name} not present in input values. Ignored")
             continue
 
         if prop_definition['type'] in ['int', 'float']:
@@ -37,9 +39,7 @@ def write_properties_datasets(group, properties_config, prop_values):
 
 def write_node_population(node_values, population_config, node_config,
                           node_h5):
-    ''' write a particular node population defined by population_config
-    in node_h5 with the values from node_values.
-    '''
+    """Write a particular node population defined by population_config in node_h5 with the values from node_values."""
     root = node_h5.create_group('/nodes/%s' % population_config['name'])
     group_0 = root.create_group('0')
     pop_size = population_config['size']

@@ -5,8 +5,7 @@ from morphio import Morphology
 
 
 def get_morphologies_name(component_path, path_to_morphologies):
-    ''' list the available morphology files
-    '''
+    """List the available morphology files."""
     filenames = glob.glob(
         os.path.join(component_path, path_to_morphologies, '*.swc'))
     if not filenames:
@@ -17,7 +16,7 @@ def get_morphologies_name(component_path, path_to_morphologies):
 
 
 def get_emodels_values(component_path, path_to_hoc_files):
-    ''' get the possible hoc emodels name '''
+    """Get the possible hoc emodels name."""
     filenames = glob.glob(
         os.path.join(component_path, path_to_hoc_files, '*.hoc'))
     if not filenames:
@@ -34,7 +33,7 @@ def get_edge_population_name(population_config):
 
 
 def get_morphology(component_path, path_to_morphology, morphology_name):
-    ''' return a morphio object for a swc file '''
+    """Return a morphio object for a swc file."""
     morph = Morphology(
         os.path.join(component_path, path_to_morphology,
                      morphology_name + '.swc'))

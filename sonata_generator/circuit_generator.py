@@ -1,12 +1,10 @@
 from collections import namedtuple
 import json
+import logging
 import os
-import sys
 
-import click
 import h5py
 import libsonata
-from loguru import logger
 import numpy as np
 import yaml
 
@@ -14,13 +12,12 @@ import sonata_generator.generators as generators
 import sonata_generator.utils as utils
 import sonata_generator.writer as writer
 
+L = logging.getLogger("Circuit")
+
 
 def create_config_file(populations_config, components_path, output_dir):
-    ''' create a SONATA configuration file based on the populations_config
-    '''
-    config = {}
-    config['version'] = 2
-    config['networks'] = {'nodes': [], 'edges': []}
+    """Create a SONATA configuration file based on the populations_config."""
+    config = {'version': 2, 'networks': {'nodes': [], 'edges': []}}
     for node_file in populations_config['nodes']:
         node_file_config = {
             'nodes_file': node_file['filepath'],
@@ -64,9 +61,8 @@ def create_config_file(populations_config, components_path, output_dir):
 
 def create_nodes_files(nodes_config, populations_config, components_path,
                        output_dir):
-    ''' create nodes files based on the populations_config with the datasets defined by nodes_config_file
-    '''
-    logger.info('create_nodes_files')
+    """Create nodes files based on the populations_config with the datasets defined by nodes_config_file."""
+    L.info('create_nodes_files')
     all_population_values = {}
     for node_file in populations_config['nodes']:
         with h5py.File(os.path.join(output_dir, node_file['filepath']),
@@ -90,9 +86,8 @@ IndexingProperties = namedtuple("IndexingProperties", ["filename", "population",
 
 def create_edges_files(edges_config, populations_config, node_values,
                        components_path, output_dir):
-    ''' create edge files based on the populations_config with the datasets defined by edges_config_file
-    '''
-    logger.info('create_edges_files')
+    """Create edge files based on the populations_config with the datasets defined by edges_config_file."""
+    L.info('create_edges_files')
     indexing_properties = []
     for edge_file in populations_config['edges']:
         filepath = os.path.join(output_dir, edge_file['filepath'])
@@ -129,44 +124,15 @@ def create_edges_files(edges_config, populations_config, node_values,
         )
 
 
-@click.command()
-@click.argument('nodes_config_file', type=click.File('r'))
-@click.argument('edges_config_file', type=click.File('r'))
-@click.argument('populations_config_file', type=click.File('r'))
-@click.argument('components_path', type=click.Path(exists=True))
-@click.argument('output_dir', type=click.Path(dir_okay=True))
-@click.option('-v', '--verbosity', default="ERROR")
-@click.option('-s', '--seed', type=int, default=0)
-def create_sample_data(nodes_config_file, edges_config_file,
-                       populations_config_file, components_path, output_dir,
-                       verbosity, seed):
-    ''' create sample data
-
-    NODES_CONFIG_FILE is the yaml file defining properties of node files
-    EDGES_CONFIG_FILE is the yaml file defining properties of edge files
-    POPULATIONS_CONFIG_FILE the yaml file defining the populations to be created
-    COMPONENTS_PATH is the root directory for externally created elements
-    OUTPUT_DIR is where the generated data will be created
-    '''
-    logger.remove()
-    format_string = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | " \
-    "<level>{level: <8}</level> | " \
-    "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
-
-    logger.add(sys.stderr,
-               colorize=True,
-               format=format_string,
-               level=verbosity)
-
-    logger.info(
-        f"configuration is {nodes_config_file},{edges_config_file},{populations_config_file},{output_dir},{verbosity}"
-    )
+def create(nodes_config_file, edges_config_file, usecase_config, components_path, output_dir, seed=0):
+    """Create the sample circuit."""
+    L.info(f"configuration is {nodes_config_file},{edges_config_file},{usecase_config},{output_dir}")
     np.random.seed(seed)
     if not os.path.exists(output_dir):
-        os.mkdir(output_dir)
+        os.makedirs(output_dir)
     nodes_config = yaml.full_load(nodes_config_file)
     edges_config = yaml.full_load(edges_config_file)
-    populations_config = yaml.full_load(populations_config_file)
+    populations_config = yaml.full_load(usecase_config)
 
     if not os.path.isabs(components_path):
         raise ValueError(f" {components_path} is not an absolute path")
@@ -175,8 +141,4 @@ def create_sample_data(nodes_config_file, edges_config_file,
                                      components_path, output_dir)
     create_edges_files(edges_config, populations_config, node_values,
                        components_path, output_dir)
-    logger.info(f"circuit generated in {output_dir}")
-
-
-if __name__ == '__main__':
-    create_sample_data()
+    L.info(f"circuit generated in {output_dir}")
