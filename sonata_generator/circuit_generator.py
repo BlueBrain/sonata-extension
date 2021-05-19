@@ -1,13 +1,14 @@
+from collections import namedtuple
 import json
 import os
 import sys
-from collections import namedtuple
 
-import libsonata
 import click
 import h5py
-import yaml
+import libsonata
 from loguru import logger
+import numpy as np
+import yaml
 
 import sonata_generator.generators as generators
 import sonata_generator.utils as utils
@@ -135,9 +136,10 @@ def create_edges_files(edges_config, populations_config, node_values,
 @click.argument('components_path', type=click.Path(exists=True))
 @click.argument('output_dir', type=click.Path(dir_okay=True))
 @click.option('-v', '--verbosity', default="ERROR")
+@click.option('-s', '--seed', type=int, default=0)
 def create_sample_data(nodes_config_file, edges_config_file,
                        populations_config_file, components_path, output_dir,
-                       verbosity):
+                       verbosity, seed):
     ''' create sample data
 
     NODES_CONFIG_FILE is the yaml file defining properties of node files
@@ -159,6 +161,7 @@ def create_sample_data(nodes_config_file, edges_config_file,
     logger.info(
         f"configuration is {nodes_config_file},{edges_config_file},{populations_config_file},{output_dir},{verbosity}"
     )
+    np.random.seed(seed)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
     nodes_config = yaml.full_load(nodes_config_file)

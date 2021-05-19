@@ -1,12 +1,17 @@
+from collections import namedtuple
 import os
 import json
+
 import click
-import yaml
 import h5py
-import numpy as np
-from collections import namedtuple
-import morphio
 from loguru import logger
+import morphio
+import numpy as np
+import yaml
+
+NodePopulationInfos = namedtuple('NodePopulationInfos', ["filepath", "name", "type", "size",
+                                                         "morphologies_asc", "morphologies_swc",
+                                                         "biophysical_neuron_models_dir"])
 
 
 def create_config_file(simulation_config_file, output_dir):
@@ -41,11 +46,6 @@ def create_config_file(simulation_config_file, output_dir):
     with open(os.path.join(output_dir, 'simulation_sonata.json'), 'w') as f:
         json.dump(config, f, indent=4)
     return config
-
-
-NodePopulationInfos = namedtuple('NodePopulationInfos', ["filepath", "name", "type", "size",
-                                                         "morphologies_asc", "morphologies_swc",
-                                                         "biophysical_neuron_models_dir"])
 
 
 def collect_biophysical_node_population_infos(usecase_config, components_path, output_dir):
@@ -228,7 +228,8 @@ def create_compartment_report(usecase_config, components_path, output_dir):
                 dtimes.attrs.create('units', data="ms", dtype=string_dtype)
 
 
-def create(usecase_config, components_path, output_dir, verbosity="ERROR"):
+def create(usecase_config, components_path, output_dir, verbosity="ERROR", seed=0):
+    np.random.seed(seed)
     usecase_config = yaml.full_load(open(usecase_config))
     simulation_config = usecase_config.get("simulations", None)
     if simulation_config is None:
@@ -248,8 +249,9 @@ def create(usecase_config, components_path, output_dir, verbosity="ERROR"):
 @click.argument('components_path', type=click.Path(file_okay=True))
 @click.argument('output_dir', type=click.Path(dir_okay=True))
 @click.option('-v', '--verbosity', default="ERROR")
-def create_sample_data(usecase_config, components_path, output_dir, verbosity):
-    create(usecase_config, components_path, output_dir, verbosity=verbosity)
+@click.option('-s', '--seed', type=int, default=0)
+def create_sample_data(usecase_config, components_path, output_dir, verbosity, seed):
+    create(usecase_config, components_path, output_dir, verbosity=verbosity, seed=seed)
 
 
 if __name__ == '__main__':
