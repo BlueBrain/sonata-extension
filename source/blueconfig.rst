@@ -387,6 +387,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          A global parameter to skip randomizing the GABA_A rise time in the helper functions.
 
+
 .. blueconfig_section:: Conditions
     :description:
      Specifies global parameters.
@@ -406,23 +407,79 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          An option to initialize synapses in depleted state.
 
+
 .. blueconfig_section:: Stimulus
     :description:
      Describes one pattern of stimulus that can be injected into multiple
      locations using one or more StimulusInject sections
-
-    .. blueconfig_value:: NumOfSynapses
-        :type: int (non-negative)
-        :required: False
-        :unit:
-        :description:
-         For NPoisson Stimulus. The number of synapses to create. Not for SONATA config.
 
     .. blueconfig_value:: Name
         :type: string
         :required: False
         :unit:
         :description:
+
+    .. blueconfig_value:: Pattern
+        :type: Pattern
+        :required: True
+        :unit:
+        :description:
+         Type of stimulus: Linear, RelativeLinear, Pulse, Subthreshold, Noise, SynapseReplay,
+         Hyperpolarizing, ReplayVoltageTrace, SEClamp, ShotNoise, RelativeShotNoise
+         NOTE: Sinusoidal, NPoisson and NPoissonInhomogeneus are deprecated.
+          For poisson stims, please consider using replay on projections instead
+
+    .. blueconfig_value:: Delay
+        :type: float
+        :required: True
+        :unit: ms
+        :description:
+         Time when stimulus commences
+
+    .. blueconfig_value:: Mode
+        :type: Mode
+        :required: True
+        :unit:
+        :description:
+         Current is used for most stimuli.  Exceptions include
+         ReplayVoltageTrace and SEClamp which then use "Voltage" instead
+
+    .. blueconfig_value:: AmpStart
+        :type: float
+        :required: False
+        :unit: nA
+        :description:
+         The amount of current initially injected when the stimulus activates
+
+    .. blueconfig_value:: AmpEnd
+        :type: float
+        :required: False
+        :unit: nA
+        :description:
+         The final current when a stimulus concludes. Used by Linear
+
+    .. blueconfig_value:: Duration
+        :type: float
+        :required: True
+        :unit: ms
+        :description:
+         Time length of stimulus duration
+
+    .. blueconfig_value:: PercentStart
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For RelativeLinear, the percentage of a cell's threshold current to
+         inject at the start of the injection
+
+    .. blueconfig_value:: PercentEnd
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         For RelativeLinear, the percentage of a cell's threshold current to
+         inject at the end of the injection
 
     .. blueconfig_value:: PercentLess
         :type: float
@@ -433,61 +490,12 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          which will trigger one spike in 2 seconds. This pattern will use that
          defined current and scale it according to the PercentLess value
 
-    .. blueconfig_value:: Pattern
-        :type: Pattern
-        :required: True
-        :unit:
-        :description:
-         Type of stimulus: Linear, RelativeLinear, Pulse, NPoisson,
-         NPoissonInhomogeneus, Sinusoidal(deprecated), Subthreshold, Noise,
-         SynapseReplay, Hyperpolarizing, ReplayVoltageTrace, SEClamp,
-         ShotNoise, RelativeShotNoise
-
-    .. blueconfig_value:: SynapseConfigure
-        :type: string
-        :required: False
-        :unit:
-        :description:
-         For NPoisson Stimuli, allows the user to specify a Synapse object type
-         which is available to the simulator. The default is ExpSyn. Possible
-         values are : ProbAMPANMDA_EMS, ProbGABAAB_EMS, and ExpSyn.
-
-    .. blueconfig_value:: PercentStart
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         For RelativeLinear, the percentage of a cell's threshold current to
-         inject at the start of the injection
-
-    .. blueconfig_value:: Delay
-        :type: float
-        :required: True
-        :unit: ms
-        :description:
-         Time when stimulus commences
-
     .. blueconfig_value:: Width
         :type: float
         :required: False
         :unit: ms
         :description:
          For Pulse Stimulus, the duration in ms of a single pulse
-
-    .. blueconfig_value:: Mode
-        :type: Mode
-        :required: True
-        :unit:
-        :description:
-         Current is used for most stimuli.  Exceptions include
-         ReplayVoltageTrace and SEClamp which then use "Voltage" instead
-
-    .. blueconfig_value:: Var
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         deprecated
 
     .. blueconfig_value:: Variance
         :type: float
@@ -506,40 +514,11 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          inject as a percentage of a cell's threshold current.
          Used instead of 'Mean' in Noise stimulus
 
-    .. blueconfig_value:: AmpStart
-        :type: float
-        :required: False
-        :unit: nA
-        :description:
-         The amount of current initially injected when the stimulus activates
-
-    .. blueconfig_value:: Weight
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         For NPoisson Stimulus. The strength of the created synapse
-
     .. blueconfig_value:: Format
         :type: Format
         :required: False
         :unit:
         :description:
-
-    .. blueconfig_value:: PercentEnd
-        :type: float
-        :required: False
-        :unit:
-        :description:
-         For RelativeLinear, the percentage of a cell's threshold current to
-         inject at the end of the injection
-
-    .. blueconfig_value:: AmpEnd
-        :type: float
-        :required: False
-        :unit: nA
-        :description:
-         The final current when a stimulus concludes. Used by Linear
 
     .. blueconfig_value:: Frequency
         :type: float
@@ -570,13 +549,6 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          For Pulse Stimulus, a std dev value each cell will apply to the Delay
          in order to add variation to the stimulation. Not for SONATA config.
-
-    .. blueconfig_value:: Duration
-        :type: float
-        :required: True
-        :unit: ms
-        :description:
-         Time length of stimulus duration
 
     .. blueconfig_value:: SpikeFile
         :type: path
@@ -669,6 +641,37 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          For RelativeShotNoise Stimulus, the std dev of the current to inject as
          a percent of a cell's threshold current
 
+    .. blueconfig_value:: Lambda
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         Deprecated: For NPoisson Stimulus to configure the random distribution
+
+    .. blueconfig_value:: Weight
+        :type: float
+        :required: False
+        :unit:
+        :description:
+         Deprecated: For NPoisson Stimulus. The strength of the created synapse
+
+    .. blueconfig_value:: NumOfSynapses
+        :type: int (non-negative)
+        :required: False
+        :unit:
+        :description:
+         Deprecated: For NPoisson Stimulus. The number of synapses to create. Not for SONATA config.
+
+    .. blueconfig_value:: SynapseConfigure
+        :type: string
+        :required: False
+        :unit:
+        :description:
+         Deprecated: For NPoisson Stimuli, allows the user to specify a Synapse object type
+         which is available to the simulator. The default is ExpSyn. Possible
+         values are : ProbAMPANMDA_EMS, ProbGABAAB_EMS, and ExpSyn.
+
+
 .. blueconfig_section:: StimulusInject
     :description:
      Pairs a Stimulus with a Target so that the stimulus is applied to the
@@ -688,6 +691,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Name of a target in start.target or user.target to receive the
          stimulation
+
 
 .. blueconfig_section:: Modification
     :description:
@@ -717,6 +721,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Name of the target in start.target or user.target to receive the
          manipulation
+
 
 .. blueconfig_section:: Report
     :description:
@@ -804,6 +809,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          String to output as descriptive test for unit recorded. Not validated
          for correctness
 
+
 .. blueconfig_section:: Connection
     :description:
      Adjusts the synaptic strength between two sets of cells.
@@ -871,6 +877,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Value to override the synaptic delay time originally set in the edge file,
          and to be given to netcon object.
 
+
 .. blueconfig_section:: Electrode
     :description:
      Will not be used for SONATA config.
@@ -909,6 +916,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          file name under the electrodePath directory
+
 
 .. blueconfig_section:: Projection
     :description:
