@@ -1,81 +1,101 @@
 .. _sonata_nodeset:
-.. include:: <isonum.txt>
 
 SONATA Node Sets
 ----------------
- TODO: this section should specify nodeset. This should not relate to bluepysnap as bluepysnap specifics should be in bluepysnap documentation.
 
-In snap they are handled by the `NodeSets <https://github.com/BlueBrain/snap/blob/master/bluepysnap/node_sets.py>`_ class:
+Introduction
+~~~~~~~~~~~~
 
-.. code-block:: python
+The `SONATA Node Sets File <https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md#node-sets-file>`_ is a way of declaratively specifying groups of nodes.
+Instead of listing each GID as per the original *target* files, instead, attribute values in the *nodes* files can be used to match and create collections of nodes.
 
-   >> from bluepysnap.node_sets import NodeSets
-   >> node_sets = NodeSets("node_sets_file.json")
-   >> node_sets.resolved
+For example:
+
+.. code-block:: js
+
    {
-   'Excitatory': {'synapse_class': 'EXC'},
+     "Excitatory": {"synapse_class": "EXC"}
    }
 
+This will select all the nodes with the attribute ``synapse_class`` equal to the value: ``EXC`` (see also :ref:`here <sonata_tech>`).
 
-The different node sets are defined inside the node sets file using different queries to select the
-corresponding nodes.
+The format of a node set file is:
 
-In the example above, there is only one node set named ``"Excitatory"``.
-This node set will select all the nodes with a field ``"synapse_class"`` equal to the
-value: ``"EXC"`` (see also :ref:`here <sonata_tech>`).
+.. code-block:: js
 
-You can have multiple node sets with selections based on all sonata fields:
-
-.. code-block:: python
-
-   >> node_sets.resolved
-   {'Excitatory': {'synapse_class': 'EXC'}}
-    'SLM_PPA': {'mtype': 'SLM_PPA'},
-   }
-
-and/or more complex node sets:
-
-.. code-block:: python
-
-   >> node_sets.resolved
-   {'SLM_PPA_and_SP_PC': {'mtype': ['SLM_PPA', 'SP_PC']},
-    'Excitatory_SLM_PPA': {'synapse_class': 'EXC', 'mtypes': 'SLM_PPA'}
-   }
-
-.. note:: Definitions:
-
-  - a list means `or`: ``"SLM_PPA_and_SP_PC"`` |rarr| ``"mtype"`` == ``"SLM_PPA"`` **or** ``"SP_PC"``
-  - a dictionary means `and`: ``"Excitatory_SLM_PPA"`` |rarr| ``"synapse_class"`` == ``"EXC"`` **and** ``"mtypes"`` ==  ``"SLM_PPA"``
-
-Compounds
-~~~~~~~~~
-
-You can also combine the different node sets using "compounds" node sets. The implementation of the
-compounds in snap is a `or` of all the node sets composing the compound.
-
-.. code-block:: python
-
-   >> node_sets.resolved
    {
-   'SP_PC': {'mtype': 'SP_PC'},
-   'cACpyr': {'etype': 'cACpyr'},
-   'SP_PC_cACpyr': ['SP_PC', 'cACpyr']
+     "Name": Expression,
+     "AnotherName": AnotherExpression
    }
 
-In this example, ``SP_PC_cACpyr`` means nodes with ``mtype`` equal to ``SP_PC`` **or**
-``etype`` equal to ``cCpyr``.
+There is a containing dictionary with keys naming expressions, this key-value pair is considered a ``nodeset``.
+The name is to be used like the *target name* in the old style target files.
+Different node sets are defined inside the ``node sets file`` as per the above example.
+This allows one name declare different queries.
+
+The expression are broken down into ``simple`` and ``compound``.
+
+Simple Expressions
+~~~~~~~~~~~~~~~~~~
+
+A ``simple`` expression names a desired attribute, or attributes, and the values that should match.
+
+You can have multiple node sets with selections based on all sonata fields, like the Excitatory example above, or:
+
+.. code-block:: js
+
+   {
+     "SLM_PPA": {"mtype": "SLM_PPA"}
+   }
+
+Simple expressions can also contain lists to match:
+
+.. code-block:: js
+
+   {
+     "SLM_PPA_and_SP_PC": {"mtype": ["SLM_PPA", "SP_PC"]},
+   }
+
+
+.. note:: A list means `or`: ``SLM_PPA_and_SP_PC`` is interpreted as ``mtype`` == ``SLM_PPA`` **or** ``SP_PC``
+
+
+They can also contain dictionaries:
+
+.. code-block:: js
+
+   {
+     "Excitatory_SLM_PPA": {"synapse_class": "EXC", "mtypes": "SLM_PPA"}
+   }
+
+.. note:: A dictionary means `and`: ``Excitatory_SLM_PPA`` is interpreted as ``synapse_class`` == ``EXC`` **and** ``mtypes`` ==  ``SLM_PPA``
+
+
+Compound Expressions
+~~~~~~~~~~~~~~~~~~~~
+
+One can also combine the different node sets using *compounds* node sets.
+
+.. code-block:: js
+
+   {
+     "SP_PC": {"mtype": "SP_PC"},
+     "cACpyr": {"etype": "cACpyr"},
+     "SP_PC_cACpyr": ["SP_PC", "cACpyr"]
+   }
+
+In this example, ``SP_PC_cACpyr`` means nodes with ``mtype`` equal to ``SP_PC`` **or** ``etype`` equal to ``cCpyr``.
 
 .. warning::
     In the compounds, only lists of node sets are allowed. So you cannot combine a node set name with an
     additional query:
 
-    .. code-block:: python
+    .. code-block:: js
 
-       >> node_sets.resolved
        {
-       'SP_PC': {'mtype': 'SP_PC'},
-       'cACpyr': {'etype': 'cACpyr'},
-       'WRONG_COMPOUND': ['SP_PC', 'cACpyr', {'mtype'; 'SLM_PPA'}]
+         "SP_PC": {"mtype": "SP_PC"},
+         "cACpyr": {"etype": "cACpyr"},
+         "WRONG_COMPOUND": ["SP_PC", "cACpyr", {"mtype"; "SLM_PPA"}]
        }
 
     **is not correct**.
@@ -83,75 +103,58 @@ In this example, ``SP_PC_cACpyr`` means nodes with ``mtype`` equal to ``SP_PC`` 
 
 It is also possible to create compounds of compounds:
 
-.. code-block:: python
+.. code-block:: js
 
    >> node_sets.resolved
    {
-   'SLM_PPA': {'mtype': 'SLM_PPA'},
-   'SP_PC': {'mtype': 'SP_PC'},
-   'bAC': {'etype': 'bAC'},
-   'cAC': {'etype': 'cAC'},
-   'SLM_PPA_SP_PC': ['SP_PC', 'SLM_PPA'],
-   'bAC_cAC': ['bAC', 'cAC'],
-   'SLM_PPA_SP_PC_bAC_cAC': ['SLM_PPA_SP_PC', 'bAC_cAC']
+     "SLM_PPA": {"mtype": "SLM_PPA"},
+     "SP_PC": {"mtype": "SP_PC"},
+     "bAC": {"etype": "bAC"},
+     "cAC": {"etype": "cAC"},
+     "SLM_PPA_SP_PC": ["SP_PC", "SLM_PPA"],
+     "bAC_cAC": ["bAC", "cAC"],
+     "SLM_PPA_SP_PC_bAC_cAC": ["SLM_PPA_SP_PC", "bAC_cAC"]
    }
-
-.. warning::
-    If a node set name cannot be resolved, then the compound is not valid and an error is thrown.
 
 
 Key "population"
 ~~~~~~~~~~~~~~~~
 
-In addition, there are also two predefined keys one can use to select particular node_ids and
-populations: ``population`` and ``node_id``.
+In addition, there are also two predefined keys one can use to select particular node_ids and populations: ``population`` and ``node_id``.
 This pre-defined key is used to select all nodes from a given population.
 
-.. code-block:: python
+.. code-block:: js
 
-    >> node_sets.resolved
     {
-    'Hippocampus': {'population': 'hippocampus_neurons'},
-    'Projection' :  {'population': 'projection_neurons'},
-    'All': {'population': ['hippocampus_neurons', 'projection_neurons']}
+      "Hippocampus": {"population": "hippocampus_neurons"},
+      "Projection" :  {"population": "hippocampus_projections"},
+      "All": {"population": ["hippocampus_neurons", "hippocampus_projections"]}
     }
 
 ``Hippocampus`` will select all the nodes inside the ``hippocampus_neurons`` population.
-``All`` selects all the nodes from the ``hippocampus_neurons`` and from the ``projection_neurons``.
+``All`` selects all the nodes from the ``hippocampus_neurons`` and from the ``hippocampus_projections``.
 
 Key "node_id"
 ~~~~~~~~~~~~~
 
 This pre-defined key selects the ``node_ids`` to extract from the circuit.
 
-.. code-block:: python
+.. code-block:: js
 
-    >> node_sets.resolved
     {
-    'Sample': {'node_id': [10, 11, 12, 13, 14, 15]},
+      "Sample": {"node_id": [10, 11, 12, 13, 14, 15]},
     }
 
-``Sample`` will select the nodes with the ``node_ids`` : ``[10, 11, 12, 13, 14, 15]``. This is important
-to notice the node_ids are defined in a list so you can interpret this as a `or`.
+``Sample`` will select the nodes with the ``node_ids`` : ``[10, 11, 12, 13, 14, 15]``.
+This is important to notice the node_ids are defined in a list so you can interpret this as a ``or``.
 
-If the ``"node_id"`` key is used alone, then the corresponding ``node_ids`` from all populations are
-returned. If you want to select the ``node_ids`` from a single population only, you should
-use the ``node_id`` in combination with the ``population`` key:
+If the ``node_id`` key is used alone, then the corresponding ``node_ids`` from all populations are returned.
+If you want to select the ``node_ids`` from a single population only, you should use the ``node_id`` in combination with the ``population`` key:
 
-.. code-block:: python
+.. code-block:: js
 
-    >> node_sets.resolved
     {
-    'Sample': {'node_id': [10, 11, 12, 13, 14, 15]},
-    'Hippocampus_sample': {'population': 'hippocampus_neurons',
-                           'node_id': [10, 11, 12, 13, 14, 15]},
+      "Sample": {"node_id": [10, 11, 12, 13, 14, 15]},
+      "Hippocampus_sample": {"population": "hippocampus_neurons",
+                             "node_id": [10, 11, 12, 13, 14, 15]},
     }
-    # ids is the snap function to access nodes from a population
-    >>  circuit.nodes["hippocampus_neurons"].ids("Sample")
-    [10, 11, 12]
-    >> circuit.nodes["projection_neurons"].ids("Sample")
-    [10, 11, 12]
-    >> circuit.nodes["hippocampus_neurons"].ids("Hippocampus_sample")
-    [10, 11, 12]
-    >> circuit.nodes["projection_neurons"].ids("Hippocampus_sample")
-    []
