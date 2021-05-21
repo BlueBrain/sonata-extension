@@ -63,7 +63,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
      Defines the versioning, data sources, and simulation-wide parameters
 
     .. blueconfig_value:: ForwardSkip
-        :type: int
+        :type: int (non-negative)
         :required: False
         :unit:
         :description:
@@ -75,7 +75,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         | Simulation execution directory. Will be prepended to other Run parameters if they do not use an absolute path: E.g.: OutputRoot, TargetFile. 
+         | Simulation execution directory. Will be prepended to other Run parameters if they do not use an absolute path: E.g.: OutputRoot, TargetFile.
          | Default value: Path to BlueConfig
          | NOTE: Relative paths are not allowed, the only exception being "." strictly for test jobs.
 
@@ -121,7 +121,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          references if trying to duplicate experiments, etc.
 
     .. blueconfig_value:: Duration
-        :type: float
+        :type: float (non-negative)
         :required: True
         :unit: ms
         :description:
@@ -164,7 +164,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Simulator engine used for execution : NEURON (default) or CORENEURON
 
     .. blueconfig_value:: ModelBuildingSteps
-        :type: int
+        :type: int (positive)
         :required: False
         :unit:
         :description:
@@ -287,7 +287,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          If CORENEURON simulator is being used, WholeCell should be used.
 
     .. blueconfig_value:: Dt
-        :type: float
+        :type: float (positive)
         :required: True
         :unit: ms
         :description:
@@ -319,7 +319,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Option: specify a population name before the target name, format "population:target_name".
 
     .. blueconfig_value:: ExtracellularCalcium
-        :type: float
+        :type: float (non-negative)
         :required: False
         :unit:
         :description:
@@ -412,7 +412,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
      locations using one or more StimulusInject sections
 
     .. blueconfig_value:: NumOfSynapses
-        :type: int
+        :type: int (non-negative)
         :required: False
         :unit:
         :description:
@@ -953,7 +953,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          the main circuit
 
     .. blueconfig_value:: PopulationID
-        :type: int
+        :type: int (positive)
         :required: False
         :unit:
         :description:
