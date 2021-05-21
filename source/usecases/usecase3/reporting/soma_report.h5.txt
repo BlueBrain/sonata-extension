@@ -1,0 +1,164 @@
+HDF5 "./results/usecase3/reporting/soma_report.h5" {
+GROUP "/" {
+   GROUP "report" {
+      GROUP "NodeA" {
+         DATASET "data" {
+            DATATYPE  H5T_IEEE_F32LE
+            DATASPACE  SIMPLE { ( 10, 3 ) / ( 10, 3 ) }
+            DATA {
+               -27.6182, -31.6364, -11.7246,
+               -70.4683, -37.376, -63.2301,
+               -13.6774, -60.5105, -67.8304,
+               -50.8273, -66.5293, -59.9911,
+               -45.216, 1.23386, -39.5045,
+               -24.8243, 1.21137, -71.0648,
+               7.28282, -21.2174, -64.6181,
+               -47.7663, -12.4382, -25.2952,
+               -50.7458, -76.5417, -22.9153,
+               6.30543, -21.2489, -22.8447
+            }
+            ATTRIBUTE "units" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SCALAR
+               DATA {
+                  "mV"
+               }
+            }
+         }
+         GROUP "mapping" {
+            DATASET "element_ids" {
+               DATATYPE  H5T_STD_U32LE
+               DATASPACE  SIMPLE { ( 3 ) / ( 3 ) }
+               DATA {
+                  0, 0, 0
+               }
+            }
+            DATASET "index_pointers" {
+               DATATYPE  H5T_STD_U64LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  0, 1, 2, 3
+               }
+            }
+            DATASET "node_ids" {
+               DATATYPE  H5T_STD_U64LE
+               DATASPACE  SIMPLE { ( 3 ) / ( 3 ) }
+               DATA {
+                  0, 1, 2
+               }
+               ATTRIBUTE "sorted" {
+                  DATATYPE  H5T_STD_U8LE
+                  DATASPACE  SCALAR
+                  DATA {
+                     1
+                  }
+               }
+            }
+            DATASET "time" {
+               DATATYPE  H5T_IEEE_F64LE
+               DATASPACE  SIMPLE { ( 3 ) / ( 3 ) }
+               DATA {
+                  0, 1, 0.1
+               }
+               ATTRIBUTE "units" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SCALAR
+                  DATA {
+                     "ms"
+                  }
+               }
+            }
+         }
+      }
+      GROUP "NodeB" {
+         DATASET "data" {
+            DATATYPE  H5T_IEEE_F32LE
+            DATASPACE  SIMPLE { ( 10, 2 ) / ( 10, 2 ) }
+            DATA {
+               9.57696, -27.6335,
+               -42.7068, -37.2772,
+               -23.8841, -49.5793,
+               -19.2723, -51.4518,
+               -9.94891, 5.46139,
+               -20.3726, -78.7785,
+               -23.9439, -19.3706,
+               7.47505, -0.962588,
+               -34.1338, -74.9857,
+               -39.3957, -78.2011
+            }
+            ATTRIBUTE "units" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SCALAR
+               DATA {
+                  "mV"
+               }
+            }
+         }
+         GROUP "mapping" {
+            DATASET "element_ids" {
+               DATATYPE  H5T_STD_U32LE
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  0, 0
+               }
+            }
+            DATASET "index_pointers" {
+               DATATYPE  H5T_STD_U64LE
+               DATASPACE  SIMPLE { ( 3 ) / ( 3 ) }
+               DATA {
+                  0, 1, 2
+               }
+            }
+            DATASET "node_ids" {
+               DATATYPE  H5T_STD_U64LE
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  0, 1
+               }
+               ATTRIBUTE "sorted" {
+                  DATATYPE  H5T_STD_U8LE
+                  DATASPACE  SCALAR
+                  DATA {
+                     1
+                  }
+               }
+            }
+            DATASET "time" {
+               DATATYPE  H5T_IEEE_F64LE
+               DATASPACE  SIMPLE { ( 3 ) / ( 3 ) }
+               DATA {
+                  0, 1, 0.1
+               }
+               ATTRIBUTE "units" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SCALAR
+                  DATA {
+                     "ms"
+                  }
+               }
+            }
+         }
+      }
+   }
+}
+}

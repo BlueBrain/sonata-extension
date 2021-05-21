@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "networks": {
+        "nodes": [
+            {
+                "nodes_file": "nodes.h5",
+                "populations": {
+                    "nodeA": {
+                        "type": "biophysical",
+                        "morphologies_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/morphologies/swc",
+                        "biophysical_neuron_models_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/hoc",
+                        "alternate_morphologies": {
+                            "neurolucida-asc": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/morphologies/asc"
+                        }
+                    }
+                }
+            }
+        ],
+        "edges": [
+            {
+                "edges_file": "edges.h5",
+                "populations": {
+                    "nodeA__nodeA__chemical": {
+                        "type": "chemical"
+                    }
+                }
+            }
+        ]
+    }
+}

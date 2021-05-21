@@ -1,0 +1,62 @@
+HDF5 "./results/usecase3/reporting/spikes.h5" {
+GROUP "/" {
+   GROUP "spikes" {
+      GROUP "NodeA" {
+         ATTRIBUTE "sorting" {
+            DATATYPE  H5T_ENUM {
+               H5T_STD_U8LE;
+               "by_id"            1;
+               "by_time"          2;
+               "none"             0;
+            }
+            DATASPACE  SCALAR
+            DATA {
+               by_time
+            }
+         }
+         DATASET "node_ids" {
+            DATATYPE  H5T_STD_U64LE
+            DATASPACE  SIMPLE { ( 5 ) / ( 5 ) }
+            DATA {
+               1, 0, 2, 0, 2
+            }
+         }
+         DATASET "timestamps" {
+            DATATYPE  H5T_IEEE_F64LE
+            DATASPACE  SIMPLE { ( 5 ) / ( 5 ) }
+            DATA {
+               0.3, 0.4, 0.8, 0.9, 0.9
+            }
+         }
+      }
+      GROUP "NodeB" {
+         ATTRIBUTE "sorting" {
+            DATATYPE  H5T_ENUM {
+               H5T_STD_U8LE;
+               "by_id"            1;
+               "by_time"          2;
+               "none"             0;
+            }
+            DATASPACE  SCALAR
+            DATA {
+               by_time
+            }
+         }
+         DATASET "node_ids" {
+            DATATYPE  H5T_STD_U64LE
+            DATASPACE  SIMPLE { ( 5 ) / ( 5 ) }
+            DATA {
+               0, 0, 1, 1, 1
+            }
+         }
+         DATASET "timestamps" {
+            DATATYPE  H5T_IEEE_F64LE
+            DATASPACE  SIMPLE { ( 5 ) / ( 5 ) }
+            DATA {
+               0, 0.3, 0.3, 0.4, 0.8
+            }
+         }
+      }
+   }
+}
+}

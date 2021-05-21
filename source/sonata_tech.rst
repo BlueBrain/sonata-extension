@@ -1,5 +1,4 @@
 .. _sonata_tech:
-.. |snap| replace:: `Blue Brain SNAP`
 
 SONATA Technical description
 ============================
