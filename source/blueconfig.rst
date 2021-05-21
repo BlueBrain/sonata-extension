@@ -763,7 +763,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: True
         :unit:
         :description:
-         ASCII, HDF5 or Bin defining report output format
+         ASCII, SONATA or Bin defining report output format
 
     .. blueconfig_value:: ReportOn
         :type: string
@@ -792,9 +792,11 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Compartment, Summation, or Synapse. Compartment means that each
-         compartment outputs separately in the report file.Summation will sum
-         up the compartments and write a single value to the report. Synapse
-         indicates that each synapse will have a separate entry in the report
+         compartment outputs separately in the report file. Summation will sum
+         up the currents and compartments to write a single value to the report
+         (soma target) or sum up the currents and leave them in each compartment
+         (compartment target). Synapse indicates that each synapse will have a
+         separate entry in the report.
 
     .. blueconfig_value:: Unit
         :type: string
