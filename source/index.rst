@@ -18,5 +18,6 @@ This documentation covers the format of Blue Brain Project circuit file formats.
    circuit-description
    recipe
    sonata
+   NGV
    faq
 

@@ -35,7 +35,8 @@ components
 
 *Optional*.
 
-A list of default properties where to find circuit components.
+These properties can be found under components where they will act as default values for the populations there are applicable.
+They can be found mainly under "populations" where in that case the property applies only to the particular population.
 
 .. table::
 
@@ -50,6 +51,12 @@ A list of default properties where to find circuit components.
    biophysical_neuron_models_dir   Optional    Path to the template HOC files defining the E-Model.
                                                There must be one defined for `biophysical` node populations.
                                                This is used in concatenation with the `model_template` property (see :doc:`sonata_tech`) to retrieve the path the the actual HOC file.
+   vasculature_file                Optional    Path to the .h5 file containing the vasculature morphology.
+                                               Only for `vasculature` node populations where it is mandatory.
+   vasculature_mesh                Optional    Path to the .obj file containing the mesh of a vasculature morphology.
+                                               Only for `vasculature` node populations where it is mandatory.
+   end_feet_area                   Optional    Path to the .h5 representing end feet meshes.
+                                               Only for `endfoot` edge populations where it is mandatory.
    =============================== =========== ====================================
 
 alternate_morphologies
@@ -74,11 +81,11 @@ example::
        "alternate_morphologies": {
            "neurolucida-asc": "/gpfs/bbp.epfl.ch/path/to/neurolucida/asc",
            "h5v1": "/gpfs/bbp.epfl.ch/path/to/h5v1"
-       } 
+       }
 
   }
 
-node_sets_file 
+node_sets_file
 --------------
 
 *Optional*.
@@ -116,7 +123,12 @@ Node files must be relative to ".".
                                                Default is `biophysical`.
    ============================== ============ ==========================================
 
-.. note:: Type is redundant with model_type and defines the expected properties for the nodes. The initial SONATA specification requires a complete dataset with the same value for model_type for *all* the nodes, which is inefficient in term of storage and access to the information. Another option could be to have it as an H5 attribute. The same pattern applies to the edges but the SONATA specification does not defined anything here to differentiate chemical_synapses, electrical, endfoot... The proposal is to have it in the .json in both cases for the nodes and for the edges. 
+.. note::
+    Type is redundant with model_type and defines the expected properties for the nodes.
+    The initial SONATA specification requires a complete dataset with the same value for model_type for *all* the nodes, which is inefficient in term of storage and access to the information.
+    Another option could be to have it as an H5 attribute.
+    The same pattern applies to the edges but the SONATA specification does not defined anything here to differentiate chemical_synapses, electrical, endfoot...
+    The proposal is to have it in the .json in both cases for the nodes and for the edges.
 
 
 populations
@@ -137,7 +149,7 @@ example::
        "alternate_morphologies": {
            "neurolucida-asc": "/gpfs/bbp.epfl.ch/default/path/to/neurolucida/asc",
            "h5v1": "/gpfs/bbp.epfl.ch/default/path/to/h5v1"
-       } 
+       }
 
   },
   "nodes": [
@@ -146,7 +158,7 @@ example::
             "populations": {
                 "node_population_a": {
                    "type: "biophysical",
-                   "morphologies_dir": "...",   
+                   "morphologies_dir": "...",
                    "biophysical_neuron_models_dir": "...",
                    "alternate_morphologies": ...
                 ...},
@@ -155,7 +167,7 @@ example::
             }
         },
         ...
-    ] 
+    ]
 
 
 edges
