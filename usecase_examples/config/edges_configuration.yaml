@@ -18,14 +18,17 @@ chemical:
     type: float
     values: derived
   afferent_section_id:
-    type: float
-    values: derived 
-  afferent_section_type:
+    type: int
+    values: derived
+  afferent_section_pos:
     type: float
     values: derived
+  afferent_section_type:
+    type: int
+    values: derived
   afferent_segment_id:
-    type: float
-    values: derived 
+    type: int
+    values: derived
   afferent_segment_offset:
     type: float
     values: derived
@@ -48,48 +51,173 @@ chemical:
     type: float
     values: derived
   efferent_section_id:
-    type: float
-    values: derived 
-  efferent_section_type:
+    type: int
+    values: derived
+  efferent_section_pos:
     type: float
     values: derived
+  efferent_section_type:
+    type: int
+    values: derived
   efferent_segment_id:
-    type: float
+    type: int
     values: derived
   efferent_segment_offset:
     type: float
     values: derived
   conductance:
     type: float
-    values: [0.10, 0.5]
+    values: [ 0.10, 0.5 ]
   decay_time:
     type: float
-    values: [1.5, 2.0]
+    values: [ 1.5, 2.0 ]
   depression_time:
     type: float
-    values: [600.0, 700.0]
+    values: [ 600.0, 700.0 ]
   facilitation_time:
     type: float
-    values: [5.0, 25.0]
+    values: [ 5.0, 25.0 ]
   u_syn:
     type: float
-    values: [0.5, 0.55]
+    values: [ 0.5, 0.55 ]
   n_rrp_vesicles:
     type: int
-    values: [1, 5]
+    values: [ 1, 5 ]
   spine_length:
     type: float
-    values: [0.1, 10000]
+    values: derived
   conductance_scale_factor:
     type: float
-    values: generated
-    values: [0.1, 1.0]
+    values: [ 0.1, 1.0 ]
   u_hill_coefficient:
     type: float
-    values: [1.0, 2.0] 
+    values: [ 1.0, 2.0 ]
   syn_type_id:
     type: int
-    values: [0, 120]
+    values: [ 0, 120 ]
   delay:
     type: float
-    values: [0, 10.0]
+    values: [ 0, 10.0 ]
+
+electrical_synapse:
+  afferent_center_x:
+    type: float
+    values: derived
+  afferent_center_y:
+    type: float
+    values: derived
+  afferent_center_z:
+    type: float
+    values: derived
+  afferent_surface_x:
+    type: float
+    values: derived
+  afferent_surface_y:
+    type: float
+    values: derived
+  afferent_surface_z:
+    type: float
+    values: derived
+  afferent_section_id:
+    type: int
+    values: derived
+  afferent_section_pos:
+    type: float
+    values: derived
+  afferent_section_type:
+    type: int
+    values: derived
+  afferent_segment_id:
+    type: int
+    values: derived
+  afferent_segment_offset:
+    type: float
+    values: derived
+  efferent_center_x:
+    type: float
+    values: derived
+  efferent_center_y:
+    type: float
+    values: derived
+  efferent_center_z:
+    type: float
+    values: derived
+  efferent_surface_x:
+    type: float
+    values: derived
+  efferent_surface_y:
+    type: float
+    values: derived
+  efferent_surface_z:
+    type: float
+    values: derived
+  efferent_section_id:
+    type: int
+    values: derived
+  efferent_section_pos:
+    type: float
+    values: derived
+  efferent_section_type:
+    type: int
+    values: derived
+  efferent_segment_id:
+    type: int
+    values: derived
+  efferent_segment_offset:
+    type: float
+    values: derived
+  spine_length:
+    type: float
+    values: derived
+
+synapse_astrocyte:
+  astrocyte_section_id:
+    type: int
+    values: derived
+  astrocyte_segment_id:
+    type: int
+    values: derived
+  astrocyte_segment_offset:
+    type: float
+    values: derived
+  astrocyte_section_pos:
+    type: float
+    values: derived
+  synapse_id:
+    type: int
+    values: derived
+  synapse_population:
+    type: text
+    values: derived
+
+endfoot:
+  endfoot_id:
+    type: int
+    values: derived
+  endfoot_surface_x:
+    type: float
+    values: derivated
+  endfoot_surface_y:
+    type: float
+    values: derivated
+  endfoot_surface_z:
+    type: float
+    values: derivated
+  vasculature_section_id:
+    type: int
+    values: derived
+  vasculature_segment_id:
+    type: int
+    values: derived
+  astrocyte_section_id:
+    type: int
+    values: derived
+  endfoot_compartment_length:
+    type: float
+    values: [ 5, 25 ]
+  endfoot_compartment_diameter:
+    type: float
+    values: [ 3, 9 ]
+  endfoot_compartment_perimeter:
+    type: float
+    values: [ 5, 20 ]

@@ -7,9 +7,9 @@ source sg-venv/bin/activate
 
 echo Install library
 pip install -U pip setuptools
-pip install -e .
+pip install -i https://bbpteam.epfl.ch/repository/devpi/simple/ -e .
 
-for usecase_id in {1..4}
+for usecase_id in {1..5}
 do
     echo Processing usecase ${usecase_id}
     circuit_cmd="sonata-generator circuit -vvv create ./$base_path/config/nodes_configuration.yaml ./$base_path/config/edges_configuration.yaml ./$base_path/config/usecase${usecase_id}/population_config.yaml $PWD/$base_path/components ./results/usecase${usecase_id} -s 0"

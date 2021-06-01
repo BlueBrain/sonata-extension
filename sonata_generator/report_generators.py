@@ -1,19 +1,16 @@
-from collections import namedtuple
 import logging
 
 import os
 import json
 
 import h5py
-import morphio
 import numpy as np
 import yaml
 
-L = logging.getLogger("Reports")
+from sonata_generator.utils import load_morphology, collect_node_populations
 
-NodePopulationInfos = namedtuple('NodePopulationInfos', ["filepath", "name", "type", "size",
-                                                         "morphologies_asc", "morphologies_swc",
-                                                         "biophysical_neuron_models_dir"])
+
+L = logging.getLogger("Reports")
 
 
 def create_config_file(simulation_config_file, output_dir):
@@ -48,30 +45,6 @@ def create_config_file(simulation_config_file, output_dir):
     with open(os.path.join(output_dir, 'simulation_sonata.json'), 'w') as f:
         json.dump(config, f, indent=4)
     return config
-
-
-def collect_biophysical_node_population_infos(usecase_config, components_path, output_dir):
-    """Collection information from the usecase config and reformat it in a more usable class.
-
-    The paths are absolute and adds the output directory as the base directory.
-    """
-    concat = os.path.join
-    node_populations = []
-    for file in usecase_config["nodes"]:
-        for population in file['populations']:
-            type_ = population["type"]
-            if type_ != "biophysical":
-                continue
-            filepath = concat(output_dir, file["filepath"])
-            name = population["name"]
-            size = population["size"]
-            morphologies_asc = concat(components_path, population["morphologies_asc"])
-            morphologies_swc = concat(components_path, population["morphologies_swc"])
-            biophysical_neuron_models_dir = concat(output_dir, population["biophysical_neuron_models_dir"])
-            node = NodePopulationInfos(filepath, name, type_, size,
-                                       morphologies_asc, morphologies_swc, biophysical_neuron_models_dir)
-            node_populations.append(node)
-    return node_populations
 
 
 def spike_generator(spike_count, pop_size, tstart, tstop, dt):
@@ -130,7 +103,9 @@ def create_spikes_report(usecase_config, components_path, output_dir):
     spike_count = config["spikes_count"]
     reporting_dir = os.path.join(output_dir, config["output_dir"])
     filepath = os.path.join(reporting_dir, config["spikes_file"])
-    node_populations = collect_biophysical_node_population_infos(usecase_config, components_path, output_dir)
+    node_populations = collect_node_populations(usecase_config, output_dir,
+                                                components_path=components_path,
+                                                filter_types="biophysical")
 
     sorting_type = h5py.enum_dtype({"none": 0, "by_id": 1, "by_time": 2})
 
@@ -142,22 +117,6 @@ def create_spikes_report(usecase_config, components_path, output_dir):
             timestamps, node_ids = spike_generator(spike_count, node_population.size, tstart, tstop, dt)
             pop_spikes.create_dataset('timestamps', data=timestamps, dtype=np.double)
             pop_spikes.create_dataset('node_ids', data=node_ids, dtype=np.uint64)
-
-
-def load_morphology(node_population, node_id):
-    """Load a morphology for a given node id from a given population.
-
-    Args:
-        node_population(NodePopulationInfos): a NodePopulationInfos containing the information about the population.
-        node_id(int): the node id you want to access.
-
-    Returns:
-        morphio.Morphology: A morphio immutable morphology.
-    """
-    with h5py.File(node_population.filepath, "r") as h5:
-        filename = h5[f'nodes/{node_population.name}/0/morphology'].asstr()[node_id] + ".swc"
-        filepath = os.path.join(node_population.morphologies_swc, filename)
-        return morphio.Morphology(filepath)
 
 
 def create_compartment_report(usecase_config, components_path, output_dir):
@@ -181,7 +140,9 @@ def create_compartment_report(usecase_config, components_path, output_dir):
     tstop = config["tstop"]
     dt = config["dt"]
     reporting_dir = os.path.join(output_dir, config["output_dir"])
-    node_populations = collect_biophysical_node_population_infos(usecase_config, components_path, output_dir)
+    node_populations = collect_node_populations(usecase_config, output_dir,
+                                                components_path=components_path,
+                                                filter_types="biophysical")
 
     report_configs = usecase_config["simulations"]["reports"]
     string_dtype = h5py.special_dtype(vlen=str)

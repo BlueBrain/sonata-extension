@@ -3,8 +3,8 @@ import logging
 
 import click
 
-from sonata_generator.report_generator import create as create_reports
-from sonata_generator.app.utils import set_verbose, READ_FILE, FILE_TYPE
+from sonata_generator.report_generators import create as create_reports
+from sonata_generator.app.utils import set_verbose, FILE_TYPE
 
 
 L = logging.getLogger("Reports")
@@ -18,7 +18,7 @@ def app(verbose):
 
 
 @app.command()
-@click.argument('usecase_config', type=click.Path(file_okay=True))
+@click.argument('usecase_config', type=FILE_TYPE)
 @click.argument('components_path', type=click.Path(dir_okay=True))
 @click.argument('output_dir', type=str)
 @click.option('-s', '--seed', type=int, default=0)

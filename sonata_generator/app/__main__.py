@@ -1,7 +1,7 @@
 """Collection of CLI tools for sonata generators."""
-
 import logging
 import click
+import morphio
 
 from sonata_generator.app import circuit, reports
 from sonata_generator.version import VERSION
@@ -13,6 +13,9 @@ def _initialize_logging(logger_name):
     ch = logging.StreamHandler()
     ch.setFormatter(CustomFormatter())
     logger.addHandler(ch)
+
+
+morphio.set_maximum_warnings(0)
 
 
 def main():

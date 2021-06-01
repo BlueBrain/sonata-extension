@@ -5,7 +5,7 @@ import numpy as np
 import numpy.testing as npt
 import pytest
 
-import sonata_generator.report_generator as tested
+import sonata_generator.report_generators as tested
 from utils import tmp_file
 
 

@@ -1,244 +1,182 @@
-import logging
+from pathlib import Path
 
+import h5py
+import libsonata
 import numpy as np
-from morphio import SectionType
 
-import sonata_generator.utils as utils
+from sonata_generator.exceptions import GeneratorError
 
-L = logging.getLogger("Circuit")
+TYPE_DISPATCH = {"float": np.float32, "int": np.int64, "text": np.string_}
 
 
-def generate_properties_dataset(
-        properties_config,
-        population_config,
-        components_path=None,
-):
-    """Generate properties for a population config.
+class Generator:
+    UNIFORM_DATA = []
+    CHOICE_DATA = []
 
-    "derived" values are ignored as they are generated as a post process
-    "morphology", "emodel" values have their own specific generator.
-    the rest is randomly generated based on the range given by "values" property.
-    """
-    L.debug(
-        f"properties_config: {properties_config}, population_config: {population_config}, components_path: {components_path}"
-    )
-    ret_values = {}
-    values = None
-    pop_size = population_config['size']
-    for prop_name, prop_definition in properties_config.items():
-        L.debug(f" generate dataset for {prop_name} {prop_definition}")
-        if prop_definition['values'] == 'derived':
-            continue
-        if prop_definition['values'] == 'morphology':
-            morphologies = utils.get_morphologies_name(
-                components_path, population_config['morphologies_swc'])
-            values = np.random.choice(morphologies, size=pop_size)
-        elif prop_definition['values'] == 'emodel':
-            emodels = utils.get_emodels_values(
-                components_path,
-                population_config['biophysical_neuron_models_dir'])
-            values = np.random.choice(emodels, size=pop_size)
-        elif prop_definition['type'] == 'float':
-            values = np.random.uniform(prop_definition['values'][0],
-                                       prop_definition['values'][1],
-                                       size=pop_size)
-        elif prop_definition['type'] == 'int':
-            values = np.random.randint(prop_definition['values'][0],
-                                       prop_definition['values'][1],
-                                       size=pop_size)
-        elif prop_definition['type'] in ['text', 'enum']:
-            values = np.random.choice(prop_definition['values'], size=pop_size)
+    def __init__(self, info, property_config):
+        self.info = info
+        self.data = {}
+        self._check_type()
+        self.property_config = property_config[self.info.type]
+
+    @property
+    def _ok_types(self):
+        """List of accepted types for this generator."""
+        raise NotImplementedError
+
+    @property
+    def _population_type(self):
+        """Can be nodes or edges."""
+        raise NotImplementedError
+
+    def _check_type(self):
+        """Check if the types are correct for this generator."""
+        if self.info.type not in self._ok_types:
+            raise GeneratorError(f"Wrong generator {self.__class__} for {self.info.type} config.")
+
+    def _create_uniform_data(self):
+        for property_name in self.UNIFORM_DATA:
+            default = self.property_config[property_name]["values"]
+            type_ = self.property_config[property_name]["type"]
+            if len(default) > 2:
+                raise GeneratorError(f"Uniform data should have only two values. Found "
+                                     f": '{default}' for '{property_name}' in '{self.info.type}'")
+            if type_ == "float":
+                values = np.random.uniform(low=default[0], high=default[1], size=self.info.size)
+            elif type_ == "int":
+                values = np.random.choice(np.arange(int(default[0]), int(default[1])),
+                                          size=self.info.size)
+            else:
+                raise GeneratorError(f"Cannot create a uniform distribution for '{type_}' "
+                                     f"variables from '{self.info.type}'.")
+            self.data[property_name] = values
+
+    def _create_choice_data(self):
+        for property_name in self.CHOICE_DATA:
+            default = self.property_config[property_name]["values"]
+            values = np.random.choice(default, size=self.info.size)
+            self.data[property_name] = values
+
+    def _append_to_data(self, added):
+        for key, value in added.items():
+            if key not in self.data:
+                self.data[key] = [value]
+            else:
+                self.data[key].append(value)
+
+    def create_data(self):
+        self._create_uniform_data()
+        self._create_choice_data()
+
+    def _check_missing_properties(self):
+        missing_properties = set(self.property_config) - set(self.data)
+        if missing_properties:
+            raise GeneratorError(f"Missing property {missing_properties}")
+
+    def save(self):
+        self._check_missing_properties()
+        mod = "w"
+        if Path(self.info.filepath).exists():
+            mod = "r+"
+
+        with h5py.File(self.info.filepath, mod) as h5:
+            population_group = h5.create_group(f"/{self._population_type}/{self.info.name}")
+            population_group.create_dataset(f"{self._population_type[:-1]}_type_id",
+                                            data=np.full(self.info.size, fill_value=-1),
+                                            dtype=np.int64)
+            properties_group = population_group.create_group("0")
+            for prop_name, prop_data in self.data.items():
+                type_ = self.property_config[prop_name]["type"]
+                prop_data = np.asarray(prop_data).astype(TYPE_DISPATCH[type_])
+                properties_group.create_dataset(prop_name, data=prop_data)
+
+
+class NodeGenerator(Generator):
+    @property
+    def _ok_types(self):
+        return []
+
+    @property
+    def _population_type(self):
+        return "nodes"
+
+
+class EdgeGenerator(Generator):
+    def __init__(self, info, property_config):
+        super().__init__(info, property_config)
+        self._check_source_target_types()
+        self.topology = {}
+
+    @property
+    def _ok_types(self):
+        return []
+
+    @property
+    def _ok_source_types(self):
+        return []
+
+    @property
+    def _ok_target_types(self):
+        return []
+
+    def _check_source_target_types(self):
+        if self.info.source.type not in self._ok_source_types:
+            raise GeneratorError(f"Bad input type source {self.info.source} "
+                                 f"for the edge data {self.info.name}")
+        if self.info.target.type not in self._ok_target_types:
+            raise GeneratorError(f"Bad input type target {self.info.target} "
+                                 f"for the edge data {self.info.name}")
+
+    @property
+    def _population_type(self):
+        return "edges"
+
+    def _create_topology(self):
+        size = self.info.size
+        if self.info.target.name != self.info.source.name:
+            self.topology["target_node_id"] = np.random.choice(self.info.target.size, size).astype(
+                np.int64)
+            self.topology["source_node_id"] = np.random.choice(self.info.source.size, size).astype(
+                np.int64)
         else:
-            raise ValueError(f"unknown type: {prop_definition['type']}")
+            if self.info.target.size == 1:
+                raise GeneratorError(f"Trying to create a edge in a graph with a single node. "
+                                     f"Please increase the number of nodes in "
+                                     f"the {self.info.target.name} population.")
+            targets = np.random.choice(self.info.target.size, size)
+            unique = np.unique(targets)
+            if len(unique) == 1:
+                values = np.arange(self.info.target.size)
+                targets[0] = np.random.choice(values[values != unique])
+            self.topology["target_node_id"] = targets.astype(np.int64)
+            sources = []
+            for target in targets:
+                sources.append(np.random.choice(targets[targets != target]))
+            self.topology["source_node_id"] = np.array(sources, dtype=np.int64)
 
-        ret_values[prop_name] = values
-    return ret_values
+    def _write_topology(self):
+        with h5py.File(self.info.filepath, 'r+') as h5:
+            pop_group = h5[f"/{self._population_type}/{self.info.name}"]
+            source = pop_group.create_dataset("source_node_id",
+                                              data=self.topology["source_node_id"])
+            source.attrs['node_population'] = self.info.source.name
+            target = pop_group.create_dataset("target_node_id",
+                                              data=self.topology["target_node_id"])
+            target.attrs['node_population'] = self.info.target.name
 
+    def _write_indexing(self):
+        libsonata.EdgePopulation.write_indices(
+            str(self.info.filepath),
+            self.info.name,
+            self.info.source.size,
+            self.info.target.size,
+        )
 
-def get_surface_point(direction, point, distance):
-    """Get a point orthogonal to a line defined by (direction, point) at a distance of point."""
-    a, b, c = direction
-    orth_direction = np.array([-b, a, 0])
-    # TODO check non collinear
-    surface_point = point + orth_direction * distance / np.linalg.norm(
-        orth_direction)
-    return surface_point
+    def create_data(self):
+        super().create_data()
+        self._create_topology()
 
-
-def create_synapse(morph, pre_or_post="pre"):
-    """Create  a random synapse on morph.
-
-    "pre" will be placed on "axon"
-    "post" will be placed on basal or apical dendrite
-    section_id, segment_id, point_position, offset, surface contact and section_type.
-    """
-    filter_ = [SectionType.axon]
-    if pre_or_post == "post":
-        filter_ = [SectionType.basal_dendrite, SectionType.apical_dendrite]
-    sections = [v for v in morph.sections if v.type in filter_]
-    selected_section = np.random.choice(sections)
-    segment_id = np.random.randint(0, len(selected_section.points) - 1)
-    diameter = selected_section.diameters[segment_id]
-    point_1 = selected_section.points[segment_id]
-    point_2 = selected_section.points[segment_id + 1]
-    direction = point_2 - point_1
-    segment_length = np.linalg.norm(direction)
-    offset = np.random.uniform(0, segment_length)
-    ratio = offset / segment_length
-    final_point = point_1 + ratio * direction
-    surface_point = get_surface_point(direction, final_point, diameter / 2)
-    return selected_section.id + 1, segment_id, final_point, offset, surface_point, selected_section.type
-
-
-def get_point_space_position(point, x, y, z, o_x, o_y, o_z, o_w):
-    """Get the position of a morphology point.
-
-    The position is derived using the soma position (x,y,z) and the rotation defined by a
-    quaternion o_x, o_y, o_z, o_w
-    """
-    from scipy.spatial.transform import Rotation as R
-    r = R.from_quat([o_x, o_y, o_z, o_w])
-    rotated_point = r.apply(point)
-    return rotated_point + [x, y, z]
-
-
-def generate_synapse_data(node_values,
-                          node_id,
-                          morphology_path,
-                          components_path,
-                          pre_or_post="pre"):
-    L.debug(f"{node_values}, {node_id}, {morphology_path}, {components_path}, {pre_or_post}")
-
-    morph = utils.get_morphology(components_path, morphology_path,
-                                 node_values['morphology'][node_id])
-    section_id, segment_id, point, offset, surface_point, section_type = create_synapse(
-        morph, pre_or_post)
-
-    point_position = get_point_space_position(
-        point, node_values['x'][node_id], node_values['y'][node_id],
-        node_values['z'][node_id], node_values['orientation_x'][node_id],
-        node_values['orientation_y'][node_id],
-        node_values['orientation_z'][node_id],
-        node_values['orientation_w'][node_id])
-    surface_point_position = get_point_space_position(
-        surface_point, node_values['x'][node_id], node_values['y'][node_id],
-        node_values['z'][node_id], node_values['orientation_x'][node_id],
-        node_values['orientation_y'][node_id],
-        node_values['orientation_z'][node_id],
-        node_values['orientation_w'][node_id])
-    return {
-        "section_id": section_id,
-        "segment_id": segment_id,
-        "offset": offset,
-        "point_position": point_position,
-        "surface_point_position": surface_point_position,
-        "section_type": section_type
-    }
-
-
-def generate_source_target_ids(edge_population_config,
-                               source_node_population_config,
-                               target_node_population_config):
-    source_node_size = source_node_population_config['size']
-    target_node_size = target_node_population_config['size']
-
-    source_node_ids = np.random.randint(0, source_node_size,
-                                        edge_population_config['size'])
-    target_node_ids = np.random.randint(0, target_node_size,
-                                        edge_population_config['size'])
-    # FIXME these 2 should not be under the group
-    l = list(zip(source_node_ids, target_node_ids))
-    # use stable order to sort by afferent then by efferent
-    l.sort()
-    l.sort(key=lambda a: a[1])
-    sorted_source_node_ids, sorted_target_node_ids = zip(*l)
-    return sorted_source_node_ids, sorted_target_node_ids
-
-
-# efferent: source, pre_synaptic
-# afferent: target, post_synaptic
-
-
-def generate_computed_properties_dataset(edge_config, population_config,
-                                         source_node_ids, target_node_ids,
-                                         node_values,
-                                         source_population_node_config,
-                                         target_population_node_config,
-                                         components_path):
-    """Post processing function to add computed properties on edges."""
-    # TODO manage edge_config and virtual nodes and so on
-    from collections import defaultdict
-    synapse_data = defaultdict(list)
-    if source_population_node_config['type'] == 'biophysical':
-        for node_id in source_node_ids:
-            efferent_data = generate_synapse_data(
-                node_values[population_config['source']], node_id,
-                source_population_node_config['morphologies_swc'],
-                components_path, "pre")
-            synapse_data['efferent_section_id'].append(
-                efferent_data['section_id'])
-            synapse_data['efferent_segment_id'].append(
-                efferent_data['segment_id'])
-            synapse_data['efferent_center_x'].append(
-                efferent_data['point_position'][0])
-            synapse_data['efferent_center_y'].append(
-                efferent_data['point_position'][1])
-            synapse_data['efferent_center_z'].append(
-                efferent_data['point_position'][2])
-            synapse_data['efferent_surface_x'].append(
-                efferent_data['surface_point_position'][0])
-            synapse_data['efferent_surface_y'].append(
-                efferent_data['surface_point_position'][1])
-            synapse_data['efferent_surface_z'].append(
-                efferent_data['surface_point_position'][2])
-            # TODO manage section type
-            synapse_data['efferent_section_type'].append(
-                int(efferent_data['section_type']))
-            # TODO efferent_section_pos
-            synapse_data['efferent_segment_offset'].append(
-                efferent_data['offset'])
-
-    for node_id in target_node_ids:
-        afferent_data = generate_synapse_data(
-            node_values[population_config['target']], node_id,
-            target_population_node_config['morphologies_swc'], components_path,
-            "post")
-        synapse_data['afferent_section_id'].append(afferent_data['section_id'])
-        synapse_data['afferent_segment_id'].append(afferent_data['segment_id'])
-        synapse_data['afferent_center_x'].append(
-            afferent_data['point_position'][0])
-        synapse_data['afferent_center_y'].append(
-            afferent_data['point_position'][1])
-        synapse_data['afferent_center_z'].append(
-            afferent_data['point_position'][2])
-        synapse_data['afferent_surface_x'].append(
-            afferent_data['surface_point_position'][0])
-        synapse_data['afferent_surface_y'].append(
-            afferent_data['surface_point_position'][1])
-        synapse_data['afferent_surface_z'].append(
-            afferent_data['surface_point_position'][2])
-        synapse_data['afferent_section_type'].append(
-            int(afferent_data['section_type']))
-        # TODO afferent_section_pos
-        synapse_data['afferent_segment_offset'].append(afferent_data['offset'])
-    synapse_data['source_node_id'] = source_node_ids
-    synapse_data['target_node_id'] = target_node_ids
-    synapse_data['edge_type_id'] = [-1] * len(source_node_ids)
-    return {k: np.array(v) for (k, v) in synapse_data.items()}
-
-
-def generate_edge_datasets(edge_type_config, edge_population_config,
-                           node_values, source_population_node_config,
-                           target_population_node_config, components_path):
-    """Generate a dict of dataset for each element of edge_type_config."""
-    generated_dataset = generate_properties_dataset(edge_type_config,
-                                                    edge_population_config)
-    source_node_ids, target_node_ids = generate_source_target_ids(
-        edge_population_config, source_population_node_config,
-        target_population_node_config)
-    synapse_data = generate_computed_properties_dataset(
-        edge_type_config, edge_population_config, source_node_ids,
-        target_node_ids, node_values, source_population_node_config,
-        target_population_node_config, components_path)
-
-    return {**generated_dataset, **synapse_data}
+    def save(self):
+        super().save()
+        self._write_topology()
+        self._write_indexing()

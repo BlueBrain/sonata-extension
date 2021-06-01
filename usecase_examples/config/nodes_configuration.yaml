@@ -1,70 +1,151 @@
 biophysical:
-    x:
-        type: float
-        values: [-1000.0, 1000]
-    y:
-        type: float
-        values: [-1000.0, 1000]
-    z:
-        type: float
-        values: [-1000.0, 1000]
-    orientation_w:
-        type: float
-        values: [-1.0, 1.0]
-    orientation_x:
-        type: float
-        values: [-1.0, 1.0]
-    orientation_y:
-        type: float
-        values: [-1.0, 1.0]
-    orientation_z:
-        type: float
-        values: [-1.0, 1.0]
-    morphology:
-      type: text
-      values: morphology
-    model_template:
-      type: text
-      values: emodel
-    layer:
-        type: text
-        values: [ 'LA', 'LB', 'LC']
-    model_type:
-        type: enum
-        values: ['biophysical']
-    morph_class:
-        type: enum
-        values: ["PYR", "INT"]
-    etype:
-        type: enum
-        values: ["dNAC", "dSTUT"]
-    mtype:
-        type: enum
-        values: ['L5_PC', 'L4_PC', 'L4_MC']
-    synapse_class:
-        type: enum
-        values: ["EXC", "INH"]
-    region:
-        type: enum
-        values: ['RA', 'RB']
-    dynamics_params/threshold_current:
-        type: float
-        values: [1.0, 2.0]
-    dynamics_params/holding_current:
-        type: float
-        values: [1.0, 2.0]
-    dynamics_params/AIS_scaler:
-        type: float
-        values: [1.0, 2.0]
-    minis:
-        type: float
-        values: [0, 100]
-    hemisphere:
-        type: enum
-        values: ['left', 'right']
+  x:
+    type: float
+    values: [ -1000.0, 1000 ]
+  y:
+    type: float
+    values: [ -1000.0, 1000 ]
+  z:
+    type: float
+    values: [ -1000.0, 1000 ]
+  orientation_w:
+    type: float
+    values: [ -1.0, 1.0 ]
+  orientation_x:
+    type: float
+    values: [ -1.0, 1.0 ]
+  orientation_y:
+    type: float
+    values: [ -1.0, 1.0 ]
+  orientation_z:
+    type: float
+    values: [ -1.0, 1.0 ]
+  morphology:
+    type: text
+    values: morphology
+  model_template:
+    type: text
+    values: emodel
+  layer:
+    type: text
+    values: [ 'LA', 'LB', 'LC' ]
+  model_type:
+    type: text
+    values: [ 'biophysical' ]
+  morph_class:
+    type: text
+    values: [ "PYR", "INT" ]
+  etype:
+    type: text
+    values: [ "dNAC", "dSTUT" ]
+  mtype:
+    type: text
+    values: [ 'L5_PC', 'L4_PC', 'L4_MC' ]
+  synapse_class:
+    type: text
+    values: [ "EXC", "INH" ]
+  region:
+    type: text
+    values: [ 'RA', 'RB' ]
+  dynamics_params/threshold_current:
+    type: float
+    values: [ 1.0, 2.0 ]
+  dynamics_params/holding_current:
+    type: float
+    values: [ 1.0, 2.0 ]
+  dynamics_params/AIS_scaler:
+    type: float
+    values: [ 1.0, 2.0 ]
+  minis:
+    type: float
+    values: [ 0, 100 ]
+  hemisphere:
+    type: text
+    values: [ 'left', 'right' ]
 
 virtual:
-    model_type:
-        type: enum
-        values: ['virtual']
+  model_type:
+    type: text
+    values: [ 'virtual' ]
 
+astrocyte:
+  x:
+    type: float
+    values: [ -1000.0, 1000 ]
+  y:
+    type: float
+    values: [ -1000.0, 1000 ]
+  z:
+    type: float
+    values: [ -1000.0, 1000 ]
+  radius:
+    type: float
+    values: [ 4, 6 ]
+  mtype:
+    type: text
+    values: [ 'L5_ASTRO', 'L4_ASTRO', 'L3_ASTRO' ]
+  orientation_w:
+    type: float
+    values: [ 1 ]
+  orientation_x:
+    type: float
+    values: [ 0 ]
+  orientation_y:
+    type: float
+    values: [ 0 ]
+  orientation_z:
+    type: float
+    values: [ 0 ]
+  morphology:
+    type: text
+    values: derivated
+  model_template:
+    type: text
+    values: derivated
+  region:
+    type: text
+    values: [ 'RA', 'RB' ]
+  model_type:
+    type: text
+    values: [ "astrocyte" ]
+
+vasculature:
+  start_x:
+    type: float
+    values: [ -1000.0, 1000.0 ]
+  start_y:
+    type: float
+    values: [ -1000.0, 1000.0 ]
+  start_z:
+    type: float
+    values: [ -1000.0, 1000.0 ]
+  end_x:
+    type: float
+    values: [ -1000.0, 1000.0 ]
+  end_y:
+    type: float
+    values: [ -1000.0, 1000.0 ]
+  end_z:
+    type: float
+    values: [ -1000.0, 1000.0 ]
+  start_diameter:
+    type: float
+    values: derivated
+  end_diameter:
+    type: float
+    values: derivated
+  start_node_id:
+    type: int
+    values: derivated
+  end_node_id:
+    type: int
+    values: derivated
+  type:
+    type: int
+    values: [ 1, 2, 3, 4, 5, 6, 7 ]
+  section_id:
+    type: int
+    values: derivated
+  segment_id:
+    type: int
+    values: derivated

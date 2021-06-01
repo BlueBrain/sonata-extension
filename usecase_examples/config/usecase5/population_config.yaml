@@ -1,0 +1,49 @@
+nodes:
+  - filepath: nodes.h5
+    populations:
+      - name: nodeA
+        type: biophysical
+        size: 2
+        morphologies_asc: CircuitA/morphologies/asc
+        morphologies_swc: CircuitA/morphologies/swc
+        biophysical_neuron_models_dir: CircuitA/hoc
+  - filepath: vasculature.h5
+    populations:
+      - name: vasculatureA
+        type: vasculature
+        size: 587
+        morphologies_h5: NGV/vasculature
+  - filepath: astrocytes.h5
+    populations:
+      - name: astrocyteA
+        type: astrocyte
+        size: 4
+        morphologies_h5: NGV/astrocyte_morphologies_h5
+        biophysical_neuron_models_dir: NGV/astrocyte_hoc
+
+edges:
+  - filepath: edges.h5
+    populations:
+      - source: nodeA
+        target: nodeA
+        type: chemical
+        size: 4
+  - filepath: glialglial.h5
+    populations:
+      - source: astrocyteA
+        target: astrocyteA
+        type: electrical_synapse
+        size: 4
+  - filepath: neuroglial.h5
+    populations:
+      - source: astrocyteA
+        target: nodeA
+        type: synapse_astrocyte
+        size: 2
+        edge_connection: nodeA__nodeA__chemical
+  - filepath: gliovascular.h5
+    populations:
+      - source: vasculatureA
+        target: astrocyteA
+        type: endfoot
+        size: 2

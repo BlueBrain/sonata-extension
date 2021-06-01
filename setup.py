@@ -4,11 +4,11 @@ from setuptools import setup, find_packages
 
 import importlib.util
 
-spec = importlib.util.spec_from_file_location("sonata_generator.version", "sonata_generator/version.py")
+spec = importlib.util.spec_from_file_location("sonata_generator.version",
+                                              "sonata_generator/version.py")
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 VERSION = module.VERSION
-
 
 setup(
     name="sonata-generator",
@@ -20,10 +20,12 @@ setup(
         "numpy",
         "h5py>=3,<4",
         "morphio>=3,<4",
-        "scipy>=1.5.4",
         "click>=7.1.2",
         "pyyaml>=5.4.1",
-        "libsonata>=0.1.8"
+        "libsonata>=0.1.8",
+        "morph_tool>=2.4.3,<3.0.0",
+        "cached-property>=1.5.2",
+        "vasculatureapi>=0.2.1"
     ],
     packages=find_packages(),
     python_requires=">=3.6",

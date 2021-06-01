@@ -7,10 +7,9 @@ import shutil
 import morphio
 
 
-import pytest
 from unittest.mock import patch
 
-import sonata_generator.report_generator as tested
+import sonata_generator.report_generators as tested
 
 from utils import tmp_file
 

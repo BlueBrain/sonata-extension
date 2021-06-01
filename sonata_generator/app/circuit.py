@@ -3,8 +3,8 @@ import logging
 
 import click
 
-from sonata_generator.circuit_generator import create as create_circuit
-from sonata_generator.app.utils import set_verbose, READ_FILE
+from sonata_generator.circuit_generators import create as create_circuit
+from sonata_generator.app.utils import set_verbose, FILE_TYPE
 
 L = logging.getLogger("Circuit")
 
@@ -17,9 +17,9 @@ def app(verbose):
 
 
 @app.command()
-@click.argument('nodes_config_file', type=READ_FILE)
-@click.argument('edges_config_file', type=READ_FILE)
-@click.argument('usecase_config', type=READ_FILE)
+@click.argument('nodes_config_file', type=FILE_TYPE)
+@click.argument('edges_config_file', type=FILE_TYPE)
+@click.argument('usecase_config', type=FILE_TYPE)
 @click.argument('components_path', type=click.Path(dir_okay=True))
 @click.argument('output_dir', type=str)
 @click.option('-s', '--seed', type=int, default=0)
@@ -32,4 +32,5 @@ def create(nodes_config_file, edges_config_file, usecase_config, components_path
     COMPONENTS_PATH is the root directory for externally created elements
     OUTPUT_DIR is where the generated data will be created
     """
-    create_circuit(nodes_config_file, edges_config_file, usecase_config, components_path, output_dir, seed)
+    create_circuit(nodes_config_file, edges_config_file, usecase_config, components_path,
+                   output_dir, seed)
