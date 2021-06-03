@@ -55,7 +55,7 @@ def create_config_file(populations_config, components_path, output_dir):
             }
         config['networks']['edges'].append(edge_file_config)
 
-    with open(os.path.join(output_dir, 'sonata.json'), 'w') as f:
+    with open(os.path.join(output_dir, 'circuit_sonata.json'), 'w') as f:
         json.dump(config, f, indent=4)
 
 

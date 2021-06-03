@@ -11,7 +11,8 @@ from utils import tmp_file
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_DATA_DIR = os.path.join(TEST_DIR, "data")
-np.random.seed(1)
+SEED=1
+np.random.seed(SEED)
 
 
 def test_spike_generator():
@@ -68,7 +69,7 @@ simulations:
     spikes_count: {spikes_count}
 """
     with tmp_file(content, cleanup=True) as (dirpath, setup_file):
-        tested.create(setup_file, dirpath, dirpath, "")
+        tested.create(setup_file, dirpath, dirpath, SEED)
         with h5py.File(os.path.join(dirpath, "reporting", "spikes.h5")) as h5:
             assert set(pop for pop in h5["spikes"]) == {name_a, name_b}
             time_a = h5["spikes/nodeA/timestamps"][:]

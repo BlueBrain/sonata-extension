@@ -8,7 +8,7 @@ import morphio
 
 
 import pytest
-from mock import patch
+from unittest.mock import patch
 
 import sonata_generator.report_generator as tested
 
@@ -16,7 +16,8 @@ from utils import tmp_file
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_DATA_DIR = os.path.join(TEST_DIR, "data")
-np.random.seed(2)
+SEED=2
+np.random.seed(SEED)
 
 
 def create_node(dirpath, pop_name, pop_size):
@@ -88,7 +89,7 @@ simulations:
         shutil.copytree(os.path.join(TEST_DATA_DIR, morph_path), os.path.join(dirpath, morph_path))
         create_node(dirpath, name_a, node_a_size)
         create_node(dirpath, name_b, node_b_size)
-        tested.create(setup_file, dirpath, dirpath, "")
+        tested.create(setup_file, dirpath, dirpath, SEED)
 
         frame_count = int((tend - tstart)/dt)
 
