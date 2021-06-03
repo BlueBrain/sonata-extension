@@ -15,15 +15,15 @@ Usecase 1
 
 Usecase 2
 ---------
-1 population of biophysical neurons with chemical synapses between neurons of that population + 1 virtual node population projecting into the biophysical neurons
+1 population of biophysical neurons with chemical synapses between neurons of that population + 1 virtual node population projecting into the biophysical neurons.
 
 Usecase 3
 ---------
-2 populations of biophysical neurons in 2 separate files with chemical synapses between neurons of their population and the other population
+2 populations of biophysical neurons in 2 separate files with chemical synapses between neurons of their population and the other population.
 
 Usecase 4
 ---------
-2 populations of biophysical neurons with chemical synapses between neurons of their population and the other population + 2 virtual node population projecting each in 1 different population
+2 populations of biophysical neurons with chemical synapses between neurons of their population and the other population + 2 virtual node population projecting each in 1 different population.
 
 Usecase 5
 ---------

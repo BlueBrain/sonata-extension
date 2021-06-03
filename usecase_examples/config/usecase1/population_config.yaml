@@ -29,9 +29,9 @@ simulations:
   reports:
     - name: "soma_report"
       cells: "node_set1"
-      variable_name: "current_soma"
+      variable_name: "v"
       sections: "soma"
     - name: "compartment_report"
       cells: "node_set2"
-      variable_name: "current_compart"
+      variable_name: "v"
       sections: "all"
