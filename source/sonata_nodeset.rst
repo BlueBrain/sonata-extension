@@ -70,6 +70,34 @@ They can also contain dictionaries:
 
 .. note:: A dictionary means `and`: ``Excitatory_SLM_PPA`` is interpreted as ``synapse_class`` == ``EXC`` **and** ``mtypes`` ==  ``SLM_PPA``
 
+.. warning:
+    This is an extension available in libsonata, and isn't covered by the SONATA specification
+
+They can also contain simple expressions:
+
+.. code-block:: js
+
+   {
+     "ALL_SP": {"mtype": {"$regex": "^SP_.*"}}
+   }
+
+
+The format is the *name of the desired attribute* as the key, and another dictionary as the value.
+This dictionary is composed of a `operator` as the key, and the value is the what the operator uses.
+In the above example, the `operator` is `$regex`, and the value is a regular expression `^SP_.*`
+
+The available operators are:
+
+======== =============== =====================
+Operator Applicable Type Meaning
+======== =============== =====================
+$regex   String          `Regular Expression`_
+$gt      Numeric         Greater than
+$lt      Numeric         Less than
+$gte     Numeric         Equal or greater than
+$lte     Numeric         Equal or less than
+======== =============== =====================
+
 
 Compound Expressions
 ~~~~~~~~~~~~~~~~~~~~
@@ -158,3 +186,5 @@ If you want to select the ``node_ids`` from a single population only, you should
       "Hippocampus_sample": {"population": "hippocampus_neurons",
                              "node_id": [10, 11, 12, 13, 14, 15]},
     }
+
+.. _`Regular Expression`: https://262.ecma-international.org/5.1/#sec-15.10
