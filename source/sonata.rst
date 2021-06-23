@@ -10,4 +10,5 @@ SONATA Circuit description
    sonata_population
    sonata_nodeset
    sonata_tech
+   sonata_report
    sonata_examples
