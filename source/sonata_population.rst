@@ -58,7 +58,7 @@ Currently, the following connection types are supported:
 
 ``electrical``
    this includes gap junctions for instance.
-``chemical_synapse``
+``chemical``
    this would include the following possible subtypes: glutamatergic, gabaergic, dopaminergic, serotinergic, adrenergic
 ``synapse_astrocyte``
    this manages the connection from an astrocyte to a particular synapse
@@ -68,7 +68,7 @@ Currently, the following connection types are supported:
 
 Examples::
 
-    /edges/thalamus_neurons__ncx_neurons__chemical_synapse
+    /edges/thalamus_neurons__ncx_neurons__chemical
 
 
 Single/Multi Populations

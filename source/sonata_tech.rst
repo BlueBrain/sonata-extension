@@ -139,7 +139,7 @@ An edge_id is unique to a vasculature morphology, a segment_id is local to a sec
     /0                 ``end_diameter``                float32    Mandatory     The diameter of the ending point of vasculature's segment in :math:`\mu m`.
     /0                 ``start_node``                  uint64     Mandatory     Morphology node id of the starting point of the vasculature segment.
     /0                 ``end_node``                    uint64     Mandatory     Morphology node id of the ending point of the vasculature segment.
-    /0                 ``type``                        string     Mandatory     The edge type is an integer in the list [1, 2, 3, 4, 5, 6, 7] corresponding to vein, artery, venule, arteriole, venous-capillary, arterial-capillary, transitional.
+    /0                 ``type``                        int32      Mandatory     The edge type is an integer in the list [1, 2, 3, 4, 5, 6, 7] corresponding to vein, artery, venule, arteriole, venous-capillary, arterial-capillary, transitional.
     /0                 ``section_id``                  uint32     Mandatory     The corresponding section id in the vasculature morphology.
     /0                 ``segment_id``                  uint32     Mandatory     The corresponding segment id in the vasculature morphology.
     /0                 ``model_type``                  string     Mandatory     `vasculature`

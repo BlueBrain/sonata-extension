@@ -119,16 +119,7 @@ Node files must be relative to ".".
    nodes_file                     Mandatory    The node file containing one or multiple node populations.
    node_types_file                Optional     Unused at BBP.
    populations                    Optional     Additional properties to override components related to the populations.
-   type                           Optional     The type of the population: a value in [`biophysical`, `virtualnode`, `single_compartment`, `point_neuron`].
-                                               Default is `biophysical`.
    ============================== ============ ==========================================
-
-.. note::
-    Type is redundant with model_type and defines the expected properties for the nodes.
-    The initial SONATA specification requires a complete dataset with the same value for model_type for *all* the nodes, which is inefficient in term of storage and access to the information.
-    Another option could be to have it as an H5 attribute.
-    The same pattern applies to the edges but the SONATA specification does not defined anything here to differentiate chemical_synapses, electrical, endfoot...
-    The proposal is to have it in the .json in both cases for the nodes and for the edges.
 
 
 populations
@@ -137,7 +128,18 @@ populations
 *Optional*.
 
 A property of a node overriding default components.
-This property is a dictionary with keys being node population names contained in the nodes_file and the values are dictionaries with the same properties than `components`_.
+This property is a dictionary with keys being node population names contained in the nodes_file and the values are dictionaries with the same properties as in `components`_.
+There is also one additional field `type` used to denote the population type.
+
+.. table::
+
+   ============================== ============ ==========================================
+   Property                       Requirement  Description
+   ============================== ============ ==========================================
+   ...                            ...          Same as in `components`_
+   type                           Optional     The type of the population: a value in [`biophysical`, `virtual`, `single_compartment`, `point_neuron`].
+                                               Default is `biophysical`.
+   ============================== ============ ==========================================
 
 example::
 
@@ -157,18 +159,24 @@ example::
             "nodes_file": "$NETWORK_DIR/V1/v1_nodes.h5",
             "populations": {
                 "node_population_a": {
-                   "type: "biophysical",
+                   "type": "biophysical",
                    "morphologies_dir": "...",
                    "biophysical_neuron_models_dir": "...",
                    "alternate_morphologies": ...
                 ...},
                 "node_population_b": {
-                  "type": "virtualnode"
+                  "type": "virtual"
             }
         },
         ...
     ]
 
+.. note::
+    Type is redundant with model_type and defines the expected properties for the nodes.
+    The initial SONATA specification requires a complete dataset with the same value for model_type for *all* the nodes, which is inefficient in term of storage and access to the information.
+    Another option could be to have it as an H5 attribute.
+    The same pattern applies to the edges but the SONATA specification does not defined anything here to differentiate chemical, electrical, endfoot...
+    The proposal is to have it in the .json in both cases for the nodes and for the edges.
 
 edges
 ^^^^^
@@ -186,8 +194,6 @@ Edge files must be relative to ".".
    edges_file                     Mandatory    A edge file path containing one or multiple node populations.
    edge_types_file                Optional     Unused at BBP.
    populations                    Optional     Additional properties to override components related to the populations.
-   type                           Optional     The connection type of the population: a value in [`chemical_synapse`, `electrical`, `synapse_astrocyte`, `endfoot`].
-                                               Default is `chemical_synapse`.
    ============================== ============ ==========================================
 
 populations
@@ -196,4 +202,15 @@ populations
 *Optional*.
 
 A property of an edge overriding default components.
-This property is a dictionary with keys being edge population names contained in the edges_file and the values are dictionaries with the same properties than `components`_.
+This property is a dictionary with keys being edge population names contained in the edges_file and the values are dictionaries with the same properties as in `components`_.
+There is also one additional field `type` used to denote the population type.
+
+.. table::
+
+   ============================== ============ ==========================================
+   Property                       Requirement  Description
+   ============================== ============ ==========================================
+   ...                            ...          Same as in `components`_
+   type                           Optional     The connection type of the population: a value in [`chemical`, `electrical`, `synapse_astrocyte`, `endfoot`].
+                                               Default is `chemical`.
+   ============================== ============ ==========================================
