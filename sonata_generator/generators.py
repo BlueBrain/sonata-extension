@@ -6,7 +6,7 @@ import numpy as np
 
 from sonata_generator.exceptions import GeneratorError
 
-TYPE_DISPATCH = {"float": np.float32, "int": np.int64, "text": np.string_}
+TYPE_DISPATCH = {"float": np.float32, "int": np.int64, "text": h5py.string_dtype(encoding='utf-8')}
 
 
 class Generator:

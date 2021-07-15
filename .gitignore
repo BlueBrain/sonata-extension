@@ -3,3 +3,4 @@
 *pyc
 results*
 sg-venv
+.tox

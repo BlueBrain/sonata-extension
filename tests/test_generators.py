@@ -108,7 +108,7 @@ tested:
             assert h5[f"nodes/{name_a}/0/a"].dtype == np.int64
             assert h5[f"nodes/{name_a}/0/b"].dtype == np.float32
             assert h5[f"nodes/{name_a}/0/c"].dtype == np.float32
-            assert h5[f"nodes/{name_a}/0/d"].asstr()[:].dtype == np.object
+            assert h5[f"nodes/{name_a}/0/d"].asstr()[:].dtype == object
 
             assert len(h5[f"nodes/{name_a}/0/a"]) == node_a_size
             assert len(h5[f"nodes/{name_a}/0/b"]) == node_a_size
@@ -246,7 +246,7 @@ edge_tested:
             assert h5[f"edges/{name_a}/0/a"].dtype == np.int64
             assert h5[f"edges/{name_a}/0/b"].dtype == np.float32
             assert h5[f"edges/{name_a}/0/c"].dtype == np.float32
-            assert h5[f"edges/{name_a}/0/d"].asstr()[:].dtype == np.object
+            assert h5[f"edges/{name_a}/0/d"].asstr()[:].dtype == object
 
             assert len(h5[f"edges/{name_a}/0/a"]) == edge_a_size
             assert len(h5[f"edges/{name_a}/0/b"]) == edge_a_size
