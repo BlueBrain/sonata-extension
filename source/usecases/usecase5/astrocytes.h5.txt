@@ -1,0 +1,135 @@
+HDF5 "./results/usecase5/astrocytes.h5" {
+GROUP "/" {
+   GROUP "nodes" {
+      GROUP "astrocyteA" {
+         GROUP "0" {
+            DATASET "model_template" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  "hoc:astrocyte", "hoc:astrocyte", "hoc:astrocyte",
+                  "hoc:astrocyte"
+               }
+            }
+            DATASET "model_type" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  "astrocyte", "astrocyte", "astrocyte", "astrocyte"
+               }
+            }
+            DATASET "morphology" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  "GLIA_0000000000001", "GLIA_0000000000000",
+                  "GLIA_0000000000000", "GLIA_0000000000000"
+               }
+            }
+            DATASET "mtype" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  "L5_ASTRO", "L3_ASTRO", "L5_ASTRO", "L5_ASTRO"
+               }
+            }
+            DATASET "orientation_w" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  1, 1, 1, 1
+               }
+            }
+            DATASET "orientation_x" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  0, 0, 0, 0
+               }
+            }
+            DATASET "orientation_y" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  0, 0, 0, 0
+               }
+            }
+            DATASET "orientation_z" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  0, 0, 0, 0
+               }
+            }
+            DATASET "radius" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  4.42076, 4.25785, 4.63086, 4.72742
+               }
+            }
+            DATASET "region" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  "RB", "RA", "RA", "RB"
+               }
+            }
+            DATASET "x" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  -962.42, 235.271, 224.191, 233.868
+               }
+            }
+            DATASET "y" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  887.496, 363.641, -280.984, -125.936
+               }
+            }
+            DATASET "z" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  395.262, -879.549, 333.533, 341.276
+               }
+            }
+         }
+         DATASET "node_type_id" {
+            DATATYPE  H5T_STD_I64LE
+            DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+            DATA {
+               -1, -1, -1, -1
+            }
+         }
+      }
+   }
+}
+}

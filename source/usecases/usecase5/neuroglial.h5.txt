@@ -1,0 +1,141 @@
+HDF5 "./results/usecase5/neuroglial.h5" {
+GROUP "/" {
+   GROUP "edges" {
+      GROUP "astrocyteA__nodeA__synapse_astrocyte" {
+         GROUP "0" {
+            DATASET "astrocyte_section_id" {
+               DATATYPE  H5T_STD_I64LE
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  27, 61
+               }
+            }
+            DATASET "astrocyte_section_pos" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  0.882442, 0.874978
+               }
+            }
+            DATASET "astrocyte_segment_id" {
+               DATATYPE  H5T_STD_I64LE
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  1, 1
+               }
+            }
+            DATASET "astrocyte_segment_offset" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  3.82489, 3.75042
+               }
+            }
+            DATASET "synapse_id" {
+               DATATYPE  H5T_STD_I64LE
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  2, 0
+               }
+            }
+            DATASET "synapse_population" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+               DATA {
+                  "nodeA__nodeA__chemical", "nodeA__nodeA__chemical"
+               }
+            }
+         }
+         DATASET "edge_type_id" {
+            DATATYPE  H5T_STD_I64LE
+            DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+            DATA {
+               -1, -1
+            }
+         }
+         GROUP "indices" {
+            GROUP "source_to_target" {
+               DATASET "node_id_to_ranges" {
+                  DATATYPE  H5T_STD_U64LE
+                  DATASPACE  SIMPLE { ( 4, 2 ) / ( 4, 2 ) }
+                  DATA {
+                     0, 1,
+                     1, 1,
+                     1, 2,
+                     2, 2
+                  }
+               }
+               DATASET "range_to_edge_id" {
+                  DATATYPE  H5T_STD_U64LE
+                  DATASPACE  SIMPLE { ( 2, 2 ) / ( 2, 2 ) }
+                  DATA {
+                     1, 2,
+                     0, 1
+                  }
+               }
+            }
+            GROUP "target_to_source" {
+               DATASET "node_id_to_ranges" {
+                  DATATYPE  H5T_STD_U64LE
+                  DATASPACE  SIMPLE { ( 2, 2 ) / ( 2, 2 ) }
+                  DATA {
+                     0, 1,
+                     1, 1
+                  }
+               }
+               DATASET "range_to_edge_id" {
+                  DATATYPE  H5T_STD_U64LE
+                  DATASPACE  SIMPLE { ( 1, 2 ) / ( 1, 2 ) }
+                  DATA {
+                     0, 2
+                  }
+               }
+            }
+         }
+         DATASET "source_node_id" {
+            DATATYPE  H5T_STD_I64LE
+            DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+            DATA {
+               2, 0
+            }
+            ATTRIBUTE "node_population" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SCALAR
+               DATA {
+                  "astrocyteA"
+               }
+            }
+         }
+         DATASET "target_node_id" {
+            DATATYPE  H5T_STD_I64LE
+            DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+            DATA {
+               0, 0
+            }
+            ATTRIBUTE "node_population" {
+               DATATYPE  H5T_STRING {
+                  STRSIZE H5T_VARIABLE;
+                  STRPAD H5T_STR_NULLTERM;
+                  CSET H5T_CSET_UTF8;
+                  CTYPE H5T_C_S1;
+               }
+               DATASPACE  SCALAR
+               DATA {
+                  "nodeA"
+               }
+            }
+         }
+      }
+   }
+}
+}

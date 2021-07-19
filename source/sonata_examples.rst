@@ -28,3 +28,15 @@ Usecase 3
 Usecase 4
 ---------
 2 populations of biophysical neurons with chemical synapses between neurons of their population and the other population and 2 virtual node populations projecting each in 1 different population. See :doc:`usecase 4 <usecase4>`
+
+Usecase 5
+---------
+
+1 population of neurons, 1 population of glial, 1 population of vasculature with:
+
+- chemical synapses between neurons
+- electrical synapses between glial cells
+- astrocyte to synapse from glial to neurons
+- end foot from vasculature to glial
+
+See :doc:`usecase 5 <usecase5>`
