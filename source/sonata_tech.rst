@@ -161,6 +161,49 @@ This type of population requires extra datasets. These datasets are represented 
 The `vasculature_mesh` is the watertight representation of the vasculure produced using ``Ultralizer`` or any other tool that can produce such surface meshes.
 The surface mesh's extension is  **.obj**.
 
+Fields for point neuron population (model_type: `point_neuron`)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is for AdEx point neuron models, see  Brette R. and Gerstner W. (2005) [1]_.
+
+The equivalent NEST model is: `<https://nest-simulator.readthedocs.io/en/v3.0/models/aeif_cond_beta_multisynapse.html>`_.
+
+.. table::
+
+    ================== =============================== ========== ============= ==================================================================================================
+    Group              Field                           Type       Requirement   Description
+    ================== =============================== ========== ============= ==================================================================================================
+    /0/dynamics_params ``C_m``                         float32    Mandatory     Membrane capacitance. (pF)
+    /0/dynamics_params ``Delta_T``                     float32    Mandatory     Slope factor. (mV).
+    /0/dynamics_params ``e_L``                         float32    Mandatory     Leak reversal potential. (mV).
+    /0/dynamics_params ``i_e``                         float32    Mandatory     Constant external input current (pA).
+    /0/dynamics_params ``v_peak``                      float32    Mandatory     Spike detection threshold. (mV).
+    /0/dynamics_params ``v_reset``                     float32    Mandatory     Reset value for V_m after a spike. (mV).
+    /0/dynamics_params ``v_th``                        float32    Mandatory     Spike initial threshol. (mV).
+    /0/dynamics_params ``a``                           float32    Mandatory     Subthreshold adaptation. (nS).
+    /0/dynamics_params ``b``                           float32    Mandatory     Spike triggered adaption. (pA).
+    /0/dynamics_params ``g_L``                         float32    Mandatory     Leak conductance. (nS).
+    /0/dynamics_params ``t_ref``                       float32    Mandatory     Duration of refractory period. (ms).
+    /0/dynamics_params ``tau_w``                       float32    Mandatory     tau_w (ms). Time constant for adaptation current.
+    /0/dynamics_params ``nb_receptors``                uint32     Mandatory     Number of receptors in the postsynaptic membrane
+    /0/dynamics_params ``e_rev``                       float32    Mandatory     Synaptic reverse potential. (mV). ``nb_receptors`` elements. Reverse potential.
+    /0/dynamics_params ``tau_decay``                   float32    Mandatory     Synaptic decay time constant (for afferent synapses). (ms) cardinality is ``nb_receptors`` elements.
+    /0/dynamics_params ``tau_rise``                    float32    Mandatory     Rise time of the synaptic conductance (for afferent synapses). (ms) cardinality is ``nb_receptors`` elements.
+    /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in :math:`\mu m`.
+    /0                 ``etype``                       utf8       Mandatory     Electrical type of the node.
+    /0                 ``mtype``                       utf8       Mandatory     Morphological type of the node.
+    /0                 ``synapse_class``               utf8       Mandatory     Defines the synapse type of the node; whether the neuron is inhibitory or excitatory. "EXC" or "INH".
+    /0                 ``region``                      utf8       Optional      Brain region of the cell.
+    /0                 ``hemisphere``                  utf8       Optional      "left" or "right" hemisphere.
+    /0                 ``model_type``                  utf8       Mandatory     `point_neuron`
+    /                  ``node_type_id``                int64      Mandatory     Set to -1. Foreign key to node type csv file not used at BBP..
+    ================== =============================== ========== ============= ==================================================================================================
+
+.. rubric:: References
+
+.. [1] Brette R. and Gerstner W. (2005), Adaptive Exponential Integrate-and-Fire Model as an Effective Description of Neuronal Activity, J. Neurophysiol. 94: 3637 - 3642.
+   DOI: `<https://journals.physiology.org/doi/full/10.1152/jn.00686.2005>`__.
+
 
 model_template
 ~~~~~~~~~~~~~~
@@ -379,6 +422,33 @@ Gliovascular connectivity. Connection between the vasculature and astrocytes. Ea
 This type of population requires extra datasets:
 
     "endfeet_areas": path/to/endfeet/meshes
+
+Fields for "point neuron connectivity"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Connection type is ``TM_synapse``.
+
+This is a Tsodyks Markram model.
+
+The NEST equivalent implementation can be found here: `<https://nest-simulator.readthedocs.io/en/v3.0/models/tsodyks2_synapse.html>`_
+
+.. table::
+
+    ========= ================================= ========== =========== ============================================================================================
+    Group     Field                             Type       Requirement Description
+    ========= ================================= ========== =========== ============================================================================================
+    /0        ``U``                             float32    Mandatory   Parameter determining the increase of the probability of release with each spike [0,1].
+    /0        ``delay``                         float32    Mandatory   Axonal delay. (ms).
+    /0        ``receptor``                      float32    Mandatory   Receptor type. Indicates which port of the postsynaptic neuron should be used.
+    /0        ``tau_fac``                       float32    Mandatory   Facilitation time constant. (ms).
+    /0        ``tau_rec``                       float32    Mandatory   Time constant for depression. (ms).
+    /0        ``weight``                        float32    Mandatory   Synaptic weight.
+    /         ``edge_type_id``                  int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
+    /         ``source_node_id``                uint64     Mandatory   The id of the presynaptic neuron.
+    /         ``target_node_id``                uint64     Mandatory   The id of the postsynaptic neuron.
+    ========= ================================= ========== =========== ============================================================================================
+
+``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
 
 
 
