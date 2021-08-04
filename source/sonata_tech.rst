@@ -35,7 +35,7 @@ Node File
 Fields for Nodes
 ~~~~~~~~~~~~~~~~
 
-The fields for the nodes depend on the model_type which has the following values `biophysical`, `virtual`, `single_compartment`, `vasculature`, `astrocyte` and `point_neuron`.
+The fields for the nodes depend on the `model_type` of the node, which should be stored in the sonata config file in as per :ref:`Sonata Node Types <sonata_config_node_type>`
 
 Some properties can be stored in a `@library` group for more efficient storage use.
 These attributes ``/<population>/<group>/X`` are stored as an integer that maps to a corresponding attribute in ``/<population>/<group>/@library/X``.
@@ -46,6 +46,8 @@ These attributes ``/<population>/<group>/X`` are stored as an integer that maps 
 
 Fields for biophysically detailed neurons (model_type: `biophysical`)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _biophysical_node_type:
 
 Group column represents the HDF group where the dataset is located under /<population>. "/" means it is directly under /<population>.
 
@@ -89,6 +91,8 @@ Group column represents the HDF group where the dataset is located under /<popul
 Fields for astrocyte population (model_type: `astrocyte`)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _astrocyte_node_type:
+
 .. table::
 
     ================== =============================== ========== ============= =========================================================================================
@@ -115,6 +119,8 @@ where "microdomains_file" and "microdomains_overlapping_file" correspond to the 
 
 Fields for vasculature population (model_type: `vasculature`)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _vasculature_node_type:
 
 The edges/segment of the vasculature morphology are stored as a population of nodes.
 

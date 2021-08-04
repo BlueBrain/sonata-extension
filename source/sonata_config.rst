@@ -131,13 +131,22 @@ A property of a node overriding default components.
 This property is a dictionary with keys being node population names contained in the nodes_file and the values are dictionaries with the same properties as in `components`_.
 There is also one additional field `type` used to denote the population type.
 
+.. _sonata_config_node_type:
+
 .. table::
 
    ============================== ============ ==========================================
    Property                       Requirement  Description
    ============================== ============ ==========================================
    ...                            ...          Same as in `components`_
-   type                           Optional     The type of the population: a value in [`biophysical`, `virtual`, `single_compartment`, `point_neuron`].
+   type                           Optional     The type of the population of one of these types:
+                                                  * :ref:`biophysical <biophysical_node_type>`
+                                                  * `virtual`
+                                                  * `single_compartment`
+                                                  * `point_neuron`
+                                                  * :ref:`astrocyte <astrocyte_node_type>`
+                                                  * :ref:`vasculature <vasculature_node_type>`
+
                                                Default is `biophysical`.
    ============================== ============ ==========================================
 
@@ -173,7 +182,7 @@ example::
 
 .. note::
     Type is redundant with model_type and defines the expected properties for the nodes.
-    The initial SONATA specification requires a complete dataset with the same value for model_type for *all* the nodes, which is inefficient in term of storage and access to the information.
+    The initial SONATA specification requires a complete dataset with the same value for model_type for *all* the nodes, which is inefficient in terms of storage.
     Another option could be to have it as an H5 attribute.
     The same pattern applies to the edges but the SONATA specification does not defined anything here to differentiate chemical, electrical, endfoot...
     The proposal is to have it in the .json in both cases for the nodes and for the edges.
