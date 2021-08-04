@@ -57,6 +57,7 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in :math:`\mu m`.
     /0                 ``rotation_angle_[x|y|z]axis``  float32    Optional      Euler angle representation of the rotation around the given axis of the morphology around the soma in radians.
     /0                 ``orientation_[w|x|y|z]``       float32    Mandatory     Preferred way to define the rotation as quaternions.
+                                                                                Note: **the quaternions are not guaranteed to be normalized**
     /0                 ``morphology``                  utf8       Mandatory     Morphology file relative path, without file extension.
                                                                                 Example "mymorphology" or "mypath/mymorphology".
                                                                                 The file format may be different depending on the consumer.
