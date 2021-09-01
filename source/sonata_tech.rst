@@ -178,7 +178,7 @@ Fields for Edges
 
 Fields for chemical connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+Connection type is ``chemical``.
 Group column represents the HDF group where the dataset is located under /<population>. "/" means it is directly under /<population>.
 
 .. table::
@@ -228,24 +228,10 @@ Group column represents the HDF group where the dataset is located under /<popul
 
 ``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
 
-
-Fields for electrical_synapse connection type edges
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-to be completed.
-
-.. table::
-
-    =============================  ========== =========================================================================================
-    Field                          Type        Description
-    =============================  ========== =========================================================================================
-    ``junction_id_pre``            int        TBD
-    ``junction_id_post``           int        TBD
-    =============================  ========== =========================================================================================
-
-GlialGlial connectivity
-^^^^^^^^^^^^^^^^^^^^^^^
-This type of connectivity happens between astrocytes. The property should be the same as Gap Junctions (see above) but we diverge here for the time being.
+GlialGlial connectivity glialglial connection type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Connection type is ``glialglial``.
+This type of connectivity happens between astrocytes. The properties are similar to Gap Junctions but still chemical connections.
 
 .. table::
 
@@ -274,9 +260,42 @@ This type of connectivity happens between astrocytes. The property should be the
 
 ``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
 
+Fields for electrical_synapse connection type edges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Connection type is ``electrical_synapse``.
+
+.. table::
+
+    ========= ============================= ========== =========== ============================================================================================
+    Group     Field                         Type       Requirement Description
+    ========= ============================= ========== =========== ============================================================================================
+    /0        ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m` on the target cell..
+    /0        ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in :math:`\mu m` on the target cell.
+    /0        ``afferent_section_id``       uint32     Mandatory   The specific section on the target node where a synapse is placed.
+    /0        ``afferent_section_pos``      float32    Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
+    /0        ``afferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
+    /0        ``afferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
+    /0        ``afferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in um.  See :ref:`faq`.
+    /0        ``afferent_junction_id``      uint32     Mandatory   An internal identifier for the simulator to perform the electrical coupling.
+    /0        ``efferent_center_[x|y|z]``   float32    Mandatory   Same as ``afferent_center_[x|y|z]``, but for the source cell.
+    /0        ``efferent_surface_[x|y|z]``  float32    Mandatory   Same as ``efferent_center_[x|y|z]``, but for the connection on the surface of the source cell.
+    /0        ``efferent_section_id``       uint32     Mandatory   Same as ``afferent_section_id``, but for source node.
+    /0        ``efferent_section_pos``      float32    Mandatory   Same as ``afferent_section_pos``, but for source node.
+    /0        ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
+    /0        ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
+    /0        ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in :math:`\mu m`.  See :ref:`faq`.
+    /0        ``afferent_junction_id``      unit32     Mandatory   An internal identifier for the simulator to perform electrical coupling.
+    /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
+    /0        ``conductance``               float32    Mandatory   The conductance of the gap junction (nanosiemens); also referred to as ``g_syn``
+    /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
+    /         ``source_node_id``            uint64     Mandatory   The id of the presynaptic cell.
+    /         ``target_node_id``            uint64     Mandatory   The id of the postsynaptic cell.
+    ========= ============================= ========== =========== ============================================================================================
+
 
 Fields for synapse_astrocyte connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Connection type is ``synapse_astrocyte``.
 Neuroglial connectivity. Astrocytes establish tripartite connections with synapses, wrapping around them forming a three-way ensemble. There are four distrinct elements in a tripartite connection, the astrocyte, the synapse, and the pre and post synaptic neurons. In sonata an edge corresponds to a connection between an astrocyte, a synapse and its post-synaptic neuron. The pre-synaptic neuron, although not directly accessible, it can be retrieved via the synaptic connectivity using the synapse id. The synapse id is stored as a property on the edges.
 
 .. table::
@@ -303,6 +322,7 @@ Neuroglial connectivity. Astrocytes establish tripartite connections with synaps
 
 Fields for endfoot connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Connection type is ``endfoot``.
 Gliovascular connectivity. Connection between the vasculature and astrocytes. Each edge corresponds to a perivascular endfoot that links an astrocyte with a vasculature segment.
 
 .. table::
