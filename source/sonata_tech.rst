@@ -228,6 +228,30 @@ Group column represents the HDF group where the dataset is located under /<popul
 
 ``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
 
+
+Extra fields for plasticity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Plasticity (the activity dependent change in synaptic release probability and conductance) has 8 extra parameters on top of the above ones.
+These fields are needed by the simulator when there is a "Glusynapse" provided in a modoverride.
+
+
+
+.. table::
+
+    ========= ============================= ========== =========== =========================================================================================
+    Group      Field                        Type       Requirement Description
+    ========= ============================= ========== =========== =========================================================================================
+    /0        ``volume_CR``                 float32    Mandatory   The volume of the spine (not simulated per se, just used for converting currents to concentrations in ``GluSynapse.mod``).In :math:`\mu m {^3}`.
+    /0        ``rho0_GB``                   int64      Mandatory   Initial value of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model (0: depressed, 1:potentiated).
+    /0        ``Use_d_TM``                  float32    Mandatory   Most depressed value (lower bound) of the release probability, ``u`` parameter of the `Tsodyks-Markram` model.
+    /0        ``Use_p_TM``                  float32    Mandatory   Most potentiated value (upper bound) of the release probability, ``u`` parameter of the `Tsodyks-Markram` model.
+    /0        ``gmax_d_AMPA``               float32    Mandatory   Most depressed value (lower bound) of the ``conductance``. In nanosiemens.
+    /0        ``gmax_p_AMPA``               float32    Mandatory   Most potentiated value (upper bound) of the ``conductance``. In nanosiemens.
+    /0        ``theta_d``                   float32    Mandatory   Lower threshold of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model. Once crossed, it triggers depression.In :math:`\mu` / liter.
+    /0        ``theta_p``                   float32    Mandatory   Higher threshold of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model. Once crossed, it triggers potentiation.In :math:`\mu` / liter.
+    ========= ============================= ========== =========== =========================================================================================
+
 GlialGlial connectivity glialglial connection type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Connection type is ``glialglial``.
@@ -260,9 +284,10 @@ This type of connectivity happens between astrocytes. The properties are similar
 
 ``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
 
+
 Fields for electrical_synapse connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Connection type is ``electrical_synapse``.
+Connection type is ``electrical_synapse``. Used for gap junctions between neurons
 
 .. table::
 

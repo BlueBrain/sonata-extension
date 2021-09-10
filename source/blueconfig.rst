@@ -867,9 +867,18 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         Override synaptic helper function (GABAABHelper.hoc or
-         AMPANMDAHelper.hoc) with this new helper function. Only give prefix,
-         e.g. "Newfun" uses NewfunHelper.hoc
+         Changes the synapse helper files used to instantiate the synapses in
+         this connection. A synapse helper initializes the synapse object and
+         the parameters of the synapse model. By default,
+         AMPANMDAHelper.hoc / GABAABHelper.hoc are used for
+         excitatory / inhibitory synapses. The value of this field determines
+         the prefix of the helper file to use e.g. "Newfun" would lead to
+         NewfunHelper.hoc being used. Exceptionally, passing "GluSynapse" will
+         lead to GluSynapse.hoc being used. That helper will use the additional
+         parameters of the plastic synapse model read from the SONATA edges
+         file using Neurodamus. This is required when using the GluSynapse.mod
+         model and will fail for other models, or if the parameters are not
+         present in the edges file.
 
     .. blueconfig_value:: SynDelayOverride
         :type: float
