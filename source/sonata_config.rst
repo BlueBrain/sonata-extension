@@ -118,17 +118,17 @@ Node files must be relative to ".".
    ============================== ============ ==========================================
    nodes_file                     Mandatory    The node file containing one or multiple node populations.
    node_types_file                Optional     Unused at BBP.
-   populations                    Optional     Additional properties to override components related to the populations.
+   populations                    Mandatory    Additional properties to override components related to the populations.
    ============================== ============ ==========================================
 
 
 populations
 """""""""""
 
-*Optional*.
+*Mandatory*.
 
-A property of a node overriding default components.
-This property is a dictionary with keys being node population names contained in the nodes_file and the values are dictionaries with the same properties as in `components`_.
+A property of a node overriding default components. This property is **mandatory within BBP** but optional to the outside community.
+It is a dictionary with keys being node population names contained in the nodes_file and the values are dictionaries with the same properties as in `components`_.
 There is also one additional field `type` used to denote the population type.
 
 .. _sonata_config_node_type:
@@ -202,16 +202,16 @@ Edge files must be relative to ".".
    ============================== ============ ==========================================
    edges_file                     Mandatory    A edge file path containing one or multiple node populations.
    edge_types_file                Optional     Unused at BBP.
-   populations                    Optional     Additional properties to override components related to the populations.
+   populations                    Mandatory    Additional properties to override components related to the populations.
    ============================== ============ ==========================================
 
 populations
 """""""""""
 
-*Optional*.
+*Mandatory*.
 
-A property of an edge overriding default components.
-This property is a dictionary with keys being edge population names contained in the edges_file and the values are dictionaries with the same properties as in `components`_.
+A property of an edge overriding default components. This property is **mandatory within BBP** but optional to the outside community.
+It is a dictionary with keys being edge population names contained in the edges_file and the values are dictionaries with the same properties as in `components`_.
 There is also one additional field `type` used to denote the population type.
 
 .. table::
