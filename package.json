@@ -1,6 +1,6 @@
 {
   "name": "Circuit Documentation",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Circuit Documentation",
   "repository": {
     "url": "ssh://bbpcode.epfl.ch/common/circuit-documentation"
