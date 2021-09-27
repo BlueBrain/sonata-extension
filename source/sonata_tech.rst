@@ -208,6 +208,12 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0        ``u_syn``                     float32    Mandatory   The ``u`` parameter in the `Tsodyks Markram Model`_.
     /0        ``n_rrp_vesicles``            uint32     Mandatory   Number of ``readily releasable pool`` of vesicles.
     /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
+    /0        ``spine_morphology``          utf8       Optional    Spine morphology file relative path, without file extension.
+                                                                   Example "mymorphology" or "mypath/mymorphology".
+    /0        ``spine_psd_id``              uint32     Optional    The id of the spine postsynaptic density. If not set, id 0 is used by default.
+                                                                   A list containing the postsynaptic densities is defined in the spine morphology file, which is set in the spine_morphology field.
+                                                                   This id refers to the list index where that psd is stored.
+
     /0        ``conductance_scale_factor``  float32    Optional    The scale factor for the conductance (no unit).If no value or negative, no change is applied.
     /0        ``u_hill_coefficient``        float32    Optional    A coefficient describing the scaling of `u` to be done by the simulator. If no value, no change is applied.
 
