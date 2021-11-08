@@ -1,4 +1,27 @@
-include:
-  - project: nse/ci
-    file: /ci/pipelines/common.doc/circuit-documentation.yml
+stages:
+  - create
+  - upload
 
+
+create_doc:
+  stage: create
+  image: python:3.8-buster
+  script:
+    - pip install tox
+    - tox -e docs
+  artifacts:
+    paths:
+      - build/html
+
+upload_doc:
+  stage: upload
+  image: python:3.8-buster
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "web"
+  needs:
+    - job: create_doc
+      artifacts: true
+  script:
+    - pip install -i https://bbpteam.epfl.ch/repository/devpi/simple --upgrade docs-internal-upload
+    - docs-internal-upload --docs-path build/html/ --duplicate-version-error  
