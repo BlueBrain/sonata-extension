@@ -321,7 +321,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
     .. blueconfig_value:: ExtracellularCalcium
         :type: float (non-negative)
         :required: False
-        :unit:
+        :unit: mM
         :description:
          Extracellular calcium concentration.
          This parameter, together with the uHill parameter of synapses,
@@ -374,7 +374,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          goes over the spike threshold value.
 
     .. blueconfig_value:: MinisSingleVesicle
-        :type: int
+        :type: boolean(0/1)
         :required: False
         :unit:
         :description:
@@ -400,12 +400,29 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          An option to skip randomizing the GABA_A rise time in the helper functions,
          the same as RandomizeGabaRiseTime in the Run section.
 
+    .. blueconfig_value:: SYNAPSES__minis_single_vesicle
+        :type: boolean(1/0)
+        :required: False
+        :unit:
+        :description:
+         An option to release only a single vesicle at Spont. events, as discussed in BBPBGLIB-660,
+         the same as MinisSingleVesicle in the Run section.
+
     .. blueconfig_value:: SYNAPSES__init_depleted
         :type: boolean(1/0)
         :required: False
         :unit:
         :description:
          An option to initialize synapses in depleted state.
+
+    .. blueconfig_value:: cao_CR_GluSynapse
+        :type: float (non-negative)
+        :required: False
+        :unit: mM
+        :description:
+         cao_CR (the extracellular calcium concentration) is a GLOBAL parameter in GluSynapse.mod,
+         that ensures the correct derivation of Ca++ related currents. Setting it to the same value
+         as ExtracellularCalcium in the Run section is crucial (but not yet automatic) in plasticity simulation.
 
 
 .. blueconfig_section:: Stimulus
