@@ -12,20 +12,23 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
-import os
+from pathlib import Path
 import json
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
-local_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(local_path, 'extensions'))
+local_path = Path(__file__).parent
+package_json_path = local_path / '../package.json'
+sys.path.insert(0, str(local_path / 'extensions'))
 
-with open(os.path.join(local_path, "../package.json")) as fp:
-    VERSION = json.load(fp)["version"]
+with open(package_json_path, encoding='utf-8') as fp:
+    package_json_info = json.load(fp)
+    VERSION = package_json_info['version']
+    PROJECT_NAME = package_json_info['name']
 
 # -- General configuration ------------------------------------------------
 
@@ -39,7 +42,7 @@ extensions = [
 ]
 
 # General information about the project.
-project = u'circuit-documentation'
+project = PROJECT_NAME
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

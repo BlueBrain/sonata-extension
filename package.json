@@ -1,14 +1,14 @@
 {
   "name": "circuit-documentation",
-  "version": "0.0.30",
+  "version": "0.0.35",
   "description": "Circuit Documentation",
   "repository": {
-    "url": "ssh://bbpcode.epfl.ch/common/circuit-documentation"
+    "url": "https://bbpgitlab.epfl.ch/common/doc/circuit-documentation"
   },
   "bugs": {
     "url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues"
   },
-  "homepage": "https://bbpteam.epfl.ch/documentation/projects/Circuit%20Documentation/latest/index.html",
+  "homepage": "https://bbpteam.epfl.ch/documentation/projects/circuit-documentation/latest/index.html",
   "author": "bbp-ou-nse",
   "contributors": ["BBP"],
   "license": "BBP-internal-confidential"
