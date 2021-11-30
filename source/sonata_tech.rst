@@ -226,53 +226,55 @@ Group column represents the HDF group where the dataset is located under /<popul
 
 .. table::
 
-    ========= ============================= ========== =========== =========================================================================================
-    Group      Field                        Type       Requirement Description
-    ========= ============================= ========== =========== =========================================================================================
-    /0        ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m`.
-    /0        ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in :math:`\mu m`.
-    /0        ``afferent_section_id``       uint32     Mandatory   The specific section on the target node where a synapse is placed.
-    /0        ``afferent_section_pos``      float32    Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
-    /0        ``afferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
-    /0        ``afferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
-    /0        ``afferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in um.  See :ref:`faq`.
-    /0        ``efferent_center_[x|y|z]``   float32    Mandatory   Same as ``afferent_center_[x|y|z]``, but for the synapse position at the axon of the presynaptic cell.
-    /0        ``efferent_surface_[x|y|z]``  float32    Mandatory   Same as ``efferent_center_[x|y|z]``, but the for the synapse location on the axon surface.
-    /0        ``efferent_section_id``       uint32     Mandatory   Same as ``afferent_section_id``, but for source node.
-    /0        ``efferent_section_pos``      float32    Mandatory   Same as ``afferent_section_pos``, but for source node.
-    /0        ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent.
-    /0        ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
-    /0        ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in :math:`\mu m`.
+    ============= ============================= ========== =========== =========================================================================================
+    Group         Field                         Type       Requirement Description
+    ============= ============================= ========== =========== =========================================================================================
+    /0            ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m`.
+    /0            ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in :math:`\mu m`.
+    /0            ``afferent_section_id``       uint32     Mandatory   The specific section on the target node where a synapse is placed.
+    /0            ``afferent_section_pos``      float32    Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
+    /0            ``afferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
+    /0            ``afferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
+    /0            ``afferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in um.  See :ref:`faq`.
+    /0            ``efferent_center_[x|y|z]``   float32    Mandatory   Same as ``afferent_center_[x|y|z]``, but for the synapse position at the axon of the presynaptic cell.
+    /0            ``efferent_surface_[x|y|z]``  float32    Mandatory   Same as ``efferent_center_[x|y|z]``, but the for the synapse location on the axon surface.
+    /0            ``efferent_section_id``       uint32     Mandatory   Same as ``afferent_section_id``, but for source node.
+    /0            ``efferent_section_pos``      float32    Mandatory   Same as ``afferent_section_pos``, but for source node.
+    /0            ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent.
+    /0            ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
+    /0            ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in :math:`\mu m`.
                                                                    See :ref:`faq`.
-    /0        ``conductance``               float32    Mandatory   The conductance of the synapse (nanosiemens); also referred to as ``g_syn``
-    /0        ``decay_time``                float32    Mandatory   The decay time of the synapse (milliseconds).
-    /0        ``depression_time``           float32    Mandatory   The depression time constant of the synapse (milliseconds), also referred to as ``f_syn``.
-    /0        ``facilitation_time``         float32    Mandatory   The facilitation time constant (milliseconds) of the synapse.
-    /0        ``u_syn``                     float32    Mandatory   The ``u`` parameter in the `Tsodyks Markram Model`_.
-    /0        ``n_rrp_vesicles``            uint32     Mandatory   Number of ``readily releasable pool`` of vesicles.
-    /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
-    /0        ``spine_morphology``          utf8       Optional    Spine morphology file relative path, without file extension.
-                                                                   Example "mymorphology" or "mypath/mymorphology".
-    /0        ``spine_psd_id``              uint32     Optional    The id of the spine postsynaptic density. If not set, id 0 is used by default.
-                                                                   A list containing the postsynaptic densities is defined in the spine morphology file, which is set in the spine_morphology field.
-                                                                   This id refers to the list index where that psd is stored.
+    /0            ``conductance``               float32    Mandatory   The conductance of the synapse (nanosiemens); also referred to as ``g_syn``
+    /0            ``decay_time``                float32    Mandatory   The decay time of the synapse (milliseconds).
+    /0            ``depression_time``           float32    Mandatory   The depression time constant of the synapse (milliseconds), also referred to as ``f_syn``.
+    /0            ``facilitation_time``         float32    Mandatory   The facilitation time constant (milliseconds) of the synapse.
+    /0            ``u_syn``                     float32    Mandatory   The ``u`` parameter in the `Tsodyks Markram Model`_.
+    /0            ``n_rrp_vesicles``            uint32     Mandatory   Number of ``readily releasable pool`` of vesicles.
+    /0            ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
+    /0            ``spine_morphology``          uint32     Optional    Integer that maps to a corresponding attribute in /0/@library/spine_morphology
+    /0            ``spine_psd_id``              int64      Optional    The id of the spine postsynaptic density. Set to -1 if synapse forms on the shaft.
+                                                                       A list containing the postsynaptic densities is defined in the spine morphology file, which is set in the spine_morphology field.
+                                                                       This id refers to the list index where that psd is stored.
+    /0            ``spine_sharing_id``          int64      Optional    The sharing id of the spine. This field value is the same for all the synapses that share the same spine.
+                                                                       These synapses must be on different postsynaptic densities. Set to -1 if synapse forms on the shaft.
+    /0            ``conductance_scale_factor``  float32    Optional    The scale factor for the conductance (no unit).If no value or negative, no change is applied.
+    /0            ``u_hill_coefficient``        float32    Optional    A coefficient describing the scaling of `u` to be done by the simulator. If no value, no change is applied.
 
-    /0        ``conductance_scale_factor``  float32    Optional    The scale factor for the conductance (no unit).If no value or negative, no change is applied.
-    /0        ``u_hill_coefficient``        float32    Optional    A coefficient describing the scaling of `u` to be done by the simulator. If no value, no change is applied.
+                                                                       .. math::
 
-                                                                   .. math::
+                                                                          u_\text{final} = u \cdot y \cdot \frac{ca^4}{u_\text{Hill}^4 + ca^4}
 
-                                                                      u_\text{final} = u \cdot y \cdot \frac{ca^4}{u_\text{Hill}^4 + ca^4}
+                                                                       where :math:`ca` denotes the simulated calcium concentration in
+                                                                       millimolar and :math:`y` a scalar such that at :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
 
-                                                                   where :math:`ca` denotes the simulated calcium concentration in
-                                                                   millimolar and :math:`y` a scalar such that at :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
-
-    /0        ``syn_type_id``               uint32     Mandatory   The position of the rule that leads to the synapse in the recipe + 100 if it is an excitatory synapse
-    /0        ``delay``                     float32    Mandatory   The axonal delay (in ms, ``NaN`` for dendro-dendritic synapses).
-    /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
-    /         ``source_node_id``            uint64     Mandatory   The id of the presynaptic neuron.
-    /         ``target_node_id``            uint64     Mandatory   The id of the postsynaptic neuron.
-    ========= ============================= ========== =========== =========================================================================================
+    /0            ``syn_type_id``               uint32     Mandatory   The position of the rule that leads to the synapse in the recipe + 100 if it is an excitatory synapse
+    /0            ``delay``                     float32    Mandatory   The axonal delay (in ms, ``NaN`` for dendro-dendritic synapses).
+    /0/@library   ``spine_morphology``          utf8       Optional    Spine morphology file relative path, without the file extension.
+                                                                       Example "mymorphology" or "mypath/mymorphology". Set to an empty string if synapse forms on the shaft.
+    /             ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
+    /             ``source_node_id``            uint64     Mandatory   The id of the presynaptic neuron.
+    /             ``target_node_id``            uint64     Mandatory   The id of the postsynaptic neuron.
+    ============= ============================= ========== =========== =========================================================================================
 
 
 ``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
