@@ -35,8 +35,8 @@ components
 
 *Optional*.
 
-These properties can be found under components where they will act as default values for the populations there are applicable.
-They can be found mainly under "populations" where in that case the property applies only to the particular population.
+These properties can be found under components where they will act as default values for the populations.
+They can be found also under "populations" where in that case the property applies only to the particular population.
 
 .. table::
 
@@ -134,6 +134,11 @@ A property of a node overriding default components. This property is **mandatory
 It is a dictionary with keys being node population names contained in the nodes_file and the values are dictionaries with the same properties as in `components`_.
 There is also one additional field `type` used to denote the population type.
 
+- The `populations` dictionary should contain only the node populations that are part of the circuit.
+  It must contain at least one population, but it doesn't need to contain all the populations present in the `nodes_file` if there are more.
+  It cannot be empty because it would mean that it's incomplete (ie: a population that should have been added, wasn't), or that the `nodes_file` shouldn't be added to the circuit.
+- The dictionary associated to each population may be empty if the components properties don't need to be overridden: see the `node_population_c` in the example that follows.
+
 .. _sonata_config_node_type:
 
 .. table::
@@ -142,7 +147,7 @@ There is also one additional field `type` used to denote the population type.
    Property                       Requirement  Description
    ============================== ============ ==========================================
    ...                            ...          Same as in `components`_
-   type                           Optional     The type of the population of one of these types:
+   type                           Optional     The type of the population, one of:
                                                   * :ref:`biophysical <biophysical_node_type>`
                                                   * `virtual`
                                                   * `single_compartment`
@@ -156,7 +161,7 @@ There is also one additional field `type` used to denote the population type.
 example::
 
   node_population_a overriding the default components with its own.
-  node_population_b do not override anything.
+  node_population_b and node_population_c do not override anything.
 
   "components": {
        "morphologies_dir": "/gpfs/bbp.epfl.ch/default//path/to/swc",
@@ -175,9 +180,11 @@ example::
                    "morphologies_dir": "...",
                    "biophysical_neuron_models_dir": "...",
                    "alternate_morphologies": ...
-                ...},
+                },
                 "node_population_b": {
                   "type": "virtual"
+                },
+                "node_population_c": {}
             }
         },
         ...
@@ -217,12 +224,22 @@ A property of an edge overriding default components. This property is **mandator
 It is a dictionary with keys being edge population names contained in the edges_file and the values are dictionaries with the same properties as in `components`_.
 There is also one additional field `type` used to denote the population type.
 
+- The `populations` dictionary should contain only the edge populations that are part of the circuit.
+  It must contain at least one population, but it doesn't need to contain all the populations present in the `edges_file` if there are more.
+  It cannot be empty because it would mean that it's incomplete (ie: a population that should have been added, wasn't), or that the `edges_file` shouldn't be added to the circuit.
+- The dictionary associated to each population may be empty if the components properties don't need to be overridden.
+
 .. table::
 
    ============================== ============ ==========================================
    Property                       Requirement  Description
    ============================== ============ ==========================================
    ...                            ...          Same as in `components`_
-   type                           Optional     The connection type of the population: a value in [`chemical`, `electrical`, `synapse_astrocyte`, `endfoot`].
+   type                           Optional     The connection type of the population, one of:
+                                                  * `chemical`
+                                                  * `electrical`
+                                                  * `synapse_astrocyte`
+                                                  * `endfoot`
+
                                                Default is `chemical`.
    ============================== ============ ==========================================
