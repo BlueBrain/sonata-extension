@@ -360,7 +360,7 @@ Connection type is ``electrical_synapse``. Used for gap junctions between neuron
     /0        ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
     /0        ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
     /0        ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in :math:`\mu m`.  See :ref:`faq`.
-    /0        ``afferent_junction_id``      unit32     Mandatory   An internal identifier for the simulator to perform electrical coupling.
+    /0        ``efferent_junction_id``      uint32     Mandatory   Same as ``afferent_junction_id``, but for source node.
     /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
     /0        ``conductance``               float32    Mandatory   The conductance of the gap junction (nanosiemens); also referred to as ``g_syn``
     /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
