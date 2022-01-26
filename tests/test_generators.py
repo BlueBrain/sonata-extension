@@ -99,12 +99,11 @@ tested:
         tested_obj = _generate_sample(setup_file, test_node_config_yaml, dirpath, morph_path,
                                       CustomNodeGenerator, type_)
         with h5py.File(tested_obj.info.filepath) as h5:
-            assert list(h5[f"nodes/{name_a}/"]) == ['0', 'node_type_id']
+            assert set(h5[f"nodes/{name_a}/"]) == {'0', 'node_type_id'}
             assert len(h5[f"nodes/{name_a}/node_type_id"]) == node_a_size
             assert np.unique(h5[f"nodes/{name_a}/node_type_id"]) == np.array([-1])
 
-            observed = list(h5[f"nodes/{name_a}/0"])
-            assert observed == ['a', 'b', 'c', 'd']
+            assert set(h5[f"nodes/{name_a}/0"]) == {'a', 'b', 'c', 'd'}
             assert h5[f"nodes/{name_a}/0/a"].dtype == np.int64
             assert h5[f"nodes/{name_a}/0/b"].dtype == np.float32
             assert h5[f"nodes/{name_a}/0/c"].dtype == np.float32
@@ -231,8 +230,9 @@ edge_tested:
         assert tested_obj.info.name == expected_name
         with h5py.File(tested_obj.info.filepath) as h5:
             name_a = expected_name
-            assert list(h5[f"edges/{name_a}/"]) == ['0', 'edge_type_id', 'indices',
-                                                    'source_node_id', 'target_node_id']
+            assert set(h5[f"edges/{name_a}/"]) == {
+                '0', 'edge_type_id', 'indices', 'source_node_id', 'target_node_id'
+            }
             assert len(h5[f"edges/{name_a}/edge_type_id"]) == edge_a_size
             assert np.unique(h5[f"edges/{name_a}/edge_type_id"]) == np.array([-1])
 
@@ -241,8 +241,7 @@ edge_tested:
             assert h5[f"edges/{name_a}/target_node_id"].attrs["node_population"] == target_name_a
             assert h5[f"edges/{name_a}/source_node_id"].attrs["node_population"] == source_name_a
 
-            observed = list(h5[f"edges/{name_a}/0"])
-            assert observed == ['a', 'b', 'c', 'd']
+            assert set(h5[f"edges/{name_a}/0"]) == {'a', 'b', 'c', 'd'}
             assert h5[f"edges/{name_a}/0/a"].dtype == np.int64
             assert h5[f"edges/{name_a}/0/b"].dtype == np.float32
             assert h5[f"edges/{name_a}/0/c"].dtype == np.float32

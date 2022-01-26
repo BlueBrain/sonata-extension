@@ -121,7 +121,7 @@ biophysical:
                                       tested.BiophysicalGenerator, type_)
 
         with h5py.File(tested_obj.info.filepath) as h5:
-            assert list(h5[f"nodes/{name_a}/"]) == ['0', 'node_type_id']
+            assert set(h5[f"nodes/{name_a}/"]) == {'0', 'node_type_id'}
             assert len(h5[f"nodes/{name_a}/node_type_id"]) == node_a_size
             assert np.unique(h5[f"nodes/{name_a}/node_type_id"]) == np.array([-1])
 
@@ -162,7 +162,7 @@ virtual:
                                       tested.VirtualGenerator, type_)
 
         with h5py.File(tested_obj.info.filepath) as h5:
-            assert list(h5[f"nodes/{name_a}/"]) == ['0', 'node_type_id']
+            assert set(h5[f"nodes/{name_a}/"]) == {'0', 'node_type_id'}
             assert len(h5[f"nodes/{name_a}/node_type_id"]) == node_a_size
             assert np.unique(h5[f"nodes/{name_a}/node_type_id"]) == np.array([-1])
 
@@ -312,8 +312,9 @@ edges:
         assert tested_obj.info.name == expected_name
         with h5py.File(tested_obj.info.filepath) as h5:
             name_edge = expected_name
-            assert list(h5[f"edges/{name_edge}/"]) == ['0', 'edge_type_id', 'indices',
-                                                    'source_node_id', 'target_node_id']
+            assert set(h5[f"edges/{name_edge}/"]) == {
+                '0', 'edge_type_id', 'indices', 'source_node_id', 'target_node_id'
+            }
             assert len(h5[f"edges/{name_edge}/edge_type_id"]) == edge_a_size
             assert np.unique(h5[f"edges/{name_edge}/edge_type_id"]) == np.array([-1])
 
@@ -395,8 +396,9 @@ edges:
         assert tested_obj.info.name == expected_name
         with h5py.File(tested_obj.info.filepath) as h5:
             name_edge = expected_name
-            assert list(h5[f"edges/{name_edge}/"]) == ['0', 'edge_type_id', 'indices',
-                                                       'source_node_id', 'target_node_id']
+            assert set(h5[f"edges/{name_edge}/"]) == {
+                '0', 'edge_type_id', 'indices', 'source_node_id', 'target_node_id'
+            }
             assert len(h5[f"edges/{name_edge}/edge_type_id"]) == edge_a_size
             assert np.unique(h5[f"edges/{name_edge}/edge_type_id"]) == np.array([-1])
 
@@ -406,6 +408,6 @@ edges:
             assert h5[f"edges/{name_edge}/target_node_id"].attrs["node_population"] == target_name
             assert h5[f"edges/{name_edge}/source_node_id"].attrs["node_population"] == source_name
 
-            for prop in list(h5[f"edges/{name_edge}/0/"]):
+            for prop in h5[f"edges/{name_edge}/0/"]:
                 assert not prop.startswith("efferent")
                 assert prop != "spine_length"

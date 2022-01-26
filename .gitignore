@@ -2,5 +2,5 @@
 *egg-info
 *pyc
 results*
-sg-venv
+venv
 .tox

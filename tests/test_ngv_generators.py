@@ -96,7 +96,7 @@ vasculature:
         shutil.copytree(Path(TEST_DATA_DIR, "vasculature"), Path(dirpath, component_global_path, morph_h5_relative_path))
         tested_obj = _generate_sample(setup_file, test_vasculature_config_yaml, dirpath, Path(dirpath, component_global_path), tested.VasculatureGenerator, type_)
         with h5py.File(tested_obj.info.filepath) as h5:
-            assert list(h5[f"nodes/{name_a}/"]) == ['0', 'node_type_id']
+            assert set(h5[f"nodes/{name_a}/"]) == {'0', 'node_type_id'}
             assert len(h5[f"nodes/{name_a}/node_type_id"]) == 587  # from a fixed morpho
             assert np.unique(h5[f"nodes/{name_a}/node_type_id"]) == np.array([-1])
 
@@ -175,7 +175,7 @@ astrocyte:
                                       tested.AstrocyteGenerator, type_)
 
         with h5py.File(tested_obj.info.filepath) as h5:
-            assert list(h5[f"nodes/{name_a}/"]) == ['0', 'node_type_id']
+            assert set(h5[f"nodes/{name_a}/"]) == {'0', 'node_type_id'}
             assert len(h5[f"nodes/{name_a}/node_type_id"]) == node_a_size
             assert np.unique(h5[f"nodes/{name_a}/node_type_id"]) == np.array([-1])
 
@@ -303,8 +303,9 @@ edges:
         assert tested_obj.info.name == expected_name
         with h5py.File(tested_obj.info.filepath) as h5:
             name_edge = expected_name
-            assert list(h5[f"edges/{name_edge}/"]) == ['0', 'edge_type_id', 'indices',
-                                                       'source_node_id', 'target_node_id']
+            assert set(h5[f"edges/{name_edge}/"]) == {
+                '0', 'edge_type_id', 'indices', 'source_node_id', 'target_node_id'
+            }
             assert len(h5[f"edges/{name_edge}/edge_type_id"]) == edge_a_size
             assert np.unique(h5[f"edges/{name_edge}/edge_type_id"]) == np.array([-1])
 

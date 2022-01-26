@@ -28,7 +28,7 @@ setup(
         "vasculatureapi>=0.2.1"
     ],
     packages=find_packages(),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     entry_points={
         'console_scripts': [
             'sonata-generator=sonata_generator.app.__main__:main'
