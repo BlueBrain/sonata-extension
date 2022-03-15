@@ -709,12 +709,12 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :description:
          Type of the connectivity between the Source and Target of the StimulusInject.
          Used to select the proper edge manager in neurodamus-py.
-         Valid types are: [`Synaptic`, `GapJunction`, `NeuroGlial`, `GlioVascular`]
+         Valid types are: [`Synaptic`, `GapJunction`, `NeuroGlial`, `GlioVascular`, `NeuroModulation`]
          Default value is `Synaptic`.
          Additional types can be specified in the ConnectionTypes member of additional plug-in
          Engines. For example the PointEngine included in neurodamus-py defines also `Point` type.
          This nomenclature of the types is specific to Neurodamus and corresponds to the SONATA
-         types [`chemical`, `electrical`, `synapse_astrocyte`, `endfoot`].
+         types [`chemical`, `electrical`, `synapse_astrocyte`, `endfoot`, `neuromodulatory`].
 
 
 .. blueconfig_section:: Modification
@@ -863,6 +863,28 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          The weight modifications of this Connection can be applied after a
          specified delay has elapsed. Note that only Weight modifications are
          applied and no other features of Connection sections
+         
+    .. blueconfig_value:: NeuromodDtc
+        :type: float
+        :required: False
+        :unit: ms
+        :description:
+         Only applicable to `NeuroModulation` projections. It can be used to
+         override the {{neuromod_dtc}} values between the selected {{Source}}
+         and {{Destination}} neurons. It represents the decay time constant
+         of the neuromodulator concentration at the target synapse
+         
+    .. blueconfig_value:: NeuromodStrength
+        :type: float
+        :required: False
+        :unit: :math:`\mu M`
+        :description:
+         Only applicable to `NeuroModulation` projections. It can be used to
+         override the {{neuromod_strength}} values between the selected {{Source}}
+         and {{Destination}} neurons. It represents the amount of increase
+         of the neuromodulator concentration at the synapse when an incoming
+         neuromodulatory event (i.e., a spike in the virtual pre-synaptic
+         neuron) is transmitted to the target synapse
 
     .. blueconfig_value:: Source
         :type: target
@@ -974,7 +996,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         Distinguishes "Synaptic" projections from "GapJunction" projections.
+         Distinguishes between "Synaptic", "GapJunction", and "NeuroModulation" projections.
          If omitted, Synaptic is assumed.
 
     .. blueconfig_value:: NumSynapseFiles
