@@ -38,6 +38,9 @@ components
 These properties can be found under components where they will act as default values for the populations.
 They can be found also under "populations" where in that case the property applies only to the particular population.
 
+.. warning::
+    In case of `biophysical` nodes: `morphologies_dir`, `alternate_morphologies` or both **must** be defined!
+
 .. table::
 
    =============================== =========== ====================================
@@ -46,7 +49,6 @@ They can be found also under "populations" where in that case the property appli
    morphologies_dir                Optional    Path to the directory containing the morphologies.
                                                This path is used in conjonction with the morphology property (see :doc:`sonata_tech`) to find the morphology.
                                                By default, the concatenation of the morphology_dir + morphology_property + ".swc" extension.
-                                               There must be one defined for `biophysical` node populations.
    `alternate_morphologies`_       Optional    Dictionary for alternate directory paths.
    biophysical_neuron_models_dir   Optional    Path to the template HOC files defining the E-Model.
                                                There must be one defined for `biophysical` node populations.
