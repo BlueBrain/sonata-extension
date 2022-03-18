@@ -237,7 +237,7 @@ There is also one additional field `type` used to denote the population type.
    ...                            ...          Same as in `components`_
    type                           Optional     The connection type of the population, one of:
                                                   * `chemical`
-                                                  * `electrical_synapse`
+                                                  * `electrical`
                                                   * `synapse_astrocyte`
                                                   * `endfoot`
                                                   * `neuromodulatory`
