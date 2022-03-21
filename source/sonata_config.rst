@@ -60,6 +60,7 @@ They can be found also under "populations" where in that case the property appli
    spine_morphologies_dir          Optional    Path to the directory containing the dendritic spine morphologies.
                                                This path is used in conjonction with the spine_morphology property (see :doc:`sonata_tech`) to find the spine_morphology.
                                                By default, the concatenation of the spine_morphologies_dir + spine_morphology_property + ".h5" extension.
+   provenance                      Optional    Dictionary containing provenance metadata (e.g. bioname).
    =============================== =========== ====================================
 
 alternate_morphologies
@@ -87,6 +88,26 @@ example::
        }
 
   }
+
+provenance
+^^^^^^^^^^
+An *optional* dictionary containing provenance metadata used to build the population(s).
+
+.. table::
+
+  =============================== =========== ===================================================
+  Property                        Requirement Description
+  =============================== =========== ===================================================
+  'bioname_dir'                   Mandatory   Folder path containing the bioname configurations
+  =============================== =========== ===================================================
+
+example::
+
+    "components": {
+        "provenance" : {
+            "bioname_dir": "/gpfs/bbp.epfl.ch/path/to/bioname/directory"
+        }
+    }
 
 node_sets_file
 --------------
