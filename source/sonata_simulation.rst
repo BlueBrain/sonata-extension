@@ -7,6 +7,22 @@ A simulation configuration file is a json formatted text file used for storing s
 
 The file is broken up into separate sections detailed below.
 
+manifest
+--------
+
+*Optional*.
+
+Variables defining paths and being used in the rest of the simulation configuration file.
+A variable can be defined as:
+
+- "." which is the path to the directory containing the simulation configuration file
+
+- an absolute path
+
+"." is always resolved as the directory containing the simulation configuration file even in the absence of manifest.
+
+The manifest is only valid in its local file, e.g., the circuit manifest variables are not visible here.
+
 run
 ---
 
