@@ -1,6 +1,6 @@
 {
   "name": "circuit-documentation",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "Circuit Documentation",
   "repository": {
     "url": "https://bbpgitlab.epfl.ch/common/doc/circuit-documentation"
