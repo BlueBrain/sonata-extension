@@ -73,3 +73,7 @@ html_static_path = ['_static']
 html_show_sourcelink = False
 
 todo_include_todos = True
+
+# to have a SONATA config version as a global substitution value
+CURRENT_SONATA_CONFIG_VERSION = "2.2"  # update this value as needed
+rst_epilog = f'.. |CurrentSonataConfigVersion| replace:: "{CURRENT_SONATA_CONFIG_VERSION}"'

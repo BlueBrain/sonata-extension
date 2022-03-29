@@ -7,6 +7,15 @@ A simulation configuration file is a json formatted text file used for storing s
 
 The file is broken up into separate sections detailed below.
 
+version
+-------
+
+*Optional*.
+
+Follows the same guidelines as in :ref:`Circuit Config Version <CircuitConfigVersion>` and shares the same version number.
+The current version is |CurrentSonataConfigVersion|.
+
+
 manifest
 --------
 
@@ -294,7 +303,7 @@ reports
 
 *Optional*.
 
-Collection of dictionaries with each member describing one data collection during the simulation such as compartment voltage. 
+Collection of dictionaries with each member describing one data collection during the simulation such as compartment voltage.
 
 .. table::
 
@@ -318,7 +327,7 @@ Collection of dictionaries with each member describing one data collection durin
 More on type summation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-This type of report is intended to accommodate related variables that exist in a section. For example, various electrical current sources. 
+This type of report is intended to accommodate related variables that exist in a section. For example, various electrical current sources.
 Depending on the sections value, the behavior of the summation adapts. Given "soma", the values are summed across the whole cell and stored as a single value. For other sections value (e.g. "all"), values are only summed within the same compartment and stored per compartment.
 
 .. image:: images/summation_imembrane.png
