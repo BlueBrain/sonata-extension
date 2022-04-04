@@ -10,7 +10,7 @@ version
 
 An integer defining the version of the SONATA specification.
 The default value is "1" as for the specification described in the SONATA original paper.
-This version is "2.1".
+This version is "2.2".
 
 
 manifest
