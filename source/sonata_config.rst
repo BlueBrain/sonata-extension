@@ -57,8 +57,10 @@ They can be found also under "populations" where in that case the property appli
                                                Only for `vasculature` node populations where it is mandatory.
    vasculature_mesh                Optional    Path to the .obj file containing the mesh of a vasculature morphology.
                                                Only for `vasculature` node populations where it is mandatory.
-   end_feet_area                   Optional    Path to the .h5 representing end feet meshes.
+   endfeet_meshes_file             Optional    Path to the .h5 representing end feet meshes.
                                                Only for `endfoot` edge populations where it is mandatory.
+   microdomains_file               Optional    Path to the .h5 storing microdomain data.
+                                               Only for `astrocyte` node populations where it is mandatory.
    spine_morphologies_dir          Optional    Path to the directory containing the dendritic spine morphologies.
                                                This path is used in conjonction with the spine_morphology property (see :doc:`sonata_tech`) to find the spine_morphology.
                                                By default, the concatenation of the spine_morphologies_dir + spine_morphology_property + ".h5" extension.

@@ -113,9 +113,8 @@ Fields for astrocyte population (model_type: `astrocyte`)
 This type of population requires extra datasets. These datasets are represented in the sonata config file as:
 
     "microdomains_file": path/to/the/microdomain/tessellation
-    "microdomains_overlapping_file": path/to/the/overlapping/microdomain/tessellation
 
-where "microdomains_file" and "microdomains_overlapping_file" correspond to the microdomain tessellation and its overlapping transformation respectively.
+where "microdomains_file" correspond to the microdomain tessellation (See :ref:`here<microdomains>` for full description of the microdomains dataset).
 
 Fields for vasculature population (model_type: `vasculature`)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -221,6 +220,9 @@ Fields for Edges
 
 Fields for chemical connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _chemical_connection:
+
 Connection type is ``chemical``.
 Group column represents the HDF group where the dataset is located under /<population>. "/" means it is directly under /<population>.
 
@@ -376,19 +378,22 @@ Neuroglial connectivity. Astrocytes establish tripartite connections with synaps
 
 .. table::
 
-    ========= ============================= ========== =========== ============================================================================================
-    Group     Field                         Type       Requirement Description
-    ========= ============================= ========== =========== ============================================================================================
-    /0        ``astrocyte_section_id``      uint32     Mandatory   The id of the closest astrocyte morphology's section to the connected neuron-neuron synapse.
-    /0        ``astrocyte_segment_id``      uint32     Mandatory   The id of the closest astrocyte morphology's segment to the connected neuron-neuron synapse.
-    /0        ``astrocyte_segment_offset``  float32    Mandatory   The offset on the respective segment corresponding to the closest point to the respective synapse. In :math:`\mu m`.
-    /0        ``astrocyte_section_pos``     float32    Mandatory   Given the section of where a synapse is closest on the astrocyte the position along the length of that section normalized to the range [0.1] where 0 is at the start of the section and 1 is at the end of the section.
-    /0        ``synapse_id``                uint64     Mandatory   Edge id of the neuron-neuron synapse to which the astrocyte connects. JDC: issue which edge population... ? source and target are not enough here.
-    /0        ``synapse_population``        utf8       Mandatory   Edge population of the neuron-neuron synapse to which the astrocyte connects.
-    /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
-    /         ``source_node_id``            uint64     Mandatory   The node id of the astrocyte.
-    /         ``target_node_id``            uint64     Mandatory   The node id of the post-synaptic neuron of the tripartite connection.
-    ========= ============================= ========== =========== ============================================================================================
+    ========= =============================  ========== =========== ============================================================================================
+    Group     Field                          Type       Requirement Description
+    ========= =============================  ========== =========== ============================================================================================
+    /0        ``astrocyte_section_id``       uint32     Mandatory   The id of the closest astrocyte morphology's section to the connected neuron-neuron synapse.
+    /0        ``astrocyte_segment_id``       uint32     Mandatory   The id of the closest astrocyte morphology's segment to the connected neuron-neuron synapse.
+    /0        ``astrocyte_segment_offset``   float32    Mandatory   The offset on the respective segment corresponding to the closest point to the respective synapse. In :math:`\mu m`.
+    /0        ``astrocyte_section_pos``      float32    Mandatory   Given the section of where a synapse is closest on the astrocyte the position along the length
+                                                                    of that section normalized to the range [0.1] where 0 is at the start of the section and 1 is at the end of the section.
+    /0        ``astrocyte_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m` on the target cell.
+                                                                    This is equivalent to calculating the branch connection point from the morphology's section_id and section_pos.
+    /0        ``synapse_id``                 uint64     Mandatory   Edge id of the :ref:`chemical connection<chemical_connection>` to which the astrocyte connects. JDC: issue which edge population... ? source and target are not enough here.
+    /0        ``synapse_population``         utf8       Mandatory   Edge population of the neuron-neuron synapse to which the astrocyte connects.
+    /         ``edge_type_id``               int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
+    /         ``source_node_id``             uint64     Mandatory   The node id of the astrocyte.
+    /         ``target_node_id``             uint64     Mandatory   The node id of the post-synaptic neuron of the tripartite connection.
+    ========= =============================  ========== =========== ============================================================================================
 
 ``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
 
@@ -398,6 +403,9 @@ Neuroglial connectivity. Astrocytes establish tripartite connections with synaps
 
 Fields for endfoot connection type edges
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _endfoot_edges:
+
 Connection type is ``endfoot``.
 Gliovascular connectivity. Connection between the vasculature and astrocytes. Each edge corresponds to a perivascular endfoot that links an astrocyte with a vasculature segment.
 
@@ -423,7 +431,9 @@ Gliovascular connectivity. Connection between the vasculature and astrocytes. Ea
 
 This type of population requires extra datasets:
 
-    "endfeet_areas": path/to/endfeet/meshes
+    "endfeet_meshes": path/to/endfeet/meshes
+
+The ``endfeet_meshes`` dataset stores the endfeet surface mesh geometry of the perivascular endfeet on the surface of the vasculature. (For a description of the dataset contents see :ref:`here<endfeet_meshes>`)
 
 Fields for "point neuron connectivity"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
