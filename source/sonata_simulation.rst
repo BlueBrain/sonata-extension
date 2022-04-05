@@ -23,6 +23,17 @@ A variable can be defined as:
 
 The manifest is only valid in its local file, e.g., the circuit manifest variables are not visible here.
 
+network
+-------
+
+*Optional*
+
+A parameter specifying the path of the circuit configuration file for which the simulation should be performed. The default value is "circuit_config.json".
+
+example::
+
+  "network": "${BASE_DIR}/circuit_config.json"
+
 run
 ---
 
