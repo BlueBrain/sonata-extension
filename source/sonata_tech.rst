@@ -437,12 +437,10 @@ Connection type is ``neuromodulatory``. Used for neuromodulatory projections bet
     /0        ``afferent_section_id``       int16      Mandatory   The specific section on the target node (same of target synapse).
     /0        ``afferent_section_pos``      float32    Mandatory   The specific section position (same of target synapse).
     /0        ``afferent_segment_id``       int16      Mandatory   The specific segment on the target node (same of target synapse).
-    /0        ``conductance``               float32    Mandatory   Not used, but needs to stay to not crash neurodamus. Can all be zeros or ones.
     /0        ``delay``                     float32    Mandatory   The axonal delay. In ms.
     /0        ``neuromod_dtc``              float32    Mandatory   Decay time constant (in ms) for the running value of neuromodulator concentration at the synapse.
     /0        ``neuromod_strength``         float32    Mandatory   Amount of the increase in neuromodulator concentration at the synapse when a neuromodulatory event is transmitted. In :math:`\mu M`.
-    /0        ``syn_type_id``               int32      Mandatory   Not used, can all be 999 as a placeholder for neuromodulatory connections.
-    /         ``edge_type_id``              int64      Mandatory   Not used, can all be zeros.
+    /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
     /         ``source_node_id``            uint64     Mandatory   The id of the presynaptic virtual neuron.
     /         ``target_node_id``            uint64     Mandatory   The id of the postsynaptic cell (same of target synapse).
     ========= ============================= ========== =========== ============================================================================================
