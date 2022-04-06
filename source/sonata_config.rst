@@ -38,6 +38,9 @@ components
 These properties can be found under components where they will act as default values for the populations.
 They can be found also under "populations" where in that case the property applies only to the particular population.
 
+.. warning::
+    In case of `biophysical` nodes: `morphologies_dir`, `alternate_morphologies` or both **must** be defined!
+
 .. table::
 
    =============================== =========== ====================================
@@ -46,7 +49,6 @@ They can be found also under "populations" where in that case the property appli
    morphologies_dir                Optional    Path to the directory containing the morphologies.
                                                This path is used in conjonction with the morphology property (see :doc:`sonata_tech`) to find the morphology.
                                                By default, the concatenation of the morphology_dir + morphology_property + ".swc" extension.
-                                               There must be one defined for `biophysical` node populations.
    `alternate_morphologies`_       Optional    Dictionary for alternate directory paths.
    biophysical_neuron_models_dir   Optional    Path to the template HOC files defining the E-Model.
                                                There must be one defined for `biophysical` node populations.
@@ -55,11 +57,14 @@ They can be found also under "populations" where in that case the property appli
                                                Only for `vasculature` node populations where it is mandatory.
    vasculature_mesh                Optional    Path to the .obj file containing the mesh of a vasculature morphology.
                                                Only for `vasculature` node populations where it is mandatory.
-   end_feet_area                   Optional    Path to the .h5 representing end feet meshes.
+   endfeet_meshes_file             Optional    Path to the .h5 representing end feet meshes.
                                                Only for `endfoot` edge populations where it is mandatory.
+   microdomains_file               Optional    Path to the .h5 storing microdomain data.
+                                               Only for `astrocyte` node populations where it is mandatory.
    spine_morphologies_dir          Optional    Path to the directory containing the dendritic spine morphologies.
                                                This path is used in conjonction with the spine_morphology property (see :doc:`sonata_tech`) to find the spine_morphology.
                                                By default, the concatenation of the spine_morphologies_dir + spine_morphology_property + ".h5" extension.
+   provenance                      Optional    Dictionary containing provenance metadata (e.g. bioname).
    =============================== =========== ====================================
 
 alternate_morphologies
@@ -87,6 +92,26 @@ example::
        }
 
   }
+
+provenance
+^^^^^^^^^^
+An *optional* dictionary containing provenance metadata used to build the population(s).
+
+.. table::
+
+  =============================== =========== ===================================================
+  Property                        Requirement Description
+  =============================== =========== ===================================================
+  'bioname_dir'                   Mandatory   Folder path containing the bioname configurations
+  =============================== =========== ===================================================
+
+example::
+
+    "components": {
+        "provenance" : {
+            "bioname_dir": "/gpfs/bbp.epfl.ch/path/to/bioname/directory"
+        }
+    }
 
 node_sets_file
 --------------

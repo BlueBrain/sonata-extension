@@ -4,5 +4,6 @@ Neuro Glia Vasculature
 .. toctree::
    :hidden:
 
-   endfeet_area
+   grouped_properties
+   endfeet_meshes
    microdomains
