@@ -13,3 +13,4 @@ SONATA Circuit description
    sonata_tech
    sonata_report
    sonata_examples
+   sonata_version_history
