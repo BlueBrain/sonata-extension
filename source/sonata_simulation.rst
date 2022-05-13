@@ -114,7 +114,7 @@ Parameters defining global experimental conditions.
    =============================== ========== =========== ====================================
    celsius                         float      Optional    Temperature of experiment. Default is 34.0.
    v_init                          float      Optional    Initial membrane voltage in mV. Default is -80.
-   synapses_init_depleted          float      Optional    Synapse at start of simulation are in deleted state. Default is false.
+   synapses_init_depleted          boolean    Optional    Synapse at start of simulation are in deleted state. Default is false.
    extracellular_calcium           float      Optional    Extracellular calcium concentration. When this parameter is provided, apply it to the synapse uHill parameter to scale the U parameter of synapses (py-neurodamus only feature). If not specified, U is set directly as read from edges file.
    minis_single_vesicle            boolean    Optional    For synapse models with multiple vesicles, limit spontaneous release to single vesicle when true. Default is false which allows for any number of ready vesicles to be potentially released.
    randomize_gaba_rise_time        boolean    Optional    When true, enable legacy behavior to randomize the GABA_A rise time in the helper functions. Default is false which will use a prescribed value for GABA_A rise time.
