@@ -361,7 +361,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          The spike detection location.
-         Can be either 'SOMA' for detecting spikes in the soma or 'AIS' for
+         Can be either 'soma' for detecting spikes in the soma or 'AIS' for
          detecting spikes on the AIS.
 
     .. blueconfig_value:: SpikeThreshold
