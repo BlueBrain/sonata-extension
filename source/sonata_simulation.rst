@@ -35,13 +35,34 @@ The manifest is only valid in its local file, e.g., the circuit manifest variabl
 network
 -------
 
-*Optional*
+*Optional*.
 
 A parameter specifying the path of the circuit configuration file for which the simulation should be performed. The default value is "circuit_config.json".
 
 example::
 
   "network": "${BASE_DIR}/circuit_config.json"
+
+target_simulator
+----------------
+
+*Optional*.
+
+A parameter specifying which simulator to run. Supported values : "NEURON" and "CORENEURON". Default is "NEURON".
+
+node_sets_file
+--------------
+
+*Optional*.
+
+A file defining the list of nodesets applicable to the simulation and overriding the "node_sets_file" from the circuit configuration file which is specified by "network".
+
+node_set
+--------
+
+*Optional*.
+
+A parameter specifying the cells from which node set should be instantiated for the simulation. The absence of that property means that all (non virtual) nodes of all populations are loaded.
 
 run
 ---
@@ -230,6 +251,7 @@ Spike events are created from the cells indicated in a file and delivered to the
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    spike_file                     text       Mandatory    Indicates the location of the file with the spike info for injection.
+   source                         text       Optional     The node set to replay spikes from.
    ============================== ========== ============ ==========================================
 
 seclamp (voltage_clamp)
