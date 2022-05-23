@@ -6,6 +6,12 @@ SONATA Version History
 The version of the configuration is shared by both simulation and circuit configuration.
 This listing keeps track of the main changes between versions that could be interesting for the developers.
 
+2.3
+---
+- Technical Description
+
+  - Added conductance stimulation in simulation Configuration
+
 2.2
 ---
 - Technical description

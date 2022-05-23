@@ -123,8 +123,8 @@ Parameters defining global experimental conditions.
 example::
 
   "conditions": {
-       "celcius": 34.0,
-       "synapses_init_deleted": false
+       "celsius": 34.0,
+       "synapses_init_depleted": false
   }
 
 inputs
@@ -139,8 +139,8 @@ Collection of dictionaries with each member describing one pattern of stimulus t
    ============================== ========== ============ ==========================================
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
-   module                         text       Mandatory    The type of stimulus dictating additional parameters (see addtional tables below). Supported values: "linear", "relative_linear", "pulse", "subthreshold", "hyperpolarizing", "synapse_replay", "seclamp", "noise", "shot_noise", "relative_shot_noise".
-   input_type                     text       Mandatory    The type of the input with the reserved values : "spikes", ”extracellular_stimulation”, ”current_clamp”, ”voltage_clamp”. Should correspond according to the module (see additional tables below). Currently, not validated by BBP simulation which will use the appropriate input_type regardless of the string passed.
+   module                         text       Mandatory    The type of stimulus dictating additional parameters (see addtional tables below). Supported values: "linear", "relative_linear", "pulse", "subthreshold", "hyperpolarizing", "synapse_replay", "seclamp", "noise", "shot_noise", "relative_shot_noise", "absolute_shot_noise", "ornstein_uhlenbeck", "relative_ornstein_uhlenbeck".
+   input_type                     text       Mandatory    The type of the input with the reserved values : "spikes", "extracellular_stimulation", "current_clamp", "voltage_clamp", "conductance". Should correspond according to the module (see additional tables below). Currently, not validated by BBP simulation which will use the appropriate input_type regardless of the string passed.
    delay                          float      Mandatory    Time in ms when input is activated.
    duration                       float      Mandatory    Time duration in ms for how long input is activated.
    node_set                       text       Mandatory    Node set which is affected by input.
@@ -172,8 +172,8 @@ A continues injection of current, regulated according to the current a cell requ
    ============================== ========== ============ ==========================================
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
-   percent_start                  float      Mandatory    The percentage of a cell’s threshold current to inject when the stimulus activates.
-   percent_end                    float      Optional     If given, The percentage of a cell’s threshold current is interpolated such that the percentage reaches this value when the stimulus concludes. Otherwise, stays at percent_start.
+   percent_start                  float      Mandatory    The percentage of a cell's threshold current to inject when the stimulus activates.
+   percent_end                    float      Optional     If given, The percentage of a cell's threshold current is interpolated such that the percentage reaches this value when the stimulus concludes. Otherwise, stays at percent_start.
    ============================== ========== ============ ==========================================
 
 pulse (current_clamp)
@@ -257,31 +257,8 @@ Note: one must chose either "mean" or "mean_percent".
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    mean                           float      Mandatory*   The mean value of current to inject. Given in nA.
-   mean_percent                   float      Mandatory*   The mean value of current to inject as a percentage of a cell’s threshold current.
+   mean_percent                   float      Mandatory*   The mean value of current to inject as a percentage of a cell's threshold current.
    variance                       float      Optional     The variance around the mean of current to inject using a normal distribution.
-   ============================== ========== ============ ==========================================
-
-shot_noise and relative_shot_noise (current_clamp)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Generate a Poisson shot noise signal consisting of bi-exponential pulses with gamma distributed amplitudes occurring at exponentially distributed time intervals, resembling random synaptic input. In the Relative version, the three parameters (amp_cv, mean_percent, sd_ercent) are used to obtain the other three (rate, amp_mean, amp_var) through an analytical result that connects them.
-Note: fields marked Mandatory* depend on which shot_noise is selected.
-
-.. table::
-
-   ============================== ========== ============ ==========================================
-   Property                       Type       Requirement  Description
-   ============================== ========== ============ ==========================================
-   rise_time                      float      Mandatory    The rise time of the bi-exponential shots in ms.
-   decay_time                     float      Mandatory    The decay time of the bi-exponential shots in ms.
-   rate                           integer    Mandatory*   For shot_noise, rate of Poisson events in Hz.
-   amp_mean                       float      Mandatory*   For shot_noise, the mean of gamma-distributed amplitudes in nA.
-   amp_var                        float      Mandatory*   For shot_noise, the variance of gamma-distributed amplitudes in nA^2.
-   amp_cv                         float      Mandatory*   For relative_shot_noise, coefficient of variation (sd/mean) of gamma-distributed amplitudes.
-   mean_percent                   float      Mandatory*   For relative_shot_noise, the mean of the current to inject as percent of cell threshold current.
-   sd_percent                     float      Mandatory*   For relative_shot_noise, the std dev of the current to inject as a percent of a cell’s threshold current.
-   dt                             float      Optional     Timestep of the injected current in ms. Default is 0.25 ms.
-   random_seed                    integer    Mandatory    Override the random seed (to introduce correlations between cells).
    ============================== ========== ============ ==========================================
 
 example::
@@ -298,6 +275,54 @@ example::
        }
   }
 
+shot_noise, absolute_shot_noise and relative_shot_noise (current_clamp or conductance)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Generate a Poisson shot noise signal consisting of bi-exponential pulses with gamma distributed amplitudes occurring at exponentially distributed time intervals, resembling random synaptic input. In the Relative and Absolute versions the three parameters (rate, amp_mean, amp_var) are obtained from other three parameters: (amp_cv, mean_percent, sd_percent) for Relative and (amp_cv, mean, sigma) for Absolute, through and analytical result that connects them. In the Relative version the parameters (mean, sigma) are computed relative to a cell's threshold current (current_clamp) or inverse input resistance (conductance), by scaling these with (mean_percent, sd_percent).
+The input resistance values must be provided as an additional dataset ``@dynamics/input_resistance`` in the nodes file.
+Note: fields marked Mandatory* depend on which shot_noise version is selected.
+
+.. table::
+
+   ============================== ========== ============ ==========================================
+   Property                       Type       Requirement  Description
+   ============================== ========== ============ ==========================================
+   rise_time                      float      Mandatory    The rise time of the bi-exponential shots in ms.
+   decay_time                     float      Mandatory    The decay time of the bi-exponential shots in ms.
+   rate                           float      Mandatory*   For shot_noise, rate of Poisson events in Hz.
+   amp_mean                       float      Mandatory*   For shot_noise, mean of gamma-distributed amplitudes in nA (current_clamp) or uS (conductance).
+   amp_var                        float      Mandatory*   For shot_noise, variance of gamma-distributed amplitudes in nA^2 (current_clamp) or uS^2 (conductance).
+   amp_cv                         float      Mandatory*   For relative_shot_noise and absolute_shot_noise, coefficient of variation (sd/mean) of gamma-distributed amplitudes.
+   mean_percent                   float      Mandatory*   For relative_shot_noise, signal mean as percentage of a cell's threshold current (current_clamp) or inverse input resistance (conductance).
+   sd_percent                     float      Mandatory*   For relative_shot_noise, signal std dev as percentage of a cell's threshold current (current_clamp) or inverse input resistance (conductance).
+   mean                           float      Mandatory*   For absolute_shot_noise, signal mean in nA (current_clamp) or uS (conductance).
+   sigma                          float      Mandatory*   For absolute_shot_noise, signal std dev in nA (current_clamp) or uS (conductance).
+   dt                             float      Optional     Timestep of generated signal in ms. Default is 0.25 ms.
+   random_seed                    integer    Optional     Override the random seed (to introduce correlations between cells).
+   ============================== ========== ============ ==========================================
+
+ornstein_uhlenbeck and relative_ornstein_uhlenbeck (current_clamp or conductance)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generate an `Ornstein-Uhlenbeck process <https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process>`_ signal injected as a conductance or current. In the Relative version the parameters (mean, sigma) are computed relative to a cell's inverse input resistance (conductance) or threshold current (current_clamp), by scaling these with (mean_percent, sd_percent).
+The input resistance values must be provided as an additional dataset ``@dynamics/input_resistance`` in the nodes file.
+Note: fields marked Mandatory* depend on which ornstein_uhlenbeck version is selected.
+
+
+.. table::
+
+   ============================== ========== ============ ==========================================
+   Property                       Type       Requirement  Description
+   ============================== ========== ============ ==========================================
+   tau                            float      Mandatory    Relaxation time constant in ms.
+   mean_percent                   float      Mandatory*   For relative_ornstein_uhlenbeck, signal mean as percentage of a cell's threshold current (current_clamp) or inverse input resistance (conductance).
+   sd_percent                     float      Mandatory*   For relative_ornstein_uhlenbeck, signal std dev as percentage of a cell's threshold current (current_clamp) or inverse input resistance (conductance).
+   mean                           float      Mandatory*   For ornstein_uhlenbeck, signal mean in nA (current_clamp) or uS (conductance).
+   sigma                          float      Mandatory*   For ornstein_uhlenbeck, signal std dev in nA (current_clamp) or uS (conductance).
+   reversal                       float      Optional     Reversal potential for conductance injection in mV. Default is 0.
+   dt                             float      Optional     Timestep of generated signal in ms. Default is 0.25 ms.
+   random_seed                    integer    Optional     Override the random seed (to introduce correlations between cells).
+   ============================== ========== ============ ==========================================
+
 reports
 -------
 
@@ -313,7 +338,7 @@ Collection of dictionaries with each member describing one data collection durin
    cells                          text       Mandatory    Specify which node_set to report.
    sections                       text       Optional     Specify which section(s) to report – available labels are dependent on the model setup. To report on all sections, use the keyword "all". Default is "soma". At BBP, we currently support "soma", "axon", "dend", "apic", or "all".
    type                           text       Mandatory    Indicates type of data collected. "compartment", "summation", or "synapse". Compartment means that each compartment outputs separately in the report file. Summation will sum up the values from compartments to write a single value to the report (section soma) or sum up the values and leave them in each compartment (other section types). More on summation after the table. Synapse indicates that each synapse afferent to the reported cells will have a separate entry in the report.
-   scaling                        text       Optional     For summation type reporting, specify the handling of density values: “none” disables all scaling, “area” (default) converts density to area values. This makes them compatible with values from point processes such as synapses.
+   scaling                        text       Optional     For summation type reporting, specify the handling of density values: "none" disables all scaling, "area" (default) converts density to area values. This makes them compatible with values from point processes such as synapses.
    compartments                   text       Optional     For compartment type reporting, override which compartments of a section are selected to report. Options are "center" or "all". When using "sections":"soma", default is "center", for other section options, default is "all".
    variable_name                  text       Mandatory    The Simulation variable to access. The variables available are model dependent. For summation type, can sum multiple variables by indicating as a comma separated strings. e.g. "ina", "ik"
    unit                           text       Optional     String to output as descriptive test for unit recorded. Not validated for correctness.
@@ -430,4 +455,3 @@ example::
             "target": "Mosaic",
             "synapse_configure": "%s.Fac = 0 %s.Dep = 0"
   }
-

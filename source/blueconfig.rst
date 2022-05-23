@@ -425,7 +425,8 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Type of stimulus: Linear, RelativeLinear, Pulse, Subthreshold, Noise, SynapseReplay,
-         Hyperpolarizing, ReplayVoltageTrace, SEClamp, ShotNoise, RelativeShotNoise
+         Hyperpolarizing, ReplayVoltageTrace, SEClamp, ShotNoise, RelativeShotNoise,
+         AbsoluteShotNoise, OrnsteinUhlenbeck, RelativeOrnsteinUhlenbeck.
          NOTE: Sinusoidal, NPoisson and NPoissonInhomogeneus are deprecated.
           For poisson stims, please consider using replay on projections instead
 
@@ -442,7 +443,10 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Current is used for most stimuli.  Exceptions include
-         ReplayVoltageTrace and SEClamp which then use "Voltage" instead
+         ReplayVoltageTrace and SEClamp which then use "Voltage" instead.
+         Conductance stimuli use "Conductance", and some stimuli (ShotNoise,
+         AbsoluteShotNoise and OrnsteinUhlenbeck) can be injected as either
+         Current or Conductance.
 
     .. blueconfig_value:: AmpStart
         :type: float
@@ -510,9 +514,10 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         For Noise and RelativeShotNoise stimuli, the mean value of current to
-         inject as a percentage of a cell's threshold current.
-         Used instead of 'Mean' in Noise stimulus
+         For Noise and RelativeShotNoise stimuli, the mean value of current to inject
+         as a percentage of a cell's threshold current. For RelativeOrnsteinUhlenbeck
+         stimulus, the mean value of conductance to inject as a percentage of a cell's
+         inverse input resistance. Used instead of 'Mean' in Noise stimulus
 
     .. blueconfig_value:: Format
         :type: Format
@@ -563,15 +568,17 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit: ms
         :description:
-         For Noise, ShotNoise and RelativeShotNoise stimuli, the timestep of
-         the current to inject
+         For Noise, ShotNoise, RelativeShotNoise, AbsoluteShotNoise,
+         OrnsteinUhlenbeck and RelativeOrnsteinUhlenbeck stimuli,
+         the timestep of the current or conductance to inject.
 
     .. blueconfig_value:: Mean
         :type: float
         :required: False
-        :unit: nA
+        :unit: nA or uS
         :description:
-         For Noise stimulus, the mean value of current to inject
+         For Noise, AbsoluteShotNoise and OrnsteinUhlenbeck stimuli,
+         the mean value of current or conductance to inject.
 
     .. blueconfig_value:: Electrode
         :type: string
@@ -585,23 +592,24 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit: ms
         :description:
-         For ShotNoise and RelativeShotNoise stimuli, the rise time of the
-         bi-exponential shots
+         For ShotNoise, RelativeShotNoise and AbsoluteShotNoise stimuli,
+         the rise time of the bi-exponential shots
 
     .. blueconfig_value:: DecayTime
         :type: float
         :required: False
         :unit: ms
         :description:
-         For ShotNoise and RelativeShotNoise stimuli, the decay time of the
-         bi-exponential shots
+         For ShotNoise, RelativeShotNoise and AbsoluteShotNoise stimuli,
+         the decay time of the bi-exponential shots
 
     .. blueconfig_value:: Seed
         :type: int
         :required: False
         :unit:
         :description:
-         For ShotNoise and RelativeShotNoise stimuli, override the random seed
+         For ShotNoise, RelativeShotNoise, AbsoluteShotNoise, OrnsteinUhlenbeck
+         and RelativeOrnsteinUhlenbeck stimuli, override the random seed
          (to introduce correlations between cells)
 
     .. blueconfig_value:: Rate
@@ -630,16 +638,17 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :required: False
         :unit:
         :description:
-         For RelativeShotNoise stimulus, the coefficient of variation (sd/mean)
-         of gamma-distributed amplitudes
+         For RelativeShotNoise and AbsoluteShotNoise stimuli,
+         the coefficient of variation (sd/mean) of gamma-distributed amplitudes
 
     .. blueconfig_value:: SDPercent
         :type: float
         :required: False
         :unit:
         :description:
-         For RelativeShotNoise Stimulus, the std dev of the current to inject as
-         a percent of a cell's threshold current
+         For RelativeShotNoise stimulus, the std dev of the current to inject as a percent
+         of a cell's threshold current. For RelativeOrnsteinUhlenbeck the std dev of the
+         conductance to inject as a percent of a cell's inverse input resistance.
 
     .. blueconfig_value:: Lambda
         :type: float
@@ -670,6 +679,30 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          Deprecated: For NPoisson Stimuli, allows the user to specify a Synapse object type
          which is available to the simulator. The default is ExpSyn. Possible
          values are : ProbAMPANMDA_EMS, ProbGABAAB_EMS, and ExpSyn.
+
+    .. blueconfig_value:: Sigma
+        :type: float
+        :required: False
+        :unit: nA or uS
+        :description:
+         For AbsoluteShotNoise and OrnsteinUhlenbeck stimuli, the std dev of the current or
+         conductance to inject.
+
+    .. blueconfig_value:: Reversal
+        :type: float
+        :required: False
+        :unit: mV
+        :description:
+         For Conductance mode stimuli, the reversal potential of the conductance injection.
+         Sets the holding voltage of the underlying SEClamp.
+
+    .. blueconfig_value:: Tau
+        :type: float
+        :required: False
+        :unit: ms
+        :description:
+         For OrnsteinUhlenbeck and RelativeOrnsteinUhlenbeck stimuli, the relaxation time constant
+         of the Ornstein-Uhlenbeck process.
 
 
 .. blueconfig_section:: StimulusInject
@@ -736,7 +769,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
         :unit:
         :description:
          Name of one of the available Tissue Manipulations. Currently
-         available: TTX
+         available: TTX, ConfigureAllSections
 
     .. blueconfig_value:: Target
         :type: target
@@ -863,7 +896,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          The weight modifications of this Connection can be applied after a
          specified delay has elapsed. Note that only Weight modifications are
          applied and no other features of Connection sections
-         
+
     .. blueconfig_value:: NeuromodDtc
         :type: float
         :required: False
@@ -873,7 +906,7 @@ Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/l
          override the {{neuromod_dtc}} values between the selected {{Source}}
          and {{Destination}} neurons. It represents the decay time constant
          of the neuromodulator concentration at the target synapse
-         
+
     .. blueconfig_value:: NeuromodStrength
         :type: float
         :required: False
