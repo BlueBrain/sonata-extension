@@ -1,7 +1,13 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"  # run for manually started pipelines from -/pipelines/new
+    - if: $CI_MERGE_REQUEST_IID  # run for all the types of merge request pipelines
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH  # run for the default branch (not for tags)
+
 stages:
   - create
+  - check
   - upload
-
 
 create_doc:
   stage: create
@@ -12,6 +18,15 @@ create_doc:
   artifacts:
     paths:
       - build/html
+
+check_version:
+  stage: check
+  image: python:3.8-buster
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+  script:
+    - pip install -i https://bbpteam.epfl.ch/repository/devpi/simple --upgrade docs-internal-upload
+    - docs-internal-upload --docs-path build/html/ --duplicate-version-error --dry-run
 
 upload_doc:
   stage: upload
