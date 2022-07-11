@@ -17,7 +17,7 @@ In addition, this documentation covers in more details than the original publica
 
 The definition of the various stimuli and reports supported by Neuron and CoreNeuron are covered too in more details than the original publication.
 
-The reference implementation to load data for this extension is provided by [links libsonata](links https://github.com/BlueBrain/libsonata)
+The reference implementation to load data for this extension is provided by [libsonata](https://github.com/BlueBrain/libsonata)
 
 ## How-to:
 
