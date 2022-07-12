@@ -8,9 +8,9 @@ Circuit and simulation files format documentation
 
 This documentation covers circuit and simulation related file format used at blue brain. This documentation is an extension to the SONATA format as described per `<http://dx.doi.org/10.1371/journal.pcbi.1007696>`_
 
-Blue Brain Project aims at reconstructing the entire mouse brain. The format has been extended to support:
+As the Blue Brain Project aims at reconstructing the entire mouse brain this format has been extended to support:
 
--  vasculature models
+- vasculature models
 - glial cell models
 - glia to glia cell connectivity
 - tripartite neuroglial connectivity
@@ -19,9 +19,9 @@ Blue Brain Project aims at reconstructing the entire mouse brain. The format has
 - plasticity
 - gap junctions
 
-In addition, this documentation covers in more details than the original publication all the properties used by models delivered by Blue Brain Project. Some technical extension have been added to improve composability of network models (model being built separately and assembled later).
+In addition, this documentation covers all the properties used by models delivered by the Blue Brain Project in more details compared to the original publication. Some technical extension have been added to improve composability of network models (model being built separately and assembled later).
 
-The definition of the various stimuli and reports supported by Neuron and CoreNeuron are covered too in more details than the original publication.
+The definition of the various stimuli and reports supported by Neuron and CoreNeuron are covered as well in more details than the original publication.
 
 The reference implementation to load data for this extension is provided by `libsonata <https://github.com/BlueBrain/libsonata>`_
 
