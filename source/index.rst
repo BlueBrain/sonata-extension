@@ -6,7 +6,7 @@
 Circuit and simulation files format documentation
 =================================================
 
-This documentation covers circuit and simulation related file format used at blue brain. This documentation is an extension to the SONATA format as described per `<http://dx.doi.org/10.1371/journal.pcbi.1007696>`_
+This documentation covers circuit and simulation related file format used at Blue Brain. It is an extension to the SONATA format as described per `<http://dx.doi.org/10.1371/journal.pcbi.1007696>`_
 
 As the Blue Brain Project aims at reconstructing the entire mouse brain this format has been extended to support:
 
