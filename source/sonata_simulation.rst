@@ -140,7 +140,7 @@ Parameters defining global experimental conditions.
    minis_single_vesicle            boolean    Optional    For synapse models with multiple vesicles, limit spontaneous release to single vesicle when true. Default is false which allows for any number of ready vesicles to be potentially released.
    randomize_gaba_rise_time        boolean    Optional    When true, enable legacy behavior to randomize the GABA_A rise time in the helper functions. Default is false which will use a prescribed value for GABA_A rise time.
    mechanisms                                 Optional    Properties to assign values to variables in synapse MOD files.
-                                                          The format is a dictionary with keys being the SUFFIX of a MOD file (unique name of mechanism) and values being dictionaries of variables' names in the MOD file and their values.
+                                                          The format is a dictionary with keys being the SUFFIX names of MOD files (unique names of mechanisms) and values being dictionaries of variable names in the MOD files and their values.
    =============================== ========== =========== ====================================
 
 example::
