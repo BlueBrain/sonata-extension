@@ -32,7 +32,7 @@ With that, the two representations are:
 
    The morph-tool_ utility can be helpful to load morphologies, and calculate the `section_id` that NEURON expects.
 
-   .. _morph-tool: https://bbpteam.epfl.ch/documentation/projects/morph-tool/latest/index.html
+   .. _morph-tool: https://github.com/BlueBrain/morph-tool
 
 
 Why doesn't SONATA have global ids?
