@@ -112,13 +112,8 @@ To which can be added the following optional circuit parameters::
 Consumers
 ---------
 
-- TouchDetector_. Required fields are positions, orientations, morphology
-- Functionalizer_. Required fields are positions, orientations, morphology
+- TouchDetector. Required fields are positions, orientations, morphology
+- Functionalizer. Required fields are positions, orientations, morphology
   etype, mtype, synapse_class
-- Brion_.
-- Neurodamus_.  Required fields are exc_mini_frequency, inh_mini_frequency, mtype
-
-.. _TouchDetector: https://collab.humanbrainproject.eu/#/collab/161/nav/2979
-.. _Functionalizer: https://collab.humanbrainproject.eu/#/collab/161/nav/2980
-.. _Brion: https://collab.humanbrainproject.eu/#/collab/161/nav/2973
-.. _Neurodamus: https://bbpteam.epfl.ch/documentation/projects/neurodamus-py/latest/index.html
+- Brion.
+- Neurodamus.  Required fields are exc_mini_frequency, inh_mini_frequency, mtype

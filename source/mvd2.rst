@@ -85,9 +85,7 @@ ElectoTypes
 Consumers
 ---------
 
-- TouchDetector_. Required fields are positions, orientations, morphology
-- Functionalizer_. Required fields are positions, orientations, morphology,
+- TouchDetector. Required fields are positions, orientations, morphology
+- Functionalizer. Required fields are positions, orientations, morphology,
   etype, mtype, synapse_class
 
-.. _TouchDetector: https://collab.humanbrainproject.eu/#/collab/161/nav/2979
-.. _Functionalizer: https://collab.humanbrainproject.eu/#/collab/161/nav/2980

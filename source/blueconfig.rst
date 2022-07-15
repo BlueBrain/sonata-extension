@@ -53,7 +53,7 @@ Section Types
 
 The following section types are defined for BlueConfigs.  The authoritative
 parser lives in
-Neurodamus `here. <https://bbpcode.epfl.ch/browse/code/sim/neurodamus/bbp/tree/lib/hoclib/ConfigParser.hoc?h=HEAD>`_
+Neurodamus.
 
 .. blueconfig_section_index::
 
