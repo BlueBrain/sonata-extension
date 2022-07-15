@@ -135,10 +135,12 @@ Parameters defining global experimental conditions.
    =============================== ========== =========== ====================================
    celsius                         float      Optional    Temperature of experiment. Default is 34.0.
    v_init                          float      Optional    Initial membrane voltage in mV. Default is -80.
-   synapses_init_depleted          boolean    Optional    Synapse at start of simulation are in deleted state. Default is false.
+   synapses_init_depleted          boolean    Optional    Synapse at start of simulation are in depleted state. Default is false.
    extracellular_calcium           float      Optional    Extracellular calcium concentration. When this parameter is provided, apply it to the synapse uHill parameter to scale the U parameter of synapses (py-neurodamus only feature). If not specified, U is set directly as read from edges file.
    minis_single_vesicle            boolean    Optional    For synapse models with multiple vesicles, limit spontaneous release to single vesicle when true. Default is false which allows for any number of ready vesicles to be potentially released.
    randomize_gaba_rise_time        boolean    Optional    When true, enable legacy behavior to randomize the GABA_A rise time in the helper functions. Default is false which will use a prescribed value for GABA_A rise time.
+   mechanisms                                 Optional    Properties to assign values to variables in synapse MOD files.
+                                                          The format is a dictionary with keys being the SUFFIX names of MOD files (unique names of mechanisms) and values being dictionaries of variable names in the MOD files and their values. Read about `NMODL2 SUFFIX description here <https://nrn.readthedocs.io/en/8.2.0/hoc/modelspec/programmatic/mechanisms/nmodl2.html#suffix>`_.
    =============================== ========== =========== ====================================
 
 example::
@@ -146,6 +148,19 @@ example::
   "conditions": {
        "celsius": 34.0,
        "synapses_init_depleted": false
+       "mechanisms": {
+           "ProbAMPANMDA_EMS": {
+               "init_depleted": true,
+               "minis_single_vesicle": false
+           },
+           "ProbGABAAB_EMS" : {
+               "property_x": 1,
+               "property_y": 0.25
+           },
+           "GluSynapse": {
+               "property_z": "string"
+           }
+       }
   }
 
 inputs
