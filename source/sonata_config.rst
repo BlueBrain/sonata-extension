@@ -271,6 +271,7 @@ There is also one additional field `type` used to denote the population type.
                                                   * `synapse_astrocyte`
                                                   * `endfoot`
                                                   * `neuromodulatory`
+                                                  * `point_neuron`
 
                                                Default is `chemical`.
    ============================== ============ ==========================================
