@@ -72,7 +72,7 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0                 ``mtype``                       utf8       Mandatory     Defines the morphological type of the node.
     /0                 ``me_combo``                    utf8       Optional      Deprecated Replaced by dynamics_params.
                                                                                 Foreign key to me combo tsv file.
-    /0                 ``synapse_class``               utf8       Mandatory     Defines the synapse type of the node; whether the neuron is inhibitory or excitatory. "EXC" or "INH".
+    /0                 ``synapse_class``               utf8       Mandatory     Defines the synapse type of the node; whether the neuron is inhibitory or excitatory. "EXC" or "INH".(or "MOD" - Define a third class of synapse (other than excitatory and inhibitory class) which is neuromodulatory.)
     /0                 ``region``                      utf8       Optional      Attribute assigning a brain region to the associated cell.
     /0/dynamics_params ``threshold_current``           float32    Mandatory     The minimal amplitude (in nA) of a step current clamp injection that triggers an action potential.
     /0/dynamics_params ``holding_current``             float32    Mandatory     The current clamp amplitude (in nA) necessary to hold the cell at a predefined holding voltage (typically around -85 mV for BBP).
