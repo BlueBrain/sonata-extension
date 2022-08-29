@@ -179,7 +179,7 @@ There is also one additional field `type` used to denote the population type.
                                                   * :ref:`biophysical <biophysical_node_type>`
                                                   * `virtual`
                                                   * `single_compartment`
-                                                  * `point_neuron`
+                                                  * `point_neuron_adex`
                                                   * :ref:`astrocyte <astrocyte_node_type>`
                                                   * :ref:`vasculature <vasculature_node_type>`
 
@@ -271,7 +271,7 @@ There is also one additional field `type` used to denote the population type.
                                                   * `synapse_astrocyte`
                                                   * `endfoot`
                                                   * `neuromodulatory`
-                                                  * `point_neuron`
+                                                  * `point_neuron_tsodyks_markram`
 
                                                Default is `chemical`.
    ============================== ============ ==========================================

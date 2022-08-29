@@ -267,7 +267,7 @@ Spike events are created from the cells indicated in a file and delivered to the
    ============================== ========== ============ ==========================================
    spike_file                     text       Mandatory    Indicates the location of the file with the spike info for injection.
    source                         text       Optional     The node set to replay spikes from.
-   connection_type                text       Optional     Type of the connectivity between the source and target of injection. Supported values are :ref:`the connection types of populations<edge_pop_type>`: "chemical", "electrical", "synapse_astrocyte", "endfoot", "neuromodulatory", "point_neuron". Default is "chemical".
+   connection_type                text       Optional     Type of the connectivity between the source and target of injection. Supported values are :ref:`the connection types of populations<edge_pop_type>`: "chemical", "electrical", "synapse_astrocyte", "endfoot", "neuromodulatory", "point_neuron_tsodyks_markram". Default is "chemical".
    ============================== ========== ============ ==========================================
 
 seclamp (voltage_clamp)
