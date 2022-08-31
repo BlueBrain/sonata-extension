@@ -478,7 +478,7 @@ Connection type is ``neuromodulatory``. Used for neuromodulatory projections bet
 Fields for point neuron Tsodyks Markram model connectivity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Connection type is ``point_neuron_tsodyks_markram``.
+Connection type is ``point_neuron_tsodyks_markram``. Used for connections between ``point_neuron_adex`` neurons.
 
 This is a Tsodyks Markram model.
 
