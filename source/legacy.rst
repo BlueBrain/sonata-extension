@@ -1,4 +1,4 @@
-Legacy circuit description
+Legacy Circuit Description
 ==========================
 
 .. toctree::
