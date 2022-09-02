@@ -927,7 +927,7 @@ Neurodamus.
     .. blueconfig_value:: NeuromodStrength
         :type: float
         :required: False
-        :unit: :math:`\mu M`
+        :unit: µM
         :description:
          Only applicable to `NeuroModulation` projections. It can be used to
          override the {{neuromod_strength}} values between the selected {{Source}}
