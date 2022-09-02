@@ -32,9 +32,9 @@ The reference implementation to load data for this extension is provided by `lib
    blueconfig
    blueconfig-projection-example
    circuit_files
-   circuit-description
    recipe
    sonata
    NGV
    faq
+   legacy
 
