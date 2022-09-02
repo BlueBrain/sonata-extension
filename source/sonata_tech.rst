@@ -27,6 +27,7 @@ The name convention for the files outputted from ``circuit-build`` is :
   - ``nodes.h5`` for the node file
   - ``edges.h5`` for the edge file
 
+.. _node_file:
 
 Node File
 ---------

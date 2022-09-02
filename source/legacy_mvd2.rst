@@ -2,6 +2,10 @@
 
 MVD version 2
 =============
+
+.. warning:: This file format is deprecated and has been superseded by the SONATA
+             :ref:`node_file`.
+
 The circuit.mvd2 file contains metadata regarding the cells in the network and
 minicolumn metadata
 
