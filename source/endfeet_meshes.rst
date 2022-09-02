@@ -12,11 +12,11 @@ The endfeet establish connections between astrocytes (glia) and the vasculature.
     ============= ============================= ========== =========== ============================================================================
     Group         Field                         Type       Requirement Description
     ============= ============================= ========== =========== ============================================================================
-    /data         points                        float32    Mandatory   Positions (x, y, z) of the mesh vertices in :math:`\mu m`
+    /data         points                        float32    Mandatory   Positions (x, y, z) of the mesh vertices in µm
     /data         triangles                     int64      Mandatory   Triangular connectivity of the point vertices
-    /data         surface_area                  float32    Mandatory   Surface area in :math:`\mu m^2`
-    /data         surface_thickness             float32    Mandatory   Thickness in :math:`\mu m`
-    /data         unreduced_surface_area        float32    Mandatory   Surface area in :math:`\mu m^2` before reduction by the target distribution
+    /data         surface_area                  float32    Mandatory   Surface area in µm²
+    /data         surface_thickness             float32    Mandatory   Thickness in µm
+    /data         unreduced_surface_area        float32    Mandatory   Surface area in µm² before reduction by the target distribution
     /offsets      points                        int64      Mandatory   Ranges for the points dataset
     /offsets      triangles                     int64      Mandatory   Ranges for the triangles dataset
     ============= ============================= ========== =========== ============================================================================

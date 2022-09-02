@@ -14,7 +14,7 @@ The microdomains are properties of the :ref:`astrocytic node population<astrocyt
     ========== =================== ========== =========== ============================================================================================
     Group      Field               Type       Requirement Description
     ========== =================== ========== =========== ============================================================================================
-    /data      points              float32    Mandatory   Positions (x, y, z) of the triangular domain vertices in :math:`\mu m`.
+    /data      points              float32    Mandatory   Positions (x, y, z) of the triangular domain vertices in µm.
     /data      triangle_data       int64      Mandatory   Polygon ids and triangles. Columns : (polygon_id, point_index_i, point_index_j, point_index_k).
     /data      neighbors           int64      Mandatory   Ids of either astrocytes (positive) or adjacent walls (negative).
     /data      scaling_factors     float64    Mandatory   Scaling factors that were used to uniformly scale the domain points to overlap.

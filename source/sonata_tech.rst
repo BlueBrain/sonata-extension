@@ -57,7 +57,7 @@ Group column represents the HDF group where the dataset is located under /<popul
     ================== =============================== ========== ============= =========================================================================================
     Group              Field                           Type       Requirement   Description
     ================== =============================== ========== ============= =========================================================================================
-    /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in :math:`\mu m`.
+    /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in µm.
     /0                 ``rotation_angle_[x|y|z]axis``  float32    Optional      Euler angle representation of the rotation around the given axis of the morphology around the soma in radians.
     /0                 ``orientation_[w|x|y|z]``       float32    Mandatory     Preferred way to define the rotation as quaternions.
                                                                                 Note: **the quaternions are not guaranteed to be normalized**
@@ -100,8 +100,8 @@ Fields for astrocyte population (model_type: `astrocyte`)
     ================== =============================== ========== ============= =========================================================================================
     Group              Field                           Type       Requirement   Description
     ================== =============================== ========== ============= =========================================================================================
-    /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in :math:`\mu m`.
-    /0                 ``radius``                      float32    Mandatory     The radius of the astrocytic soma in :math:`\mu m`.
+    /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in µm.
+    /0                 ``radius``                      float32    Mandatory     The radius of the astrocytic soma in µm.
     /0                 ``mtype``                       utf8       Mandatory     The morphological type of the astrocyte.
     /0                 ``morphology``                  utf8       Mandatory     The name of the astrocytic morphology without extension.
     /0                 ``model_type``                  utf8       Mandatory     `astrocyte` JDC: seems to be incorrect in generated files..
@@ -141,10 +141,10 @@ An edge_id is unique to a vasculature morphology, a segment_id is local to a sec
     ================== =============================== ========== ============= ==================================================================================================
     Group              Field                           Type       Requirement   Description
     ================== =============================== ========== ============= ==================================================================================================
-    /0                 ``start_[x|y|z]``               float32    Mandatory     The coordinate of the starting point of vasculature's segment in the local world in :math:`\mu m`.
-    /0                 ``end_[x|y|z]``                 float32    Mandatory     The coordinate of the ending point of vasculature's segment in the local world in :math:`\mu m`.
-    /0                 ``start_diameter``              float32    Mandatory     The diameter of the starting point of vasculature's segment in :math:`\mu m`.
-    /0                 ``end_diameter``                float32    Mandatory     The diameter of the ending point of vasculature's segment in :math:`\mu m`.
+    /0                 ``start_[x|y|z]``               float32    Mandatory     The coordinate of the starting point of vasculature's segment in the local world in µm.
+    /0                 ``end_[x|y|z]``                 float32    Mandatory     The coordinate of the ending point of vasculature's segment in the local world in µm.
+    /0                 ``start_diameter``              float32    Mandatory     The diameter of the starting point of vasculature's segment in µm.
+    /0                 ``end_diameter``                float32    Mandatory     The diameter of the ending point of vasculature's segment in µm.
     /0                 ``start_node``                  uint64     Mandatory     Morphology node id of the starting point of the vasculature segment.
     /0                 ``end_node``                    uint64     Mandatory     Morphology node id of the ending point of the vasculature segment.
     /0                 ``type``                        int32      Mandatory     The edge type is an integer in the list [1, 2, 3, 4, 5, 6, 7] corresponding to vein, artery, venule, arteriole, venous-capillary, arterial-capillary, transitional.
@@ -190,7 +190,7 @@ The equivalent NEST model is: `<https://nest-simulator.readthedocs.io/en/v3.0/mo
     /0/dynamics_params ``e_rev``                       float32    Mandatory     Synaptic reverse potential. (mV). ``nb_receptors`` elements. Reverse potential.
     /0/dynamics_params ``tau_decay``                   float32    Mandatory     Synaptic decay time constant (for afferent synapses). (ms) cardinality is ``nb_receptors`` elements.
     /0/dynamics_params ``tau_rise``                    float32    Mandatory     Rise time of the synaptic conductance (for afferent synapses). (ms) cardinality is ``nb_receptors`` elements.
-    /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in :math:`\mu m`.
+    /0                 ``x``, ``y``, ``z``             float32    Mandatory     The position of the center of the soma in the local world in µm.
     /0                 ``etype``                       utf8       Mandatory     Electrical type of the node.
     /0                 ``mtype``                       utf8       Mandatory     Morphological type of the node.
     /0                 ``synapse_class``               utf8       Mandatory     Defines the synapse type of the node; whether the neuron is inhibitory or excitatory. "EXC" or "INH".
@@ -251,8 +251,8 @@ Group column represents the HDF group where the dataset is located under /<popul
     ============= ============================= ========== =========== =========================================================================================
     Group         Field                         Type       Requirement Description
     ============= ============================= ========== =========== =========================================================================================
-    /0            ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m`.
-    /0            ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in :math:`\mu m`.
+    /0            ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in µm.
+    /0            ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in µm.
     /0            ``afferent_section_id``       uint32     Mandatory   The specific section on the target node where a synapse is placed.
     /0            ``afferent_section_pos``      float32    Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
     /0            ``afferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
@@ -264,14 +264,14 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0            ``efferent_section_pos``      float32    Mandatory   Same as ``afferent_section_pos``, but for source node.
     /0            ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent.
     /0            ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
-    /0            ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in :math:`\mu m`.  See :ref:`faq`.
+    /0            ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in µm.  See :ref:`faq`.
     /0            ``conductance``               float32    Mandatory   The conductance of the synapse (nanosiemens); also referred to as ``g_syn``
     /0            ``decay_time``                float32    Mandatory   The decay time of the synapse (milliseconds).
     /0            ``depression_time``           float32    Mandatory   The depression time constant of the synapse (milliseconds), also referred to as ``f_syn``.
     /0            ``facilitation_time``         float32    Mandatory   The facilitation time constant (milliseconds) of the synapse.
     /0            ``u_syn``                     float32    Mandatory   The ``u`` parameter in the `Tsodyks Markram Model`_.
     /0            ``n_rrp_vesicles``            uint32     Mandatory   Number of ``readily releasable pool`` of vesicles.
-    /0            ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
+    /0            ``spine_length``              float32    Mandatory   Distance between the two surface positions in µm.
     /0            ``spine_morphology``          uint32     Optional    Integer that maps to a corresponding attribute in /0/@library/spine_morphology
     /0            ``spine_psd_id``              int64      Optional    The id of the spine postsynaptic density. Set to -1 if synapse forms on the shaft.
                                                                        A list containing the postsynaptic densities is defined in the spine morphology file, which is set in the spine_morphology field.
@@ -314,14 +314,14 @@ These fields are needed by the simulator when there is a "Glusynapse" provided i
     ========= ============================= ========== =========== =========================================================================================
     Group      Field                        Type       Requirement Description
     ========= ============================= ========== =========== =========================================================================================
-    /0        ``volume_CR``                 float32    Mandatory   The volume of the spine (not simulated per se, just used for converting currents to concentrations in ``GluSynapse.mod``).In :math:`\mu m {^3}`.
+    /0        ``volume_CR``                 float32    Mandatory   The volume of the spine (not simulated per se, just used for converting currents to concentrations in ``GluSynapse.mod``).In µm³.
     /0        ``rho0_GB``                   int64      Mandatory   Initial value of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model (0: depressed, 1:potentiated).
     /0        ``Use_d_TM``                  float32    Mandatory   Most depressed value (lower bound) of the release probability, ``u`` parameter of the `Tsodyks-Markram` model.
     /0        ``Use_p_TM``                  float32    Mandatory   Most potentiated value (upper bound) of the release probability, ``u`` parameter of the `Tsodyks-Markram` model.
     /0        ``gmax_d_AMPA``               float32    Mandatory   Most depressed value (lower bound) of the ``conductance``. In nanosiemens.
     /0        ``gmax_p_AMPA``               float32    Mandatory   Most potentiated value (upper bound) of the ``conductance``. In nanosiemens.
-    /0        ``theta_d``                   float32    Mandatory   Lower threshold of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model. Once crossed, it triggers depression.In :math:`\mu` / liter.
-    /0        ``theta_p``                   float32    Mandatory   Higher threshold of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model. Once crossed, it triggers potentiation.In :math:`\mu` / liter.
+    /0        ``theta_d``                   float32    Mandatory   Lower threshold of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model. Once crossed, it triggers depression.In µ / liter.
+    /0        ``theta_p``                   float32    Mandatory   Higher threshold of the efficacy, ``rho`` parameter of the `Graptner and Brunel 2012` model. Once crossed, it triggers potentiation.In µ / liter.
     ========= ============================= ========== =========== =========================================================================================
 
 GlialGlial connectivity glialglial connection type
@@ -334,8 +334,8 @@ This type of connectivity happens between astrocytes. The properties are similar
     ========= ============================= ========== =========== ============================================================================================
     Group     Field                         Type       Requirement Description
     ========= ============================= ========== =========== ============================================================================================
-    /0        ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m` on the target cell..
-    /0        ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in :math:`\mu m` on the target cell.
+    /0        ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in µm on the target cell..
+    /0        ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in µm on the target cell.
     /0        ``afferent_section_id``       uint32     Mandatory   The specific section on the target node where a synapse is placed.
     /0        ``afferent_section_pos``      float32    Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
     /0        ``afferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1 glia_perivascular_process=2 glia_process=3.
@@ -347,8 +347,8 @@ This type of connectivity happens between astrocytes. The properties are similar
     /0        ``efferent_section_pos``      float32    Mandatory   Same as ``afferent_section_pos``, but for source node.
     /0        ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1 glia_perivascular_process=2 glia_process=3.
     /0        ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
-    /0        ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in :math:`\mu m`.  See :ref:`faq`.
-    /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
+    /0        ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in µm.  See :ref:`faq`.
+    /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in µm.
     /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
     /         ``source_node_id``            uint64     Mandatory   The id of the presynaptic cell.
     /         ``target_node_id``            uint64     Mandatory   The id of the postsynaptic cell.
@@ -366,8 +366,8 @@ Connection type is ``electrical_synapse``. Used for gap junctions between neuron
     ========= ============================= ========== =========== ============================================================================================
     Group     Field                         Type       Requirement Description
     ========= ============================= ========== =========== ============================================================================================
-    /0        ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m` on the target cell..
-    /0        ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in :math:`\mu m` on the target cell.
+    /0        ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in µm on the target cell..
+    /0        ``afferent_surface_[x|y|z]``  float32    Mandatory   Position on the surface of a cylindrical cell segment, radially outward from the center position in the direction of the other cell in µm on the target cell.
     /0        ``afferent_section_id``       uint32     Mandatory   The specific section on the target node where a synapse is placed.
     /0        ``afferent_section_pos``      float32    Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
     /0        ``afferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
@@ -380,9 +380,9 @@ Connection type is ``electrical_synapse``. Used for gap junctions between neuron
     /0        ``efferent_section_pos``      float32    Mandatory   Same as ``afferent_section_pos``, but for source node.
     /0        ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
     /0        ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
-    /0        ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in :math:`\mu m`.  See :ref:`faq`.
+    /0        ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in µm.  See :ref:`faq`.
     /0        ``efferent_junction_id``      uint32     Mandatory   Same as ``afferent_junction_id``, but for source node.
-    /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in :math:`\mu m`.
+    /0        ``spine_length``              float32    Mandatory   Distance between the two surface positions in µm.
     /0        ``conductance``               float32    Mandatory   The conductance of the gap junction (nanosiemens); also referred to as ``g_syn``
     /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
     /         ``source_node_id``            uint64     Mandatory   The id of the presynaptic cell.
@@ -402,10 +402,10 @@ Neuroglial connectivity. Astrocytes establish tripartite connections with synaps
     ========= =============================  ========== =========== ============================================================================================
     /0        ``astrocyte_section_id``       uint32     Mandatory   The id of the closest astrocyte morphology's section to the connected neuron-neuron synapse.
     /0        ``astrocyte_segment_id``       uint32     Mandatory   The id of the closest astrocyte morphology's segment to the connected neuron-neuron synapse.
-    /0        ``astrocyte_segment_offset``   float32    Mandatory   The offset on the respective segment corresponding to the closest point to the respective synapse. In :math:`\mu m`.
+    /0        ``astrocyte_segment_offset``   float32    Mandatory   The offset on the respective segment corresponding to the closest point to the respective synapse. In µm.
     /0        ``astrocyte_section_pos``      float32    Mandatory   Given the section of where a synapse is closest on the astrocyte the position along the length
                                                                     of that section normalized to the range [0.1] where 0 is at the start of the section and 1 is at the end of the section.
-    /0        ``astrocyte_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m` on the target cell.
+    /0        ``astrocyte_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in µm on the target cell.
                                                                     This is equivalent to calculating the branch connection point from the morphology's section_id and section_pos.
     /0        ``synapse_id``                 uint64     Mandatory   Edge id of the :ref:`chemical connection<chemical_connection>` to which the astrocyte connects. JDC: issue which edge population... ? source and target are not enough here.
     /0        ``synapse_population``         utf8       Mandatory   Edge population of the neuron-neuron synapse to which the astrocyte connects.
@@ -434,13 +434,13 @@ Gliovascular connectivity. Connection between the vasculature and astrocytes. Ea
     Group     Field                             Type       Requirement Description
     ========= ================================= ========== =========== ============================================================================================
     /0        ``endfoot_id``                    uint64     Mandatory   The identifier of the end foot geometry to lookup in the end_feet_area file.
-    /0        ``endfoot_surface_[x|y|z]``       float32    Mandatory   The coordinate of the endfoot connection on the vasculature's surface. In :math:`\mu m`.
+    /0        ``endfoot_surface_[x|y|z]``       float32    Mandatory   The coordinate of the endfoot connection on the vasculature's surface. In µm.
     /0        ``vasculature_section_id``        uint32     Mandatory   The section id in the vasculature morphology.
     /0        ``vasculature_segment_id``        uint32     Mandatory   The segment id in the vasculature morphology.
     /0        ``astrocyte_section_id``          uint32     Mandatory   The section id of the astrocytic section that connects to the endfoot.
-    /0        ``endfoot_compartment_length``    float32    Mandatory   The length of the virtual endfoot compartment to construct in the simulator. In :math:`\mu m`.
-    /0        ``endfoot_compartment_diameter``  float32    Mandatory   The diameter of the virtual endfoot compartment to construct in the simulator. In :math:`\mu m`.
-    /0        ``endfoot_compartment_perimeter`` float32    Mandatory   The perimeter of the virtual endfoot compartment to construct in the simulator. In :math:`\mu m`.
+    /0        ``endfoot_compartment_length``    float32    Mandatory   The length of the virtual endfoot compartment to construct in the simulator. In µm.
+    /0        ``endfoot_compartment_diameter``  float32    Mandatory   The diameter of the virtual endfoot compartment to construct in the simulator. In µm.
+    /0        ``endfoot_compartment_perimeter`` float32    Mandatory   The perimeter of the virtual endfoot compartment to construct in the simulator. In µm.
     /         ``edge_type_id``                  int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
     /         ``source_node_id``                uint64     Mandatory   The node id of the vasculature.
     /         ``target_node_id``                uint64     Mandatory   The node id of the astrocyte.
@@ -469,7 +469,7 @@ Connection type is ``neuromodulatory``. Used for neuromodulatory projections bet
     /0        ``afferent_segment_id``       int16      Mandatory   The specific segment on the target node (same of target synapse).
     /0        ``delay``                     float32    Mandatory   The axonal delay. In ms.
     /0        ``neuromod_dtc``              float32    Mandatory   Decay time constant (in ms) for the running value of neuromodulator concentration at the synapse.
-    /0        ``neuromod_strength``         float32    Mandatory   Amount of the increase in neuromodulator concentration at the synapse when a neuromodulatory event is transmitted. In :math:`\mu M`.
+    /0        ``neuromod_strength``         float32    Mandatory   Amount of the increase in neuromodulator concentration at the synapse when a neuromodulatory event is transmitted. In µm.
     /         ``edge_type_id``              int64      Mandatory   Links an edge to the underlying CSV file; not used at BBP.
     /         ``source_node_id``            uint64     Mandatory   The id of the presynaptic virtual neuron.
     /         ``target_node_id``            uint64     Mandatory   The id of the postsynaptic cell (same of target synapse).
@@ -515,7 +515,7 @@ The difference to the normal :ref:`chemical <chemical_connection>` type is that 
     ============= ============================= ========== =========== =========================================================================================
     Group         Field                         Type       Requirement Description
     ============= ============================= ========== =========== =========================================================================================
-    /0            ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in :math:`\mu m`.
+    /0            ``afferent_center_[x|y|z]``   float32    Mandatory   Position on the `axis` of the cell's section/segment in µm.
     /0            ``afferent_section_id``       uint32     Mandatory   The specific section on the target node where a synapse is placed.
     /0            ``afferent_section_pos``      float32    Mandatory   Fractional position along the length of the section (normalized to the range [0, 1], where 0 is at the start of the section and 1 is at the end of the section).
     /0            ``afferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent as in morphIO: soma=1, axon=2, basal_dendrite=3, apical_dendrite=4.
