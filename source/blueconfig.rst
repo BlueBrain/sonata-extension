@@ -578,7 +578,7 @@ Neurodamus.
         :unit:
         :description:
          For SynapseReplay, indicates the location of the file with the spike
-         info for injection
+         info for injection. The weights of the replay synapses are set at t=0 ms and are not altered by any delayed connection.
 
     .. blueconfig_value:: Dt
         :type: float
