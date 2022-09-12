@@ -161,8 +161,8 @@ This type of population requires extra datasets. These datasets are represented 
 The `vasculature_mesh` is the watertight representation of the vasculure produced using ``Ultralizer`` or any other tool that can produce such surface meshes.
 The surface mesh's extension is  **.obj**.
 
-Fields for point neuron population (model_type: `point_neuron_adex`)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fields for point neuron population (model_type: `point_neuron`)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is for AdEx point neuron models, see  Brette R. and Gerstner W. (2005) [1]_.
 
@@ -195,7 +195,7 @@ The equivalent NEST model is: `<https://nest-simulator.readthedocs.io/en/v3.0/mo
     /0                 ``synapse_class``               utf8       Mandatory     Defines the synapse type of the node; whether the neuron is inhibitory or excitatory. "EXC" or "INH".
     /0                 ``region``                      utf8       Optional      Brain region of the cell.
     /0                 ``hemisphere``                  utf8       Optional      "left" or "right" hemisphere.
-    /0                 ``model_type``                  utf8       Mandatory     `point_neuron_adex`
+    /0                 ``model_type``                  utf8       Mandatory     `point_neuron`
     /                  ``node_type_id``                int64      Mandatory     Set to -1. Foreign key to node type csv file not used at BBP..
     ================== =============================== ========== ============= ==================================================================================================
 
@@ -475,10 +475,10 @@ Connection type is ``neuromodulatory``. Used for neuromodulatory projections bet
     ========= ============================= ========== =========== ============================================================================================
 
 
-Fields for point neuron Tsodyks Markram model connectivity
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fields for "point neuron connectivity"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Connection type is ``point_neuron_tsodyks_markram``. Used for connections between ``point_neuron_adex`` neurons.
+Connection type is ``TM_synapse``.
 
 This is a Tsodyks Markram model.
 
