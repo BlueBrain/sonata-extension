@@ -492,3 +492,27 @@ example::
             "target": "Mosaic",
             "synapse_configure": "%s.Fac = 0 %s.Dep = 0"
   }
+
+meta_data
+---------
+A set of string variables storing remarks on the simulation, but are not used for running the simulation.
+
+example::
+
+  "meta_data": {
+       "note": "the first attempt at reproducing xxx experiment",
+       "version": "v1"
+  }
+
+beta_features
+-------------
+This section is reserved for variables that are used for developing a new feature of the simulation. Once the feature goes in production, the variables should be moved to a proper section in the simulation configuration file. 
+
+example::
+
+  "beta_features": {
+       "v_str": "abcd",
+       "v_float": 0.5,
+       "v_int": 10,
+       "v_bool": false
+  }
