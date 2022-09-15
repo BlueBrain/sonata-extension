@@ -281,6 +281,7 @@ Cells are held at indicated membrane voltage by injecting adapting current.
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    voltage                        float      Mandatory    Specifies the membrane voltage the targeted cells should be held at in mV.
+   rs                             float      Optional     Specifies the series resistance in Mohm. Default is 0.01 Mohm.
    ============================== ========== ============ ==========================================
 
 noise (current_clamp)
