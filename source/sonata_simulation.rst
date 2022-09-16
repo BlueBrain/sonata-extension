@@ -141,13 +141,26 @@ Parameters defining global experimental conditions.
    randomize_gaba_rise_time        boolean    Optional    When true, enable legacy behavior to randomize the GABA_A rise time in the helper functions. Default is false which will use a prescribed value for GABA_A rise time.
    mechanisms                                 Optional    Properties to assign values to variables in synapse MOD files.
                                                           The format is a dictionary with keys being the SUFFIX names of MOD files (unique names of mechanisms) and values being dictionaries of variable names in the MOD files and their values. Read about `NMODL2 SUFFIX description here <https://nrn.readthedocs.io/en/8.2.0/hoc/modelspec/programmatic/mechanisms/nmodl2.html#suffix>`_.
+   modifications                              Optional    Collection of dictionaries with each member decribing a modification that mimics experimental manipulations to the circuit.
+   =============================== ========== =========== ====================================
+
+Parameters required for modifications
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. table::
+
+   =============================== ========== =========== ====================================
+   property                        Type       Requirement Description
+   =============================== ========== =========== ====================================
+   node_set                        string     Mandatory   Node set which receives the manipulation.
+   type                            string     Mandatory   Name of the manipulation. Supported values are "TTX" and "ConfigureAllSections". "TTX" mimics the application of TTX, which precludes spiking and modifies mechanism variables. "ConfigureAllSections" is a generic way to modify variables per morphology section.
+   section_configure               string     Mandatory*  For "ConfigureAllSections" manipulation, a snippet of hoc code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes.
    =============================== ========== =========== ====================================
 
 example::
 
   "conditions": {
        "celsius": 34.0,
-       "synapses_init_depleted": false
+       "synapses_init_depleted": false,
        "mechanisms": {
            "ProbAMPANMDA_EMS": {
                "init_depleted": true,
@@ -159,6 +172,17 @@ example::
            },
            "GluSynapse": {
                "property_z": "string"
+           }
+       },
+       "modifications": {
+           "applyTTX": {
+               "node_set": "single",
+               "type": "TTX"
+           },
+           "no_SK_E2": {
+               "node_set": "single",
+               "type": "ConfigureAllSections",
+               "section_configure": "%s.gSK_E2bar_SK_E2 = 0"
            }
        }
   }

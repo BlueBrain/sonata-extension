@@ -796,6 +796,13 @@ Neurodamus.
          Name of the target in start.target or user.target to receive the
          manipulation
 
+    .. blueconfig_value:: SectionConfigure
+        :type: string
+        :required: True for ConfigureAllSections
+        :unit:
+        :description:
+         A snippet of hoc code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes.
+
 
 .. blueconfig_section:: Report
     :description:
