@@ -493,13 +493,13 @@ example::
             "synapse_configure": "%s.Fac = 0 %s.Dep = 0"
   }
 
-meta_data
+metadata
 ---------
 A set of string variables storing remarks on the simulation, but are not used for running the simulation.
 
 example::
 
-  "meta_data": {
+  "metadata": {
        "note": "the first attempt at reproducing xxx experiment",
        "version": "v1"
   }
