@@ -257,8 +257,6 @@ There is also one additional field `type` used to denote the population type.
   It cannot be empty because it would mean that it's incomplete (ie: a population that should have been added, wasn't), or that the `edges_file` shouldn't be added to the circuit.
 - The dictionary associated to each population may be empty if the components properties don't need to be overridden.
 
-.. _edge_pop_type:
-
 .. table::
 
    ============================== ============ ==========================================
