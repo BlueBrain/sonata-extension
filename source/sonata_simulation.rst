@@ -153,7 +153,7 @@ Parameters required for modifications
    =============================== ========== =========== ====================================
    node_set                        string     Mandatory   Node set which receives the manipulation.
    type                            string     Mandatory   Name of the manipulation. Supported values are "TTX" and "ConfigureAllSections". "TTX" mimics the application of TTX, which precludes spiking and modifies mechanism variables. "ConfigureAllSections" is a generic way to modify variables per morphology section.
-   section_configure               string     Mandatory*  For "ConfigureAllSections" manipulation, a snippet of hoc code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes.
+   section_configure               string     Mandatory*  For "ConfigureAllSections" manipulation, a snippet of python code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes. The format is "%s.xxxx; %s.xxxx; ..." .
    =============================== ========== =========== ====================================
 
 example::
