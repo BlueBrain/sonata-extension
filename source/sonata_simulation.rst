@@ -82,10 +82,10 @@ Parameters defining global simulation settings. As NEURON is the engine used for
    spike_threshold                 integer    Optional    The spike detection threshold. A spike is detected whenever the voltage in the spike detection location goes over the spike threshold value. Default is -30mV. `NEURON specific details <https://nrn.readthedocs.io/en/latest/python/modelspec/programmatic/network/netcon.html#NetCon.threshold>`_.
    spike_location                  text       Optional    The spike detection location. Can be either ‘soma’ or 'AIS' for detecting spikes in either the soma or axon initial segment, respectively. Default is 'soma'.
    integration_method              text       Optional    Selects the NEURON/CoreNEURON `integration method <https://nrn.readthedocs.io/en/latest/python/simctrl/programmatic.html#secondorder>`_. This parameter sets the NEURON global variable h.secondorder. The allowed values are ‘0’ (default) for fully implicit backward euler, ‘1’ for Crank-Nicolson and ‘2’ for Crank-Nicolson with fixed ion currents.
-   stimulus_seed                   integer    Optional
-   ionchannel_seed                 integer    Optional
-   minis_seed                      integer    Optional
-   synapse_seed                    integer    Optional
+   stimulus_seed                   integer    Optional    A non-negative integer used for seeding noise stimuli and any other future stochastic stimuli, default is 0.
+   ionchannel_seed                 integer    Optional    A non-negative integer used for seeding stochastic ion channels, default is 0.
+   minis_seed                      integer    Optional    A non-negative integer used for seeding the Poisson processes that drives the minis, default is 0.
+   synapse_seed                    integer    Optional    A non-negative integer used for seeding stochastic synapses, default is 0.
    =============================== ========== =========== ====================================
 
 example::
@@ -281,7 +281,7 @@ Cells are held at indicated membrane voltage by injecting adapting current.
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    voltage                        float      Mandatory    Specifies the membrane voltage the targeted cells should be held at in mV.
-   rs                             float      Optional     Specifies the series resistance in Mohm. Default is 0.01 Mohm.
+   rs                             float      Optional     Specifies the series resistance in M :math:`\Omega`. Default is 0.01 M :math:`\Omega`.
    ============================== ========== ============ ==========================================
 
 noise (current_clamp)
