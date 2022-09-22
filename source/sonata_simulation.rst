@@ -106,14 +106,15 @@ A parameter specifying the path to the weights file describing the scaling facto
   =========================== ======================= ========== ============= =============================================================================================================================================================================================================
   Group                       Field                   Type       Requirement   Description
   =========================== ======================= ========== ============= =============================================================================================================================================================================================================
-  /electrodes                 {electrodename}layer    str        Optional      Layer of the circuit in which {electrodename} is located
-  /electrodes                 {electrodename}location float64    Optional      Position of {electrodename} in cartesian coordinates
-  /electrodes                 {electrodename}region   str        Optional      Region in which {electrodename} is located (1 x 3)
-  /electrodes                 {electrodename}type     str        Optional      Either EEG or LFP
-  /electrodes/{electrodename} {gid}                   float64    Mandatory     Scaling factor for each segment in the corresponding neuron (1 x nsegments)
-  /                           neuron_ids              uint64     Mandatory     List of GIDs (1 x ngids)
-  /offsets                    {gid}                   uint64     Mandatory     For each section, number of entries in /electrodes/{electrodename}/{gid} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
-  /sec_ids                    {gid}                   unit64     Mandatory     For each segment, index of the section to which it belongs (1 x nsegments)
+  /electrodes/{electrodename} layer                   str        Optional      Layer of the circuit in which {electrodename} is located
+  /electrodes/{electrodename} location                float64    Optional      Position of {electrodename} in cartesian coordinates (3 x 1)
+  /electrodes/{electrodename} region                  str        Optional      Region in which {electrodename} is located
+  /electrodes/{electrodename} type                    str        Optional      Either EEG or LFP
+  /electrodes/{electrodename} offset                  uint64     Optional      Column index of the coefficients for {electrodename} in /electrodes/electrode_grid/{gid}
+  /electrodes/electrode_grid  {gid}                   float64    Mandatory     Scaling factor for each segment in the corresponding neuron (nsegments x nelectrodes)
+  /                           neuron_ids              uint64     Mandatory     List of GIDs (ngids x 1)
+  /offsets                    {gid}                   uint64     Mandatory     For each section, number of entries in /electrodes/electrode_grid/{gid} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
+  /sec_ids                    {gid}                   unit64     Mandatory     For each segment, index of the section to which it belongs (nsegments x 1)
   =========================== ======================= ========== ============= =============================================================================================================================================================================================================
 
 output
