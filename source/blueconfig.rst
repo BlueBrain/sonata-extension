@@ -801,7 +801,7 @@ Neurodamus.
         :required: True for ConfigureAllSections
         :unit:
         :description:
-         A snippet of hoc code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes.
+         A snippet of python code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes. The format is "%s.xxxx; %s.xxxx; ...".
 
 
 .. blueconfig_section:: Report
