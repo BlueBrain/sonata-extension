@@ -270,28 +270,28 @@ Neurodamus.
         :required: False
         :unit:
         :description:
-         A non-negative integer used for seeding noise stimuli and any other future stochastic stimuli.
+         A non-negative integer used for seeding noise stimuli and any other future stochastic stimuli. Default is 0.
 
     .. blueconfig_value:: IonChannelSeed
         :type: int
         :required: False
         :unit:
         :description:
-         A non-negative integer used for seeding stochastic ion channels.
+         A non-negative integer used for seeding stochastic ion channels. Default is 0.
 
     .. blueconfig_value:: MinisSeed
         :type: int
         :required: False
         :unit:
         :description:
-         A non-negative integer used for seeding the Poisson processes that drives the minis.
+         A non-negative integer used for seeding the Poisson processes that drive the minis. Default is 0.
 
     .. blueconfig_value:: SynapseSeed
         :type: int
         :required: False
         :unit:
         :description:
-         A non-negative integer used for seeding stochastic synapses.
+         A non-negative integer used for seeding stochastic synapses. Default is 0.
 
     .. blueconfig_value:: nrnPath
         :type: abspath
