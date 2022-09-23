@@ -152,8 +152,11 @@ Parameters required for modifications
    property                        Type       Requirement Description
    =============================== ========== =========== ====================================
    node_set                        string     Mandatory   Node set which receives the manipulation.
-   type                            string     Mandatory   Name of the manipulation. Supported values are "TTX" and "ConfigureAllSections". "TTX" mimics the application of TTX, which precludes spiking and modifies mechanism variables. "ConfigureAllSections" is a generic way to modify variables per morphology section.
-   section_configure               string     Mandatory*  For "ConfigureAllSections" manipulation, a snippet of python code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes. The format is "%s.xxxx; %s.xxxx; ..." .
+   type                            string     Mandatory   Name of the manipulation. Supported values are "TTX" and "ConfigureAllSections".
+                                                          "TTX" mimics the application of tetrodotoxin, which blocks sodium channels and precludes spiking.
+                                                          "ConfigureAllSections" is a generic way to modify variables (properties, mechanisms, etc.) per morphology section.
+   section_configure               string     Mandatory*  For "ConfigureAllSections" manipulation, a snippet of python code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes.
+                                                          The wildcard %s represents each section. Multiple statements are separated by semicolons. E.g., "%s.attr = value; %s.attr2 \*= value2".
    =============================== ========== =========== ====================================
 
 example::
