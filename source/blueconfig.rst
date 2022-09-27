@@ -265,6 +265,34 @@ Neurodamus.
          For random sequences, the BaseSeed is added in order to give the user
          the capacity to change the sequences.
 
+    .. blueconfig_value:: StimulusSeed
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         A non-negative integer used for seeding noise stimuli and any other future stochastic stimuli. Default is 0.
+
+    .. blueconfig_value:: IonChannelSeed
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         A non-negative integer used for seeding stochastic ion channels. Default is 0.
+
+    .. blueconfig_value:: MinisSeed
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         A non-negative integer used for seeding the Poisson processes that drive the minis. Default is 0.
+
+    .. blueconfig_value:: SynapseSeed
+        :type: int
+        :required: False
+        :unit:
+        :description:
+         A non-negative integer used for seeding stochastic synapses. Default is 0.
+
     .. blueconfig_value:: nrnPath
         :type: abspath
         :required: True
@@ -578,7 +606,7 @@ Neurodamus.
         :unit:
         :description:
          For SynapseReplay, indicates the location of the file with the spike
-         info for injection
+         info for injection. The weights of the replay synapses are set at t=0 ms and are not altered by any delayed connection.
 
     .. blueconfig_value:: Dt
         :type: float

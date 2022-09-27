@@ -82,7 +82,10 @@ Parameters defining global simulation settings. As NEURON is the engine used for
    spike_threshold                 integer    Optional    The spike detection threshold. A spike is detected whenever the voltage in the spike detection location goes over the spike threshold value. Default is -30mV. `NEURON specific details <https://nrn.readthedocs.io/en/latest/python/modelspec/programmatic/network/netcon.html#NetCon.threshold>`_.
    spike_location                  text       Optional    The spike detection location. Can be either ‘soma’ or 'AIS' for detecting spikes in either the soma or axon initial segment, respectively. Default is 'soma'.
    integration_method              text       Optional    Selects the NEURON/CoreNEURON `integration method <https://nrn.readthedocs.io/en/latest/python/simctrl/programmatic.html#secondorder>`_. This parameter sets the NEURON global variable h.secondorder. The allowed values are ‘0’ (default) for fully implicit backward euler, ‘1’ for Crank-Nicolson and ‘2’ for Crank-Nicolson with fixed ion currents.
-   forward_skip                    integer    Optional    When included, then run without Stimulus or Reports for given duration prior to t=0 using a timestep computed as dt=0.1*forward_skip. This is to get the cells quickly past any initial transience. Specified in ms.
+   stimulus_seed                   integer    Optional    A non-negative integer used for seeding noise stimuli and any other future stochastic stimuli, default is 0.
+   ionchannel_seed                 integer    Optional    A non-negative integer used for seeding stochastic ion channels, default is 0.
+   minis_seed                      integer    Optional    A non-negative integer used for seeding the Poisson processes that drive the minis, default is 0.
+   synapse_seed                    integer    Optional    A non-negative integer used for seeding stochastic synapses, default is 0.
    =============================== ========== =========== ====================================
 
 example::
@@ -92,8 +95,7 @@ example::
        "dt": 0.025,
        "random_seed": 201506,
        "spike_location": "AIS",
-       "integration_method" : 2,
-       "forward_skip": 500
+       "integration_method" : 2
   }
 
 output
@@ -137,7 +139,6 @@ Parameters defining global experimental conditions.
    v_init                          float      Optional    Initial membrane voltage in mV. Default is -80.
    synapses_init_depleted          boolean    Optional    Synapse at start of simulation are in depleted state. Default is false.
    extracellular_calcium           float      Optional    Extracellular calcium concentration. When this parameter is provided, apply it to the synapse uHill parameter to scale the U parameter of synapses (py-neurodamus only feature). If not specified, U is set directly as read from edges file.
-   minis_single_vesicle            boolean    Optional    For synapse models with multiple vesicles, limit spontaneous release to single vesicle when true. Default is false which allows for any number of ready vesicles to be potentially released.
    randomize_gaba_rise_time        boolean    Optional    When true, enable legacy behavior to randomize the GABA_A rise time in the helper functions. Default is false which will use a prescribed value for GABA_A rise time.
    mechanisms                                 Optional    Properties to assign values to variables in synapse MOD files.
                                                           The format is a dictionary with keys being the SUFFIX names of MOD files (unique names of mechanisms) and values being dictionaries of variable names in the MOD files and their values. Read about `NMODL2 SUFFIX description here <https://nrn.readthedocs.io/en/8.2.0/hoc/modelspec/programmatic/mechanisms/nmodl2.html#suffix>`_.
@@ -258,7 +259,7 @@ Note: No additional parameter are needed when using module "hyperpolarizing". Th
 synapse_replay (spikes)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Spike events are created from the cells indicated in a file and delivered to their post synaptic targets.
+Spike events are created from the cells indicated in a file and delivered to their post synaptic targets. The weights of the replay synapses are set at t=0 ms and are not altered by any delayed connection.
 
 .. table::
 
@@ -280,6 +281,7 @@ Cells are held at indicated membrane voltage by injecting adapting current.
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    voltage                        float      Mandatory    Specifies the membrane voltage the targeted cells should be held at in mV.
+   series_resistance              float      Optional     Specifies the series resistance in M :math:`\Omega`. Default is 0.01 M :math:`\Omega`.
    ============================== ========== ============ ==========================================
 
 noise (current_clamp)
