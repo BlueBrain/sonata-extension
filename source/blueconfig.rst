@@ -824,6 +824,13 @@ Neurodamus.
          Name of the target in start.target or user.target to receive the
          manipulation
 
+    .. blueconfig_value:: SectionConfigure
+        :type: string
+        :required: True for ConfigureAllSections
+        :unit:
+        :description:
+         A snippet of python code to perform one or more assignments involving section attributes, for all sections that have all the referenced attributes. The wildcard %s represents each section. Multiple statements are separated by semicolons. E.g., "%s.attr = value; %s.attr2 *= value2".
+
 
 .. blueconfig_section:: Report
     :description:
