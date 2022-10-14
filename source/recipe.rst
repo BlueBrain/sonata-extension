@@ -271,8 +271,8 @@ To assign synapse properties, the classification field needs to be set:
 
 Two optional attributes may be set:
 
-- ``neuralTransmitterReleaseDelay`` with a default of 0.1
-- ``axonalConductionVelocity`` with a default of 300 m/s
+- ``neuralTransmitterReleaseDelay`` with a default of 0.1 ms
+- ``axonalConductionVelocity`` with a default of 300 μm/ms
 
 These two attributes may also be present in the ``SynapsesProperties``
 element, setting default values for all ``synapse`` elements::
