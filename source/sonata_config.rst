@@ -10,7 +10,7 @@ version
 
 *Optional*.
 
-An number defining the version of the SONATA specification.
+A number defining the version of the SONATA specification.
 The default value is "1" as for the specification described in the SONATA original paper.
 This version is |CurrentSonataConfigVersion|.
 
@@ -31,7 +31,7 @@ Place for extra metadata about the circuit config.
                                                      * `partial`: relaxes checking: `networks` may not exist, for instance; mandatory properties aren't enforced.
                                                        This means it is up to the API consumer to be diligent when accessing properties.
 
-                                                     The default is "Complete".
+                                                     The default is "complete".
    =============================== ================ ====================================
 
 manifest
