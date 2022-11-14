@@ -10,10 +10,29 @@ version
 
 *Optional*.
 
-An integer defining the version of the SONATA specification.
+A number defining the version of the SONATA specification.
 The default value is "1" as for the specification described in the SONATA original paper.
 This version is |CurrentSonataConfigVersion|.
 
+metadata
+--------
+
+Place for extra metadata about the circuit config.
+
+*Optional*.
+
+.. table::
+
+   =============================== ================ ====================================
+   Property                        Requirement      Description
+   =============================== ================ ====================================
+   status                          Optional         This describes how "complete" the circuit_config is:
+                                                     * `complete`: circuit is checked for all properties that aren't optional, and all fields should resolve.
+                                                     * `partial`: relaxes checking: `networks` may not exist, for instance; mandatory properties aren't enforced.
+                                                       This means it is up to the API consumer to be diligent when accessing properties.
+
+                                                     The default is "complete".
+   =============================== ================ ====================================
 
 manifest
 --------
