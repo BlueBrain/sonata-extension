@@ -267,8 +267,8 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0            ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in µm.  See :ref:`faq`.
     /0            ``conductance``               float32    Mandatory   The conductance of the synapse (nanosiemens); also referred to as ``g_syn``
     /0            ``decay_time``                float32    Mandatory   The decay time of the synapse (milliseconds).
-    /0            ``depression_time``           float32    Mandatory   The depression time constant of the synapse (milliseconds), also referred to as ``f_syn``.
-    /0            ``facilitation_time``         float32    Mandatory   The facilitation time constant (milliseconds) of the synapse.
+    /0            ``depression_time``           float32    Mandatory   The depression time constant of the synapse (milliseconds), also referred to as ``d_syn``.
+    /0            ``facilitation_time``         float32    Mandatory   The facilitation time constant of the synapse (milliseconds), also referred to as ``f_syn``.
     /0            ``u_syn``                     float32    Mandatory   The ``u`` parameter in the `Tsodyks Markram Model`_.
     /0            ``n_rrp_vesicles``            uint32     Mandatory   Number of ``readily releasable pool`` of vesicles.
     /0            ``spine_length``              float32    Mandatory   Distance between the two surface positions in µm.
