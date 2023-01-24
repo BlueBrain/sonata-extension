@@ -82,6 +82,8 @@ They can be found also under :ref:`populations <population_config_dict>` where i
                                                     This path is used in conjonction with the spine_morphology property (see :doc:`sonata_tech`) to find the spine_morphology.
                                                     By default, the concatenation of the spine_morphologies_dir + spine_morphology_property + ".h5" extension.
    provenance                      Optional         Dictionary containing provenance metadata (e.g. bioname).
+   spatial_index_dir               Optional         Path to the directory containing the spatial index files.
+                                                    Only for `biophysical` node populations and `chemical` edge populations.
    =============================== ================ ====================================
 
 .. [#f1] Mandatory (at least one) for :ref:`biophysical node populations<biophysical_node_type>`
@@ -226,6 +228,7 @@ example::
                    "type": "biophysical",
                    "morphologies_dir": "...",
                    "biophysical_neuron_models_dir": "...",
+                   "spatial_index_dir": "...",
                    "alternate_morphologies": ...
                 },
                 "node_population_b": {
