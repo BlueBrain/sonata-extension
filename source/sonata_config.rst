@@ -203,7 +203,7 @@ There is also one additional field `type` used to denote the population type.
                                                   * :ref:`vasculature <vasculature_node_type>`
 
                                                Default is `biophysical`.
-   spatial_index_dir              Optional     Path to the directory containing the spatial index files.
+   spatial_segment_index_dir      Optional     Path to the directory containing the spatial index files.
                                                Only for `biophysical` node populations.
    ============================== ============ ==========================================
 
@@ -229,7 +229,7 @@ example::
                     "type": "biophysical",
                     "morphologies_dir": "...",
                     "biophysical_neuron_models_dir": "...",
-                    "spatial_index_dir": "...",
+                    "spatial_segment_index_dir": "...",
                     "alternate_morphologies": ...
                   },
                   "node_population_b": {
@@ -296,6 +296,6 @@ There is also one additional field `type` used to denote the population type.
                                                   * `neuromodulatory`
 
                                                Default is `chemical`.
-   spatial_index_dir              Optional     Path to the directory containing the spatial index files.
+   spatial_synapse_index_dir      Optional     Path to the directory containing the spatial index files.
                                                Only for `chemical` edge populations.
    ============================== ============ ==========================================
