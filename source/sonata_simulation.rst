@@ -80,7 +80,6 @@ Parameters defining global simulation settings. As NEURON is the engine used for
    dt                              float      Mandatory   Duration of a single integration timestep. Given in ms.
    random_seed                     integer    Mandatory   For random sequences, seed is a positive integer added in order to give the user the capacity to change the sequences.
    spike_threshold                 integer    Optional    The spike detection threshold. A spike is detected whenever the voltage in the spike detection location goes over the spike threshold value. Default is -30mV. `NEURON specific details <https://nrn.readthedocs.io/en/latest/python/modelspec/programmatic/network/netcon.html#NetCon.threshold>`_.
-   spike_location                  text       Optional    The spike detection location. Can be either ‘soma’ or 'AIS' for detecting spikes in either the soma or axon initial segment, respectively. Default is 'soma'.
    integration_method              text       Optional    Selects the NEURON/CoreNEURON `integration method <https://nrn.readthedocs.io/en/latest/python/simctrl/programmatic.html#secondorder>`_. This parameter sets the NEURON global variable h.secondorder. The allowed values are ‘0’ (default) for fully implicit backward euler, ‘1’ for Crank-Nicolson and ‘2’ for Crank-Nicolson with fixed ion currents.
    stimulus_seed                   integer    Optional    A non-negative integer used for seeding noise stimuli and any other future stochastic stimuli, default is 0.
    ionchannel_seed                 integer    Optional    A non-negative integer used for seeding stochastic ion channels, default is 0.
@@ -94,7 +93,6 @@ example::
        "tstop": 1000,
        "dt": 0.025,
        "random_seed": 201506,
-       "spike_location": "AIS",
        "integration_method" : 2
   }
 
@@ -137,7 +135,7 @@ Parameters defining global experimental conditions.
    =============================== ========== =========== ====================================
    celsius                         float      Optional    Temperature of experiment. Default is 34.0.
    v_init                          float      Optional    Initial membrane voltage in mV. Default is -80.
-   synapses_init_depleted          boolean    Optional    Synapse at start of simulation are in depleted state. Default is false.
+   spike_location                  text       Optional    The spike detection location. Can be either ‘soma’ or 'AIS' for detecting spikes in either the soma or axon initial segment, respectively. Default is 'soma'.
    extracellular_calcium           float      Optional    Extracellular calcium concentration. When this parameter is provided, apply it to the synapse uHill parameter to scale the U parameter of synapses (py-neurodamus only feature). If not specified, U is set directly as read from edges file.
    randomize_gaba_rise_time        boolean    Optional    When true, enable legacy behavior to randomize the GABA_A rise time in the helper functions. Default is false which will use a prescribed value for GABA_A rise time.
    mechanisms                                 Optional    Properties to assign values to variables in synapse MOD files.
@@ -164,7 +162,7 @@ example::
 
   "conditions": {
        "celsius": 34.0,
-       "synapses_init_depleted": false,
+       "spike_location": "AIS",
        "mechanisms": {
            "ProbAMPANMDA_EMS": {
                "init_depleted": true,
