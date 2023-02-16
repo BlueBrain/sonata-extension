@@ -203,6 +203,8 @@ There is also one additional field `type` used to denote the population type.
                                                   * :ref:`vasculature <vasculature_node_type>`
 
                                                Default is `biophysical`.
+   spatial_segment_index_dir      Optional     Path to the directory containing the spatial index files.
+                                               Only for `biophysical` node populations.
    ============================== ============ ==========================================
 
 example::
@@ -218,24 +220,28 @@ example::
        }
 
   },
-  "nodes": [
-        {
-            "nodes_file": "$NETWORK_DIR/V1/v1_nodes.h5",
-            "populations": {
-                "node_population_a": {
-                   "type": "biophysical",
-                   "morphologies_dir": "...",
-                   "biophysical_neuron_models_dir": "...",
-                   "alternate_morphologies": ...
-                },
-                "node_population_b": {
-                  "type": "virtual"
-                },
-                "node_population_c": {}
-            }
-        },
-        ...
-    ]
+  "networks": {
+    "nodes": [
+          {
+              "nodes_file": "$NETWORK_DIR/V1/v1_nodes.h5",
+              "populations": {
+                  "node_population_a": {
+                    "type": "biophysical",
+                    "morphologies_dir": "...",
+                    "biophysical_neuron_models_dir": "...",
+                    "spatial_segment_index_dir": "...",
+                    "alternate_morphologies": ...
+                  },
+                  "node_population_b": {
+                    "type": "virtual"
+                  },
+                  "node_population_c": {}
+              }
+          },
+          ...
+      ]
+      ...
+    }
 
 .. note::
     Type is redundant with model_type and defines the expected properties for the nodes.
@@ -290,4 +296,6 @@ There is also one additional field `type` used to denote the population type.
                                                   * `neuromodulatory`
 
                                                Default is `chemical`.
+   spatial_synapse_index_dir      Optional     Path to the directory containing the spatial index files.
+                                               Only for `chemical` edge populations.
    ============================== ============ ==========================================
