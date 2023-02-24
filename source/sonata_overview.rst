@@ -43,17 +43,28 @@ A standard circuit config at |bbp| is :
         "nodes": [
           {
             "nodes_file": "$NETWORK_DIR/neurons.h5",
-            "node_types_file": "$NETWORK_DIR/node_types.csv"
+            "node_types_file": null,
+            "populations": {
+              "node_population_a": {
+                "type": "biophysical"
+              }
+            }
           },
           {
             "nodes_file": "$NETWORK_DIR/projections.h5",
-            "node_types_file": null
+            "node_types_file": null,
+            "node_population_b": {
+              "type": "virtual"
+            }
           }
         ],
         "edges": [
           {
             "edges_file": "$NETWORK_DIR/edges.h5",
-            "edge_types_file": null
+            "edge_types_file": null,
+            "populations": {
+                "edges-AB": {}
+            }
           }
         ]
       }
