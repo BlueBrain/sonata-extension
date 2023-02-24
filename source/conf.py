@@ -36,8 +36,9 @@ with open(package_json_path, encoding='utf-8') as fp:
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.todo',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
+    'sphinx.ext.todo',
     'blueconfig_sphinx',
 ]
 
