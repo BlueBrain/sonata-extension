@@ -43,7 +43,6 @@ A standard circuit config at |bbp| is :
         "nodes": [
           {
             "nodes_file": "$NETWORK_DIR/neurons.h5",
-            "node_types_file": null,
             "populations": {
               "node_population_a": {
                 "type": "biophysical"
@@ -52,7 +51,6 @@ A standard circuit config at |bbp| is :
           },
           {
             "nodes_file": "$NETWORK_DIR/projections.h5",
-            "node_types_file": null,
             "node_population_b": {
               "type": "virtual"
             }
@@ -61,7 +59,6 @@ A standard circuit config at |bbp| is :
         "edges": [
           {
             "edges_file": "$NETWORK_DIR/edges.h5",
-            "edge_types_file": null,
             "populations": {
                 "edges-AB": {}
             }
