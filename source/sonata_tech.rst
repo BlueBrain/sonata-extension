@@ -288,7 +288,8 @@ Group column represents the HDF group where the dataset is located under /<popul
                                                                        where :math:`ca` denotes the simulated calcium concentration in
                                                                        millimolar and :math:`y` a scalar such that at :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
 
-    /0            ``syn_type_id``               uint32     Mandatory   Takes the value 0 for inhibitory synapses, 100 for excitatory synapses (numerical values due to historic reasons)
+    /0            ``syn_type_id``               uint32     Mandatory   Takes the value 0 for inhibitory synapses, 100 for excitatory synapses (numerical values due to historic reasons).  Deprecated, replaced by ``model_template``.
+    /0/@library   ``model_template`             uft8       Mandatory   Reference to a template or class for the mechanism of the synapse.
     /0            ``syn_property_rule``         uint32     Mandatory   The position of the rule that leads to the synapse in the recipe
     /0            ``delay``                     float32    Mandatory   The axonal delay (in ms, ``NaN`` for dendro-dendritic synapses).
     /0/@library   ``spine_morphology``          utf8       Optional    Spine morphology file relative path, without the file extension.
