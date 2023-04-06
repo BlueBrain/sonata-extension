@@ -268,7 +268,7 @@ To assign synapse properties, the classification field needs to be set:
 
      The type has to start with either ``E`` for excitatory connections or
      ``I`` for inhibitory connections.  This legacy behavior may be overriden by
-     specifying the `model_template` parameter for the `SynapsesClassification` section.
+     specifying the `connection_model` parameter for the `SynapsesClassification` section.
 
 Two optional attributes may be set:
 
@@ -333,7 +333,7 @@ be given for all `SynapsesClassification` elements:
   where :math:`ca` denotes the simulated calcium concentration in
   millimolar and :math:`y` a scalar such that at
   :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
-- `model_template`, to specify the filename stub (without a final extension) that should
+- `connection_model`, to specify the filename stub (without a final extension) that should
   appear in the field with the same name in the corresponding SONATA edge file.  Presence
   of this attribute will suppress creating the `syn_type_id` field in the edge file.
 
