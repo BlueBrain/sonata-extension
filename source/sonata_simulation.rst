@@ -488,13 +488,14 @@ connection_overrides
 
 *Optional*.
 
-Collection of dictionaries to adjust the synaptic strength or other properties of edges between two sets of nodes. These are executed in the order they are read from the file. If a set of synapses are affected by multiple connection_overrides because of source and target used, the latter will overwrite any repeated fields set by a former. This is useful when making more general adjustments and then more specific adjustments. Any edges unaffected by any connection_overrides are instantiated as prescribed in the model.
+List of dictionaries to adjust the synaptic strength or other properties of edges between two sets of nodes. These are executed in the order they are read from the file. If a set of synapses are affected by multiple connection_overrides because of source and target used, the latter will overwrite any repeated fields set by a former. This is useful when making more general adjustments and then more specific adjustments. Any edges unaffected by any connection_overrides are instantiated as prescribed in the model.
 
 .. table::
 
    ============================== ========== ============ ==========================================
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
+   name                           text       Mandatory    Descriptive name for the override.
    source                         text       Mandatory    node_set specifying presynaptic nodes.
    target                         text       Mandatory    node_set specifying postsynaptic nodes.
    weight                         float      Optional     Scalar used to adjust synaptic strength.
@@ -509,18 +510,21 @@ Collection of dictionaries to adjust the synaptic strength or other properties o
 
 example::
 
-  "connection_overrides": {
-       "weaken_excitation": {
+  "connection_overrides": [
+       {
+            "name": "weaken_excitation"
             "source": "Excitatory",
             "target": "Mosaic,
             "weight": 0.75,
             "spont_minis": 0.04
        },
-       "deactivate_short_term_plasticity": {
+       {
+            "name": "deactivate_short_term_plasticity",
             "source": "Mosaic",
             "target": "Mosaic",
             "synapse_configure": "%s.Fac = 0 %s.Dep = 0"
-  }
+       }
+  ]
 
 metadata
 ---------
@@ -535,7 +539,7 @@ example::
 
 beta_features
 -------------
-This section is reserved for variables that are used for developing a new feature of the simulation. Once the feature goes in production, the variables should be moved to a proper section in the simulation configuration file. 
+This section is reserved for variables that are used for developing a new feature of the simulation. Once the feature goes in production, the variables should be moved to a proper section in the simulation configuration file.
 
 example::
 
