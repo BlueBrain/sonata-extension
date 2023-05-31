@@ -96,7 +96,7 @@ example::
        "integration_method" : 2
   }
 
-LFPWeightsPath
+electrodes_file
 --------------
 
 *Optional*
@@ -110,11 +110,11 @@ A parameter specifying the path to the weights file describing the scaling facto
   /electrodes/{electrodename}   position                float32    Optional      Position of {electrodename} in microns, in cartesian coordinates (3 x 1)
   /electrodes/{electrodename}   region                  utf8       Optional      Region in which {electrodename} is located
   /electrodes/{electrodename}   type                    utf8       Optional      Either EEG or LFP
-  /electrodes/{electrodename}   offset                  uint64     Optional      Column index of the coefficients for {electrodename} in /electrodes/electrode_grid/{gid}
+  /electrodes/{electrodename}   offset                  uint64     Optional      Column index of the coefficients for {electrodename} in /electrodes/{population_name}/{node_id}
   /electrodes/{population_name} {node_id}               float64    Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA (nsegments x nelectrodes)
-  /{population_name}            node_ids                uint64     Mandatory     List of GIDs (ngids x 1)
-  /offsets                      {gid}                   uint64     Mandatory     For each section, number of entries in /electrodes/electrode_grid/{gid} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
-  /sec_ids                      {gid}                   unit64     Mandatory     For each segment, index of the section to which it belongs (nsegments x 1)
+  /{population_name}            {node_id}               uint64     Mandatory     List of GIDs (ngids x 1)
+  /{population_name}/offsets    {node_id}               uint64     Mandatory     For each section, number of entries in /electrodes/{population_name}/{node_id} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
+  /{population_name}/sec_ids    {node_id}               unit64     Mandatory     For each segment, index of the section to which it belongs (nsegments x 1)
   ============================= ======================= ========== ============= =============================================================================================================================================================================================================
 
 output
@@ -426,7 +426,7 @@ Collection of dictionaries with each member describing one data collection durin
    ============================== ========== ============ ==========================================
    cells                          text       Optional     Specify which node_set to report, default is the simulation "node_set".
    sections                       text       Optional     Specify which section(s) to report, available labels are dependent on the model setup. To report on all sections, use the keyword "all". Default is "soma". At BBP, we currently support "soma", "axon", "dend", "apic", or "all".
-   type                           text       Mandatory    Indicates type of data collected. "compartment", "summation", "synapse", or "lfp". Compartment means that each compartment outputs separately in the report file. Summation will sum up the values from compartments to write a single value to the report (section soma) or sum up the values and leave them in each compartment (other section types). More on summation after the table. Synapse indicates that each synapse afferent to the reported cells will have a separate entry in the report. LFP will report the contribution to the lfp (or eeg) signal from each cell, using the LFPWeightsPath parameter. See more after the table
+   type                           text       Mandatory    Indicates type of data collected. "compartment", "summation", "synapse", or "lfp". Compartment means that each compartment outputs separately in the report file. Summation will sum up the values from compartments to write a single value to the report (section soma) or sum up the values and leave them in each compartment (other section types). More on summation after the table. Synapse indicates that each synapse afferent to the reported cells will have a separate entry in the report. LFP will report the contribution to the lfp (or eeg) signal from each cell, using the 'electrodes_file' parameter. See more after the table
    scaling                        text       Optional     For summation type reporting, specify the handling of density values: "none" disables all scaling, "area" (default) converts density to area values. This makes them compatible with values from point processes such as synapses.
    compartments                   text       Optional     For compartment type reporting, override which compartments of a section are selected to report. Options are "center" or "all". When using "sections":"soma", default is "center", for other section options, default is "all".
    variable_name                  text       Mandatory    The Simulation variable to access. The variables available are model dependent. For summation type, can sum multiple variables by indicating as a comma separated strings. e.g. "ina", "ik"
