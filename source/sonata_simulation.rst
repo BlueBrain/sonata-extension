@@ -85,6 +85,7 @@ Parameters defining global simulation settings. As NEURON is the engine used for
    ionchannel_seed                 integer    Optional    A non-negative integer used for seeding stochastic ion channels, default is 0.
    minis_seed                      integer    Optional    A non-negative integer used for seeding the Poisson processes that drive the minis, default is 0.
    synapse_seed                    integer    Optional    A non-negative integer used for seeding stochastic synapses, default is 0.
+   electrodes_file                 text       Optional    Path to the weights file describing the scaling factors for the contributions of each segment's transmembrane current to the LFP/EEG. Format description after the table.
    =============================== ========== =========== ====================================
 
 example::
@@ -96,16 +97,16 @@ example::
        "integration_method" : 2
   }
 
-electrodes_file
---------------
+Format of the electrodes_file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*Optional*
-A parameter specifying the path to the weights file describing the scaling factors for the contributions of each segment's transmembrane current to the LFP/EEG. The format of the weights file is as follows:
+The format of the weights file is described below:
 
 .. table::
-  ============================= ======================= ========== ============= =============================================================================================================================================================================================================
+
+  ============================= ======================= ========== ============= ==========================================
   Group                         Field                   Type       Requirement   Description
-  ============================= ======================= ========== ============= =============================================================================================================================================================================================================
+  ============================= ======================= ========== ============= ==========================================
   /electrodes/{electrodename}   layer                   utf8       Optional      Layer of the circuit in which {electrodename} is located
   /electrodes/{electrodename}   position                float32    Optional      Position of {electrodename} in microns, in cartesian coordinates (3 x 1)
   /electrodes/{electrodename}   region                  utf8       Optional      Region in which {electrodename} is located
@@ -115,7 +116,7 @@ A parameter specifying the path to the weights file describing the scaling facto
   /{population_name}            {node_id}               uint64     Mandatory     List of GIDs (ngids x 1)
   /{population_name}/offsets    {node_id}               uint64     Mandatory     For each section, number of entries in /electrodes/{population_name}/{node_id} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
   /{population_name}/sec_ids    {node_id}               unit64     Mandatory     For each segment, index of the section to which it belongs (nsegments x 1)
-  ============================= ======================= ========== ============= =============================================================================================================================================================================================================
+  ============================= ======================= ========== ============= ==========================================
 
 output
 ------
