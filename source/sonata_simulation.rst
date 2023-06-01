@@ -104,19 +104,19 @@ The format of the weights file is described below:
 
 .. table::
 
-  ============================= ======================= ========== ============= ==========================================
-  Group                         Field                   Type       Requirement   Description
-  ============================= ======================= ========== ============= ==========================================
-  /electrodes/{electrodename}   layer                   utf8       Optional      Layer of the circuit in which {electrodename} is located
-  /electrodes/{electrodename}   position                float32    Optional      Position of {electrodename} in microns, in cartesian coordinates (3 x 1)
-  /electrodes/{electrodename}   region                  utf8       Optional      Region in which {electrodename} is located
-  /electrodes/{electrodename}   type                    utf8       Optional      Either EEG or LFP
-  /electrodes/{electrodename}   offset                  uint64     Optional      Column index of the coefficients for {electrodename} in /electrodes/{population_name}/{node_id}
-  /electrodes/{population_name} {node_id}               float64    Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA (nsegments x nelectrodes)
-  /{population_name}            {node_id}               uint64     Mandatory     List of GIDs (ngids x 1)
-  /{population_name}/offsets    {node_id}               uint64     Mandatory     For each section, number of entries in /electrodes/{population_name}/{node_id} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
-  /{population_name}/sec_ids    {node_id}               unit64     Mandatory     For each segment, index of the section to which it belongs (nsegments x 1)
-  ============================= ======================= ========== ============= ==========================================
+  ============================= ======================= ========== =============== ============= ==========================================
+  Group                         Dataset                 Type       Shape           Requirement   Description
+  ============================= ======================= ========== =============== ============= ==========================================
+  /electrodes/{electrodename}   layer                   utf8       1               Optional      Layer of the circuit in which {electrodename} is located
+  /electrodes/{electrodename}   position                float32    3               Optional      Position of {electrodename} in microns, in cartesian coordinates (3 x 1)
+  /electrodes/{electrodename}   region                  utf8       1               Optional      Region in which {electrodename} is located
+  /electrodes/{electrodename}   type                    utf8       1               Optional      Either EEG or LFP
+  /electrodes/{electrodename}   offset                  uint64     1               Optional      Column index of the coefficients for {electrodename} in /electrodes/{population_name}/{node_id}
+  /electrodes/{population_name} {node_id}               float64    N_seg x N_elec  Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA (nsegments x nelectrodes)
+  /{population_name}            node_ids                uint64     N_nodes         Mandatory     List of GIDs (ngids x 1)
+  /{population_name}/offsets    {node_id}               uint64     N_sec           Mandatory     For each section, number of entries in /electrodes/{population_name}/{node_id} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
+  /{population_name}/sec_ids    {node_id}               unit64     N_seg           Mandatory     For each segment, index of the section to which it belongs (nsegments x 1)
+  ============================= ======================= ========== =============== ============= ==========================================
 
 output
 ------
