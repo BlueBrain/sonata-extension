@@ -78,7 +78,7 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0/dynamics_params ``threshold_current``           float32    Mandatory     The minimal amplitude (in nA) of a step current clamp injection that triggers an action potential.
     /0/dynamics_params ``holding_current``             float32    Mandatory     The current clamp amplitude (in nA) necessary to hold the cell at a predefined holding voltage (typically around -85 mV for BBP).
     /0/dynamics_params ``AIS_scaler``                  float32    Optional      Multiplicative factor to scale AIS (morphology dependent and optional, used only for synthesis).
-    /0/dynamics_params ``input_resistance``            float32    Optional      Input resistance of the cell in MOhm. 
+    /0/dynamics_params ``input_resistance``            float32    Optional      Input resistance of the cell in MOhm.
     /0                 |minis|                         float32    Optional      Mini-frequencies are associated with incoming connections of a cell, and depend on the incoming connection's synapse type, and the receiving cell's layer.
                                                                                 If the synapse type is excitatory then exc-mini_frequency is used, otherwise inh-mini_frequency is used.
                                                                                 Default to the one provided by the circuit config if not present (Unit is Hz).
@@ -576,3 +576,23 @@ Required fields for ``Spykfunc``:
 .. _specification: https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md
 .. _enumeration: https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md#nodes---enum-datatypes
 .. _Tsodyks Markram Model: https://www.pnas.org/content/94/2/719
+
+Format of the electrodes_file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The format of the weights file is described below:
+
+.. table::
+
+  ===================================== ======================= ========== =============== ============= ==========================================
+  Group                                 Field                   Type       Shape           Requirement   Description
+  ===================================== ======================= ========== =============== ============= ==========================================
+  /electrodes/contacts/{electrodename}  layer                   utf8       1               Optional      Layer of the circuit in which {electrodename} is located. If the electrode is in a region without cortical layers, then "NA". If the electrode is outside the brain, then "Outside"
+  /electrodes/contacts/{electrodename}  position                float32    3               Mandatory     Position of {electrodename} in microns, in cartesian coordinates
+  /electrodes/contacts/{electrodename}  region                  utf8       1               Optional      Region in which {electrodename} is located
+  /electrodes/contacts/{electrodename}  type                    utf8       1               Optional      Either EEG or LFP
+  /electrodes/{population_name}         {node_id}               float64    N_seg x N_elec  Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA
+  /{population_name}                    node_ids                uint64     N_nodes         Mandatory     List of node ids
+  /{population_name}/offsets            {node_id}               uint64     N_sec           Mandatory     For each section, number of entries in /electrodes/{population_name}/{node_id} between start of previous section and start of current section. Equivalent to number of segments in previous section
+  /{population_name}/sec_ids            {node_id}               unit64     N_seg           Mandatory     For each segment, index of the section to which it belongs
+  ===================================== ======================= ========== =============== ============= ==========================================

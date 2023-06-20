@@ -85,7 +85,7 @@ Parameters defining global simulation settings. As NEURON is the engine used for
    ionchannel_seed                 integer    Optional    A non-negative integer used for seeding stochastic ion channels, default is 0.
    minis_seed                      integer    Optional    A non-negative integer used for seeding the Poisson processes that drive the minis, default is 0.
    synapse_seed                    integer    Optional    A non-negative integer used for seeding stochastic synapses, default is 0.
-   electrodes_file                 text       Optional    Path to the weights file describing the scaling factors for the contributions of each segment's transmembrane current to the LFP/EEG. Format description after the table.
+   electrodes_file                 text       Optional    Path to the weights file describing the scaling factors for the contributions of each segment's transmembrane current to the LFP/EEG. Format description in sonata_tech.rst
    =============================== ========== =========== ====================================
 
 example::
@@ -97,26 +97,6 @@ example::
        "integration_method" : 2
   }
 
-Format of the electrodes_file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The format of the weights file is described below:
-
-.. table::
-
-  ============================= ======================= ========== =============== ============= ==========================================
-  Group                         Dataset                 Type       Shape           Requirement   Description
-  ============================= ======================= ========== =============== ============= ==========================================
-  /electrodes/{electrodename}   layer                   utf8       1               Optional      Layer of the circuit in which {electrodename} is located
-  /electrodes/{electrodename}   position                float32    3               Optional      Position of {electrodename} in microns, in cartesian coordinates (3 x 1)
-  /electrodes/{electrodename}   region                  utf8       1               Optional      Region in which {electrodename} is located
-  /electrodes/{electrodename}   type                    utf8       1               Optional      Either EEG or LFP
-  /electrodes/{electrodename}   offset                  uint64     1               Optional      Column index of the coefficients for {electrodename} in /electrodes/{population_name}/{node_id}
-  /electrodes/{population_name} {node_id}               float64    N_seg x N_elec  Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA (nsegments x nelectrodes)
-  /{population_name}            node_ids                uint64     N_nodes         Mandatory     List of GIDs (ngids x 1)
-  /{population_name}/offsets    {node_id}               uint64     N_sec           Mandatory     For each section, number of entries in /electrodes/{population_name}/{node_id} between start of previous section and start of current section. Equivalent to number of segments in previous section (1 x nsections)
-  /{population_name}/sec_ids    {node_id}               unit64     N_seg           Mandatory     For each segment, index of the section to which it belongs (nsegments x 1)
-  ============================= ======================= ========== =============== ============= ==========================================
 
 output
 ------
