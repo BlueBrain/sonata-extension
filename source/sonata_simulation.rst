@@ -528,13 +528,16 @@ example::
 
 metadata
 ---------
-A set of string variables storing remarks on the simulation, but are not used for running the simulation.
+A set of variables storing remarks on the simulation, but are not used for running the simulation.
 
 example::
 
   "metadata": {
        "note": "the first attempt at reproducing xxx experiment",
-       "version": "v1"
+       "version": "v1",
+       "v_int": 10,
+       "v_float": 0.5,
+       "v_bool": false
   }
 
 beta_features
