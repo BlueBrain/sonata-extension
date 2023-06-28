@@ -65,8 +65,9 @@ simulations:
     tstop: 1.0
     dt: {dt}
     spikes_file: "spikes.h5"
-    spikes_sort_order: "time"
+    spikes_sort_order: "by_time"
     spikes_count: {spikes_count}
+    random_seed: 0
 """
     with tmp_file(content, cleanup=True) as (dirpath, setup_file):
         tested.create(setup_file, dirpath, dirpath, SEED)

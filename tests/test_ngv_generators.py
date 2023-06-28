@@ -188,8 +188,8 @@ astrocyte:
             assert np.all(np.isin(h5[f"nodes/{name_a}/0/morphology"].asstr()[:], ["GLIA_0000000000000", "GLIA_0000000000001"]))
 
 
-ELECTRICAL_SYNAPSE = """
-electrical_synapse:
+ELECTRICAL = """
+electrical:
   afferent_center_x:
     type: float
     values: derived
@@ -269,7 +269,7 @@ def test_electrical_synapse_edge_generator():
     source_size = 2
     morph_global_path = "morphologies"
     morph_h5_relative_path = "h5"
-    type_ = "electrical_synapse"
+    type_ = "electrical"
     edge_a_size = 4
     content = f"""
 nodes:
@@ -296,7 +296,7 @@ edges:
         create_simple_morph(Path(dirpath, morph_global_path, morph_h5_relative_path),
                             morph_name="test_morph.h5")
         create_node(dirpath, target_name, target_size)
-        tested_obj = _generate_sample(setup_file, ELECTRICAL_SYNAPSE, dirpath,
+        tested_obj = _generate_sample(setup_file, ELECTRICAL, dirpath,
                                       str(Path(dirpath, morph_global_path)),
                                       tested.GlialGlialGenerator, type_)
         expected_name = f"{source_name}__{target_name}__{type_}"

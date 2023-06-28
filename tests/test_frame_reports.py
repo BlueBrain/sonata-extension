@@ -71,18 +71,21 @@ simulations:
     tstop: {tend}
     dt: {dt}
     spikes_file: "spikes.h5"
-    spikes_sort_order: "time"
+    spikes_sort_order: "by_time"
     spikes_count: {spikes_count}
+    random_seed: 0
 
   reports:
     - name: "soma_report"
       cells: "node_set1"
       variable_name: "current_soma"
       sections: "soma"
+      type: "compartment"
     - name: "compartment_report"
       cells: "node_set2"
       variable_name: "current_compart"
       sections: "all"
+      type: "compartment"
 """
     with tmp_file(content, cleanup=True) as (dirpath, setup_file):
         shutil.copytree(os.path.join(TEST_DATA_DIR, morph_path), os.path.join(dirpath, morph_path))

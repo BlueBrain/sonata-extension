@@ -49,6 +49,14 @@ class VirtualGenerator(NodeGenerator):
     def _ok_types(self):
         return ["virtual"]
 
+    @cached_property
+    def _templates(self):
+        return {"model_template": np.full((self.info.size), "")}
+
+    def create_data(self):
+        super().create_data()
+        self.data.update(self._templates)
+
 
 class ChemicalGenerator(EdgeGenerator):
     UNIFORM_DATA = ["conductance", "decay_time", "depression_time", "facilitation_time", "u_syn",
@@ -115,14 +123,16 @@ class ChemicalGenerator(EdgeGenerator):
             if self.info.source.type == "biophysical":
                 self._append_to_data(
                     self._add_synapse_properties(self.info.source, source, "efferent"))
+            elif self.info.source.type == "virtual":
+                self._append_to_data({"efferent_section_type": NEURITE_TYPE_MAP[SectionType.axon]})
             self._append_to_data(self._add_synapse_properties(self.info.target, target, "afferent"))
 
         if self.info.source.type == "biophysical":
             # no spine length from what I understood from Joni for projections
             afferent_points = np.array([self.data["afferent_center_" + coord] for coord in
-                                       ['x', 'y', 'z']]).T
+                                        ['x', 'y', 'z']]).T
             efferent_points = np.array([self.data["efferent_center_" + coord] for coord in
-                                       ['x', 'y', 'z']]).T
+                                        ['x', 'y', 'z']]).T
             self.data["spine_length"] = np.linalg.norm(afferent_points - efferent_points, axis=1)
 
     def _check_missing_properties(self):
@@ -130,7 +140,8 @@ class ChemicalGenerator(EdgeGenerator):
         required_properties = list(self.property_config)
         if self.info.source.type == "virtual":
             required_properties = {prop for prop in self.property_config if
-                                   not prop.startswith("efferent") and prop != "spine_length"}
+                                   prop == "efferent_section_type" or  # keep this prop
+                                   (not prop.startswith("efferent") and prop != "spine_length")}
         missing_properties = set(required_properties) - set(self.data)
         if missing_properties:
             raise GeneratorError(f"Missing property {missing_properties}")

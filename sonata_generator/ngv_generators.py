@@ -4,7 +4,7 @@ from cached_property import cached_property
 import h5py
 from morphio import SectionType
 import numpy as np
-from vasculatureapi import SectionVasculature
+from vascpy import SectionVasculature
 
 from sonata_generator.generators import NodeGenerator, EdgeGenerator
 from sonata_generator.utils import load_morphology, get_surface_point, segment_lengths
@@ -37,7 +37,7 @@ class VasculatureGenerator(NodeGenerator):
     def save(self):
         """Full override of the save.
 
-        Don t use the normal one and use vasculatureapi instead.
+        Don t use the normal one and use vascpy instead.
         """
         self.vasc.save_sonata(self.info.filepath)
         with h5py.File(self.info.filepath, "r+") as h5:
@@ -163,7 +163,7 @@ class GlialGlialGenerator(EdgeGenerator):
 
     @property
     def _ok_types(self):
-        return ["electrical_synapse"]
+        return ["electrical", "glialglial"]
 
     @staticmethod
     def _add_touch_properties(population, node_id, prefix):
@@ -275,10 +275,17 @@ class NeuroGlialGenerator(EdgeGenerator):
         self.data["synapse_population"] = np.full(self.info.size,
                                                   fill_value=self._synapse_population.name)
 
+    def _write_topology(self):
+        super()._write_topology()
+        with h5py.File(self.info.filepath, 'r+') as h5:
+            pop_group = h5[f"/{self._population_type}/{self.info.name}"]
+            pop_group["0/synapse_id"].attrs["edge_population"] = self.info.edge_connection
+
     @staticmethod
     def _get_process_properties(population, node_id):
         """Create the end process properties for a given node id."""
         morph = load_morphology(population, node_id, transform=True, morph_type=".h5")
+        x, y, z = morph.soma.center
         section = np.random.randint(0, len(morph.sections))
         morph_section = morph.sections[section]
         segment = np.random.randint(0, len(morph_section.points) - 1)
@@ -292,6 +299,9 @@ class NeuroGlialGenerator(EdgeGenerator):
                 "astrocyte_segment_id": segment,
                 "astrocyte_segment_offset": offset,
                 "astrocyte_section_pos": pos,
+                "astrocyte_center_x": x,
+                "astrocyte_center_y": y,
+                "astrocyte_center_z": z,
                 }
 
     def _add_connections_properties(self):

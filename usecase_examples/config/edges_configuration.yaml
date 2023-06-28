@@ -18,16 +18,16 @@ chemical:
     type: float
     values: derived
   afferent_section_id:
-    type: int
+    type: uint32
     values: derived
   afferent_section_pos:
     type: float
     values: derived
   afferent_section_type:
-    type: int
+    type: uint32
     values: derived
   afferent_segment_id:
-    type: int
+    type: uint32
     values: derived
   afferent_segment_offset:
     type: float
@@ -51,16 +51,16 @@ chemical:
     type: float
     values: derived
   efferent_section_id:
-    type: int
+    type: uint32
     values: derived
   efferent_section_pos:
     type: float
     values: derived
   efferent_section_type:
-    type: int
+    type: uint32
     values: derived
   efferent_segment_id:
-    type: int
+    type: uint32
     values: derived
   efferent_segment_offset:
     type: float
@@ -81,7 +81,7 @@ chemical:
     type: float
     values: [ 0.5, 0.55 ]
   n_rrp_vesicles:
-    type: int
+    type: uint32
     values: [ 1, 5 ]
   spine_length:
     type: float
@@ -93,13 +93,13 @@ chemical:
     type: float
     values: [ 1.0, 2.0 ]
   syn_type_id:
-    type: int
+    type: uint32
     values: [ 0, 120 ]
   delay:
     type: float
     values: [ 0, 10.0 ]
 
-electrical_synapse:
+electrical:
   afferent_center_x:
     type: float
     values: derived
@@ -119,16 +119,16 @@ electrical_synapse:
     type: float
     values: derived
   afferent_section_id:
-    type: int
+    type: uint32
     values: derived
   afferent_section_pos:
     type: float
     values: derived
   afferent_section_type:
-    type: int
+    type: uint32
     values: derived
   afferent_segment_id:
-    type: int
+    type: uint32
     values: derived
   afferent_segment_offset:
     type: float
@@ -152,16 +152,87 @@ electrical_synapse:
     type: float
     values: derived
   efferent_section_id:
-    type: int
+    type: uint32
     values: derived
   efferent_section_pos:
     type: float
     values: derived
   efferent_section_type:
-    type: int
+    type: uint32
     values: derived
   efferent_segment_id:
-    type: int
+    type: uint32
+    values: derived
+  efferent_segment_offset:
+    type: float
+    values: derived
+  spine_length:
+    type: float
+    values: derived
+
+glialglial:
+  afferent_center_x:
+    type: float
+    values: derived
+  afferent_center_y:
+    type: float
+    values: derived
+  afferent_center_z:
+    type: float
+    values: derived
+  afferent_surface_x:
+    type: float
+    values: derived
+  afferent_surface_y:
+    type: float
+    values: derived
+  afferent_surface_z:
+    type: float
+    values: derived
+  afferent_section_id:
+    type: uint32
+    values: derived
+  afferent_section_pos:
+    type: float
+    values: derived
+  afferent_section_type:
+    type: uint32
+    values: derived
+  afferent_segment_id:
+    type: uint32
+    values: derived
+  afferent_segment_offset:
+    type: float
+    values: derived
+  efferent_center_x:
+    type: float
+    values: derived
+  efferent_center_y:
+    type: float
+    values: derived
+  efferent_center_z:
+    type: float
+    values: derived
+  efferent_surface_x:
+    type: float
+    values: derived
+  efferent_surface_y:
+    type: float
+    values: derived
+  efferent_surface_z:
+    type: float
+    values: derived
+  efferent_section_id:
+    type: uint32
+    values: derived
+  efferent_section_pos:
+    type: float
+    values: derived
+  efferent_section_type:
+    type: uint32
+    values: derived
+  efferent_segment_id:
+    type: uint32
     values: derived
   efferent_segment_offset:
     type: float
@@ -171,11 +242,20 @@ electrical_synapse:
     values: derived
 
 synapse_astrocyte:
+  astrocyte_center_x:
+    type: float
+    values: derived
+  astrocyte_center_y:
+    type: float
+    values: derived
+  astrocyte_center_z:
+    type: float
+    values: derived
   astrocyte_section_id:
-    type: int
+    type: uint32
     values: derived
   astrocyte_segment_id:
-    type: int
+    type: uint32
     values: derived
   astrocyte_segment_offset:
     type: float
@@ -184,7 +264,7 @@ synapse_astrocyte:
     type: float
     values: derived
   synapse_id:
-    type: int
+    type: uint64
     values: derived
   synapse_population:
     type: text
@@ -192,7 +272,7 @@ synapse_astrocyte:
 
 endfoot:
   endfoot_id:
-    type: int
+    type: uint64
     values: derived
   endfoot_surface_x:
     type: float
@@ -204,13 +284,13 @@ endfoot:
     type: float
     values: derivated
   vasculature_section_id:
-    type: int
+    type: uint32
     values: derived
   vasculature_segment_id:
-    type: int
+    type: uint32
     values: derived
   astrocyte_section_id:
-    type: int
+    type: uint32
     values: derived
   endfoot_compartment_length:
     type: float

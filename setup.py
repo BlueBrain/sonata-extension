@@ -25,7 +25,7 @@ setup(
         "libsonata>=0.1.8",
         "morph_tool>=2.4.3,<3.0.0",
         "cached-property>=1.5.2",
-        "vasculatureapi>=0.2.1"
+        "vascpy>=0.1.1"
     ],
     packages=find_packages(),
     python_requires=">=3.7",

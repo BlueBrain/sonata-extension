@@ -154,6 +154,9 @@ virtual:
   model_type:
     type: text
     values: [ 'virtual' ]
+  model_template:
+    type: text
+    values: null
 """
     with tmp_file(content, cleanup=True) as (dirpath, setup_file):
         shutil.copytree(Path(TEST_DATA_DIR, "morphologies"), Path(dirpath, component_global_path, morph_swc_relative_path))
@@ -168,9 +171,11 @@ virtual:
 
             observed = set(h5[f"nodes/{name_a}/0"])
             assert "model_type" in observed
+            assert "model_template" in observed
 
             # other values are tested in the normal generator tests (uniform or choice variables)
             npt.assert_array_equal(h5[f"nodes/{name_a}/0/model_type"].asstr()[:], ["virtual", "virtual"])
+            npt.assert_array_equal(h5[f"nodes/{name_a}/0/model_template"].asstr()[:], ["", ""])
 
 
 CONFIG_CHEMICAL = """chemical:
@@ -193,17 +198,17 @@ CONFIG_CHEMICAL = """chemical:
     type: float
     values: derived
   afferent_section_id:
-    type: int
+    type: uint32
     values: derived
   afferent_section_pos:
     type: float
     values: derived
   afferent_section_type:
-    type: int
+    type: uint32
     values: derived
   afferent_segment_id:
-    type: int
-    values: derived 
+    type: uint32
+    values: derived
   afferent_segment_offset:
     type: float
     values: derived
@@ -226,16 +231,16 @@ CONFIG_CHEMICAL = """chemical:
     type: float
     values: derived
   efferent_section_id:
-    type: int
+    type: uint32
     values: derived
   efferent_section_pos:
     type: float
     values: derived
   efferent_section_type:
-    type: int
+    type: uint32
     values: derived
   efferent_segment_id:
-    type: int
+    type: uint32
     values: derived
   efferent_segment_offset:
     type: float
@@ -256,7 +261,7 @@ CONFIG_CHEMICAL = """chemical:
     type: float
     values: [0.5, 0.55]
   n_rrp_vesicles:
-    type: int
+    type: uint32
     values: [1, 5]
   spine_length:
     type: float
@@ -266,9 +271,9 @@ CONFIG_CHEMICAL = """chemical:
     values: [0.1, 1.0]
   u_hill_coefficient:
     type: float
-    values: [1.0, 2.0] 
+    values: [1.0, 2.0]
   syn_type_id:
-    type: int
+    type: uint32
     values: [0, 120]
   delay:
     type: float
@@ -293,7 +298,7 @@ nodes:
         morphologies_asc: dummy
         morphologies_swc:  {morph_swc_relative_path}
         biophysical_neuron_models_dir: dummy
-        
+
 edges:
   - filepath: edges.h5
     populations:
@@ -316,10 +321,13 @@ edges:
                 '0', 'edge_type_id', 'indices', 'source_node_id', 'target_node_id'
             }
             assert len(h5[f"edges/{name_edge}/edge_type_id"]) == edge_a_size
+            assert h5[f"edges/{name_edge}/edge_type_id"].dtype.name == "int64"
             assert np.unique(h5[f"edges/{name_edge}/edge_type_id"]) == np.array([-1])
 
             assert np.all((h5[f"edges/{name_edge}/source_node_id"][:] < node_a_size))
+            assert h5[f"edges/{name_edge}/source_node_id"].dtype.name == "uint64"
             assert np.all((h5[f"edges/{name_edge}/target_node_id"][:] < node_a_size))
+            assert h5[f"edges/{name_edge}/target_node_id"].dtype.name == "uint64"
 
             assert h5[f"edges/{name_edge}/target_node_id"].attrs["node_population"] == name_a
             assert h5[f"edges/{name_edge}/source_node_id"].attrs["node_population"] == name_a
@@ -340,6 +348,17 @@ edges:
             assert np.all((h5[f"edges/{name_edge}/0/efferent_section_pos"][:] <= 1))
             assert np.all(h5[f"edges/{name_edge}/0/efferent_section_type"][:] == 1)
             assert np.all(h5[f"edges/{name_edge}/0/efferent_segment_offset"][:] <= 10)
+
+            # Test a few of the uint32 types
+            int_types = {h5[f"edges/{name_edge}/0/{prop}"].dtype.name for prop in (
+                "afferent_section_type",
+                "afferent_section_id",
+                "afferent_segment_id",
+                "efferent_section_type",
+                "efferent_section_id",
+                "efferent_segment_id",
+            )}
+            assert int_types == {'uint32'}
 
             cx = h5[f"edges/{name_edge}/0/afferent_center_x"][0]
             cy = h5[f"edges/{name_edge}/0/afferent_center_y"][0]
@@ -409,5 +428,5 @@ edges:
             assert h5[f"edges/{name_edge}/source_node_id"].attrs["node_population"] == source_name
 
             for prop in h5[f"edges/{name_edge}/0/"]:
-                assert not prop.startswith("efferent")
+                assert not prop.startswith("efferent") or prop == "efferent_section_type"
                 assert prop != "spine_length"

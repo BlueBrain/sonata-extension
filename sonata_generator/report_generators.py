@@ -20,6 +20,7 @@ def create_config_file(simulation_config_file, output_dir):
                            "$INPUT_DIR": "./"
                            },
               'run': {
+                  'random_seed': simulation_config_file["globals"]["random_seed"],
                   'tstart': simulation_config_file["globals"]["tstart"],
                   'tstop': simulation_config_file["globals"]["tstop"],
                   'dt': simulation_config_file["globals"]["dt"],
@@ -38,6 +39,10 @@ def create_config_file(simulation_config_file, output_dir):
             'cells': report['cells'],
             'variable_name': report['variable_name'],
             'sections': report['sections'],
+            'type': report['type'],
+            'start_time': simulation_config_file["globals"]["tstart"],
+            'end_time': simulation_config_file["globals"]["tstop"],
+            'dt': simulation_config_file["globals"]["dt"],
         }
         reports[report_name] = sub_config
 

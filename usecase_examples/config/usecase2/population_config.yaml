@@ -32,16 +32,19 @@ simulations:
     tstop: 1.0
     dt: 0.1
     spikes_file: "spikes.h5"
-    spikes_sort_order: "time"
+    spikes_sort_order: "by_time"
     spikes_count: 5
+    random_seed: 0
 
   reports:
     - name: "soma_report"
       cells: "node_set1"
       variable_name: "v"
       sections: "soma"
+      type: "compartment"
     - name: "compartment_report"
       cells: "node_set2"
       variable_name: "v"
       sections: "all"
+      type: "compartment"
 

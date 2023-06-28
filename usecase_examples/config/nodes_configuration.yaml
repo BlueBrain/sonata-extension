@@ -67,6 +67,9 @@ virtual:
   model_type:
     type: text
     values: [ 'virtual' ]
+  model_template:
+    type: text
+    values: null
 
 astrocyte:
   x:

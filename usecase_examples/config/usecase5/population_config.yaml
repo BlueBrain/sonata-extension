@@ -32,7 +32,7 @@ edges:
     populations:
       - source: astrocyteA
         target: astrocyteA
-        type: electrical_synapse
+        type: glialglial
         size: 4
   - filepath: neuroglial.h5
     populations:

@@ -6,7 +6,13 @@ import numpy as np
 
 from sonata_generator.exceptions import GeneratorError
 
-TYPE_DISPATCH = {"float": np.float32, "int": np.int64, "text": h5py.string_dtype(encoding='utf-8')}
+TYPE_DISPATCH = {
+    "float": np.float32,
+    "int": np.int64,
+    "uint32": np.uint32,
+    "uint64": np.uint64,
+    "text": h5py.string_dtype(encoding='utf-8'),
+}
 
 
 class Generator:
@@ -43,7 +49,7 @@ class Generator:
                                      f": '{default}' for '{property_name}' in '{self.info.type}'")
             if type_ == "float":
                 values = np.random.uniform(low=default[0], high=default[1], size=self.info.size)
-            elif type_ == "int":
+            elif type_ in ("int", "uint32"):
                 values = np.random.choice(np.arange(int(default[0]), int(default[1])),
                                           size=self.info.size)
             else:
@@ -158,10 +164,10 @@ class EdgeGenerator(Generator):
         with h5py.File(self.info.filepath, 'r+') as h5:
             pop_group = h5[f"/{self._population_type}/{self.info.name}"]
             source = pop_group.create_dataset("source_node_id",
-                                              data=self.topology["source_node_id"])
+                                              data=self.topology["source_node_id"], dtype="u8")
             source.attrs['node_population'] = self.info.source.name
             target = pop_group.create_dataset("target_node_id",
-                                              data=self.topology["target_node_id"])
+                                              data=self.topology["target_node_id"], dtype="u8")
             target.attrs['node_population'] = self.info.target.name
 
     def _write_indexing(self):

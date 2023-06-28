@@ -26,7 +26,8 @@ NODE_GENERATOR_DISPATCH = {
 
 EDGE_GENERATOR_DISPATCH = {
     "chemical": ChemicalGenerator,
-    "electrical_synapse": GlialGlialGenerator,
+    "electrical": GlialGlialGenerator,
+    "glialglial": GlialGlialGenerator,
     "synapse_astrocyte": NeuroGlialGenerator,
     "endfoot": EndfootGenerator
 }
