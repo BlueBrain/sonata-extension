@@ -48,6 +48,8 @@ Spike replay files are commonly named "input.dat", after a rename of the "out.da
     }
 
 
+.. _dat_spike_files:
+
 .dat Spike Files
 ~~~~~~~~~~~~~~~~
 
