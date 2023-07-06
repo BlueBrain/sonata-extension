@@ -295,6 +295,9 @@ Spike events are created from the cells indicated in a file and delivered to the
    source                         text       Optional     The node set to replay spikes from.
    ============================== ========== ============ ==========================================
 
+Note: Spike files can be those output by Neurodamus. While Sonata spikes is undergoing support you may
+consider previous .dat files with their caveats. See `BlueConfig Projections and Replay`_.
+
 seclamp (voltage_clamp)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
