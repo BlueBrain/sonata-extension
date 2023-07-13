@@ -1,8 +1,18 @@
 .. _projection-example:
 
-BlueConfig Projection example
-=============================
-How to properly add a Projection to a BlueConfig
+BlueConfig Projections and Replay
+=================================
+
+Adding a Projection to a BlueConfig
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Specifying projections in a BlueConfig is done via a "Projection" block.
+
+Frequently one wants to attach a Spike Replay to the projection, so that the spikes
+originating in another brain region, previously simulated, can be used as input to the
+current target region being simulated.
+
+Spike replay files are commonly named "input.dat", after a rename of the "out.dat" file.
 
 
 .. code::
@@ -21,7 +31,7 @@ How to properly add a Projection to a BlueConfig
         Pattern SynapseReplay
         # this file contains spike times of neurons from Name_Of_Projection, you must
         # generate it on your own, see an example below
-        SpikeFile /path/to/spikes_file/
+        SpikeFile /path/to/spikes_file.dat
     }
 
     StimulusInject spikeReplayIntoUniverse
@@ -37,24 +47,49 @@ How to properly add a Projection to a BlueConfig
         SynapseConfigure %s.Use = 0.86
     }
 
-How to generate a spikes file for Projection
+
+.. _dat_spike_files:
+
+.dat Spike Files
+~~~~~~~~~~~~~~~~
+
+Spike files used with BlueConfigs follow a very simple ".dat" text spec.
+They have a `/scatter` header followed by lines of "<time-ms>  <cell-id>".
+
+Example:
+
+```
+/scatter
+015.7384     221086
+015.8529     222256
+015.8538     221131
+015.8726     221285
+```
+
+**SONATA COMPAT NOTE**: The <cell-id> is a 1-based NEURON cell Id, which is consistent
+with legacy MVD formats. In turn, SONATA uses 0-based cell Ids and therefore,
+in case you use SONATA node sets, you will need to OFFSET EVERY CELL ID BY 1.
+
+Building on the previous example, the first spike would go out at 15.7384ms on cell with
+SONATA Node Id 221085.
+
+
+Example Generating a .dat Spikes File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 
-    def generate_spike_file():
+    def generate_spike_file(spike_file_path):
         import random
         import numpy as np
         from bluepy.v2 import Circuit
         SIMULATION_TIME = 2000  # 2 seconds, update it for your simulation
 
         def _gen_single_poisson_process():
-            process = []
             t = 0
-            while True:
+            while t < SIMULATION_TIME:
                 t += random.expovariate(.5) * 1000
-                if t > SIMULATION_TIME:
-                    return process
-                process.append(t)
+                yield t
 
         c = Circuit('BlueConfig')
         proj_gids = c.cells.ids('Name_Of_Projection')
@@ -62,17 +97,11 @@ How to generate a spikes file for Projection
         assert (len(proj_gids) / 7. == 310.)
         gids = np.arange(proj_gids[0] + 2 * 310, proj_gids[0] + 3 * 310)
 
-        spike_times = {}
-        for gid in gids:
-            spike_times[gid] = _gen_single_poisson_process()
-
-        lines = []
-        for gid, times in spike_times.items():
-            for t in times:
-                lines.append(f'{gid} {t}\n')
-
-        with open('/path/to/spikes_file/', 'w') as f:
-            f.writelines(lines)
+        with open(spike_file_path, 'w') as f:
+            f.write(f'/scatter\n')
+            for gid in gids:
+                for t in  _gen_single_poisson_process():
+                    f.write(f'{t} \t{gid}\n')
 
 
-    generate_spike_file()
+    generate_spike_file("/path/to/spikes_file.dat")
