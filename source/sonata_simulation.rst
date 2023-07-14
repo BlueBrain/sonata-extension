@@ -364,6 +364,7 @@ Note: fields marked Mandatory* depend on which shot_noise version is selected.
    sd_percent                     float      Mandatory*   For relative_shot_noise, signal std dev as percentage of a cell's threshold current (current_clamp) or inverse input resistance (conductance).
    mean                           float      Mandatory*   For absolute_shot_noise, signal mean in nA (current_clamp) or uS (conductance).
    sigma                          float      Mandatory*   For absolute_shot_noise, signal std dev in nA (current_clamp) or uS (conductance).
+   reversal                       float      Optional     Reversal potential for conductance injection in mV. Default is 0.
    dt                             float      Optional     Timestep of generated signal in ms. Default is 0.25 ms.
    random_seed                    integer    Optional     Override the random seed (to introduce correlations between cells).
    ============================== ========== ============ ==========================================
