@@ -593,6 +593,6 @@ The format of the weights file is described below:
   /electrodes/contacts/{electrodename}  type                    utf8       1                   Optional      Either EEG or LFP
   /electrodes/{population_name}         data                    float64    Total_seg x N_elec  Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA
   /{population_name}                    node_ids                uint64     N_nodes             Mandatory     List of node ids
-  /{population_name}                    sec_ids                 unit64     Total_seg           Mandatory     For each segment, index of the section to which it belongs. Ordered by section ids and grouped by nodes.
-  /{population_name}                    offsets                 unit64     N_nodes + 1         Mandatory     The offset for each node in the data and sec_ids fields
+  /{population_name}                    sec_ids                 uint64     Total_seg           Mandatory     For each segment, index of the section to which it belongs. Ordered by section ids and grouped by nodes.
+  /{population_name}                    offsets                 uint64     N_nodes + 1         Mandatory     The offset for each node in the data and sec_ids fields
   ===================================== ======================= ========== =================== ============= ==========================================
