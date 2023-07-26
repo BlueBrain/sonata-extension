@@ -584,16 +584,16 @@ The format of the weights file is described below:
 
 .. table::
 
-  ===========================================================   ======================= ========== =================== ============= ==========================================
-  Group                                                         Field                   Type       Shape               Requirement   Description
-  ===========================================================   ======================= ========== =================== ============= ==========================================
-  /electrodes/{array_name}/{electrodename}                      layer                   utf8       1                   Optional      Layer of the circuit in which {electrodename} is located. If the electrode is in a region without cortical layers, then "NA". If the electrode is outside the brain, then "Outside"
-  /electrodes/{array_name}/{electrodename}                      position                float32    3                   Mandatory     Position of {electrodename} in microns, in cartesian coordinates
-  /electrodes/{array_name}/{electrodename}                      region                  utf8       1                   Optional      Region in which {electrodename} is located
-  /electrodes/{array_name}/{electrodename}                      type                    utf8       1                   Optional      Either EEG or LFP
-  /electrodes/{array_name}/{electrodename}/{population_name}    index                   uint64                         Mandatory     Column corresponding to this electrode in /electrodes/{population_name}/scaling_factors
-  /electrodes/{population_name}                                 scaling_factors         float64    Total_seg x N_elec  Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA
-  /{population_name}                                            node_ids                uint64     N_nodes             Mandatory     List of node ids
-  /{population_name}                                            section_ids             uint64     Total_seg           Mandatory     For each segment, index of the section to which it belongs. Ordered by section ids and grouped by nodes.
-  /{population_name}                                            offsets                 uint64     N_nodes + 1         Mandatory     The offset for each node in the data and sec_ids fields
-  ===========================================================   ======================= ========== =================== ============= ==========================================
+  ============================================= ======================= ========== =================== ============= ==========================================
+  Group                                         Field                   Type       Shape               Requirement   Description
+  ============================================= ======================= ========== =================== ============= ==========================================
+  /electrodes/{electrodename}                   layer                   utf8       1                   Optional      Layer of the circuit in which {electrodename} is located. If the electrode is in a region without cortical layers, then "NA". If the electrode is outside the brain, then "Outside"
+  /electrodes/{electrodename}                   position                float32    3                   Mandatory     Position of {electrodename} in microns, in cartesian coordinates
+  /electrodes/{electrodename}                   region                  utf8       1                   Optional      Region in which {electrodename} is located
+  /electrodes/{electrodename}                   type                    utf8       1                   Optional      Either EEG or LFP
+  /electrodes/{electrodename}/{population_name} index                   uint64     1                   Mandatory     Index of the column corresponding to this electrode in /electrodes/{population_name}/scaling_factors
+  /electrodes/{population_name}                 scaling_factors         float64    Total_seg x N_elec  Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA
+  /{population_name}                            node_ids                uint64     N_nodes             Mandatory     List of node ids
+  /{population_name}                            section_ids             uint64     Total_seg           Mandatory     For each segment, index of the section to which it belongs. Ordered by section ids and grouped by nodes.
+  /{population_name}                            offsets                 uint64     N_nodes + 1         Mandatory     The offset for each node in the data and sec_ids fields
+  ============================================= ======================= ========== =================== ============= ==========================================
