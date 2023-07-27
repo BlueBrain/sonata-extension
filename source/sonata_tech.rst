@@ -597,3 +597,5 @@ The format of the weights file is described below:
   /{population_name}                            section_ids             uint64     Total_seg           Mandatory     For each segment, index of the section to which it belongs. Ordered by section ids and grouped by nodes.
   /{population_name}                            offsets                 uint64     N_nodes + 1         Mandatory     The offset for each node in the data and sec_ids fields
   ============================================= ======================= ========== =================== ============= ==========================================
+
+``node_ids`` dataset have an HDF5 attribute of type string named ``circuit`` that gives the path of the circuit to be used.
