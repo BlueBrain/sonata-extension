@@ -592,7 +592,7 @@ The format of the weights file is described below:
   /electrodes/{electrodename}                   region                  utf8       1                   Optional      Region in which {electrodename} is located
   /electrodes/{electrodename}                   type                    utf8       1                   Optional      Either EEG or LFP
   /electrodes/{electrodename}/{population_name} index                   uint64     1                   Mandatory     Index of the column corresponding to this electrode in /electrodes/{population_name}/scaling_factors
-  /electrodes/{population_name}                 scaling_factors         float64    Total_seg x N_elec  Mandatory     Scaling factor for each segment in the corresponding neuron, in mV/nA
+  /electrodes/{population_name}                 scaling_factors         float64    Total_comp x N_elec Mandatory     Scaling factor for each compartment in the corresponding neuron, in mV/nA
   /{population_name}                            node_ids                uint64     N_nodes             Mandatory     List of node ids. Node ids not listed here are to be ignored
   /{population_name}                            offsets                 uint64     N_nodes + 1         Mandatory     The offset for each node in the scaling_factors field
   ============================================= ======================= ========== =================== ============= ==========================================
