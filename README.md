@@ -23,7 +23,7 @@ The reference implementation to load data for this extension is provided by [lib
 
 - To update the documentation, update the rst files located in the source directory.
 - To update the version number, modify the "version" entry in package.json.
-- To build locally the documentation, just run `tox -e docs`.
+- To locally build the documentation, just run `tox -e docs`.
 
 
 
