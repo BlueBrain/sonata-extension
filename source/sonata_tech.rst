@@ -78,6 +78,7 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0/dynamics_params ``threshold_current``           float32    Mandatory     The minimal amplitude (in nA) of a step current clamp injection that triggers an action potential.
     /0/dynamics_params ``holding_current``             float32    Mandatory     The current clamp amplitude (in nA) necessary to hold the cell at a predefined holding voltage (typically around -85 mV for BBP).
     /0/dynamics_params ``AIS_scaler``                  float32    Optional      Multiplicative factor to scale AIS (morphology dependent and optional, used only for synthesis).
+    /0/dynamics_params ``soma_scaler``                 float32    Optional      Multiplicative factor to scale soma (morphology dependent and optional, used only for synthesis).
     /0/dynamics_params ``input_resistance``            float32    Optional      Input resistance of the cell in MOhm.
     /0                 |minis|                         float32    Optional      Mini-frequencies are associated with incoming connections of a cell, and depend on the incoming connection's synapse type, and the receiving cell's layer.
                                                                                 If the synapse type is excitatory then exc-mini_frequency is used, otherwise inh-mini_frequency is used.
