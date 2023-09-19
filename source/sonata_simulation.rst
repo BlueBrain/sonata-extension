@@ -55,7 +55,8 @@ node_sets_file
 
 *Optional*.
 
-A file defining the list of nodesets applicable to the simulation and overriding the "node_sets_file" from the circuit configuration file which is specified by "network".
+A file defining the list of nodesets applicable to the simulation. (see :doc:`sonata_nodeset`)
+The `circuit_config` nodesets are considered the base set of nodesets; the values in this file are added to the possible nodesets, and overwrite any duplicates from the base set.
 
 node_set
 --------

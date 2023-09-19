@@ -140,10 +140,6 @@ node_sets_file
 
 A file defining the list of nodesets applicable to this circuit. (see :doc:`sonata_nodeset`)
 
-.. todo::
-
-    will be defined along with nodesets file specification.
-
 networks
 --------
 
