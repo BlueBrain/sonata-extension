@@ -187,4 +187,10 @@ If you want to select the ``node_ids`` from a single population only, you should
                              "node_id": [10, 11, 12, 13, 14, 15]},
     }
 
+Resolution Order
+~~~~~~~~~~~~~~~~
+If only the `circuit_config` or `simulation_config` `node_sets_file` is set, those are the only nodesets available during a simulation.
+If both are set, first the `circuit_config` are loaded, and then the `simulation_config` are added to the this
+If there are duplicates, the `simulation_config` ones overwrite the ones from `circuit_config`.
+
 .. _`Regular Expression`: https://262.ecma-international.org/5.1/#sec-15.10
