@@ -86,6 +86,11 @@ Synapse report
 In that case, the element_ids are the synapse ids with no particular order / grouping.
 The node_ids are the one of the post synaptic cells.
 
+LFP report
+^^^^^^^^^^
+
+In this case, the element_ids are the electrode ids described in the electrodes_file :ref:`here <sonata_tech>`.
+
 Bloodflow report
 ^^^^^^^^^^^^^^^^
 
