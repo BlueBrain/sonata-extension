@@ -6,6 +6,8 @@ SONATA reports
 The goal of this document is to clarify the specification with respect to BBP needs.
 The original report documentation is `located here <https://github.com/AllenInstitute/sonata/blob/master/docs/SONATA_DEVELOPER_GUIDE.md#output-file-formats>`_
 
+.. _sonata_spike_files:
+
 Spike file
 ----------
 
