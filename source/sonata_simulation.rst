@@ -106,6 +106,8 @@ output
 
 Parameters to override simulation output.
 
+.. _output_config:
+
 .. table::
 
    =============================== ========== =========== ====================================
@@ -416,7 +418,7 @@ Dictionary of dictionaries with each member describing one data collection durin
    dt                             float      Mandatory    Interval between reporting steps in milliseconds. If assigned value smaller than simulation dt, will be set equal to simulation dt.
    start_time                     float      Mandatory    Time to start reporting in milliseconds.
    end_time                       float      Mandatory    Time to stop reporting in milliseconds.
-   file_name                      text       Optional     Specify file name. The '.h5' extension will be added if not provided. The default file name is <report_name>.h5 where 'report_name' is the key name of the current dictionary.
+   file_name                      text       Optional     Specify report file name to be written in the :ref:`output_dir <output_config>`. The '.h5' extension will be added if not provided. The default file name is <report_name>.h5 where 'report_name' is the key name of the current dictionary.
    enabled                        boolean    Optional     Allows for supressing a report so that it is not created. Useful for reducing output temporarily. Possible values are true/false. Default is true.
    ============================== ========== ============ ==========================================
 
