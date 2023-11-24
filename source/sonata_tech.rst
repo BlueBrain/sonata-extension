@@ -83,6 +83,7 @@ Group column represents the HDF group where the dataset is located under /<popul
                                                                                 If the synapse type is excitatory then exc-mini_frequency is used, otherwise inh-mini_frequency is used.
                                                                                 Default to the one provided by the circuit config if not present (Unit is Hz).
     /0                 ``hemisphere``                  utf8       Optional      "left" or "right" hemisphere.
+    /0                 ``placeholder``                 bool       Optional      Whether the node is a placeholder (True) or a detailed (False) one.
     /                  ``node_type_id``                int64      Mandatory     Set to -1. Foreign key to node type csv file not used at BBP..
     ================== =============================== ========== ============= =========================================================================================
 
