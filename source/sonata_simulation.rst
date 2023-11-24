@@ -106,6 +106,8 @@ output
 
 Parameters to override simulation output.
 
+.. _output_config:
+
 .. table::
 
    =============================== ========== =========== ====================================
@@ -143,7 +145,7 @@ Parameters defining global experimental conditions.
    randomize_gaba_rise_time        boolean    Optional    When true, enable legacy behavior to randomize the GABA_A rise time in the helper functions. Default is false which will use a prescribed value for GABA_A rise time.
    mechanisms                                 Optional    Properties to assign values to variables in synapse MOD files.
                                                           The format is a dictionary with keys being the SUFFIX names of MOD files (unique names of mechanisms) and values being dictionaries of variable names in the MOD files and their values. Read about `NMODL2 SUFFIX description here <https://nrn.readthedocs.io/en/8.2.0/hoc/modelspec/programmatic/mechanisms/nmodl2.html#suffix>`_.
-   modifications                              Optional    Collection of dictionaries with each member decribing a modification that mimics experimental manipulations to the circuit.
+   modifications                              Optional    Dictionary of dictionaries with each member describing a modification that mimics experimental manipulations to the circuit.
    =============================== ========== =========== ====================================
 
 Parameters required for modifications
@@ -197,7 +199,7 @@ inputs
 
 *Optional*.
 
-Collection of dictionaries with each member describing one pattern of stimulus to be injected.
+Dictionary of dictionaries with each member describing one pattern of stimulus to be injected.
 
 .. table::
 
@@ -399,7 +401,7 @@ reports
 
 *Optional*.
 
-Collection of dictionaries with each member describing one data collection during the simulation such as compartment voltage.
+Dictionary of dictionaries with each member describing one data collection during the simulation such as compartment voltage.
 
 .. table::
 
@@ -416,7 +418,7 @@ Collection of dictionaries with each member describing one data collection durin
    dt                             float      Mandatory    Interval between reporting steps in milliseconds. If assigned value smaller than simulation dt, will be set equal to simulation dt.
    start_time                     float      Mandatory    Time to start reporting in milliseconds.
    end_time                       float      Mandatory    Time to stop reporting in milliseconds.
-   file_name                      text       Optional     Specify file name. The '.h5' extension will be added if not provided. The default file name is <report_name>.h5 where 'report_name' is the key name of the current dictionary.
+   file_name                      text       Optional     Specify report file name to be written in the :ref:`output_dir <output_config>`. The '.h5' extension will be added if not provided. The default file name is <report_name>.h5 where 'report_name' is the key name of the current dictionary.
    enabled                        boolean    Optional     Allows for supressing a report so that it is not created. Useful for reducing output temporarily. Possible values are true/false. Default is true.
    ============================== ========== ============ ==========================================
 
