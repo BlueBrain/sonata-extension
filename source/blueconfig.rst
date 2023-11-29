@@ -1003,9 +1003,8 @@ Neurodamus.
          the parameters of the synapse model. By default,
          AMPANMDAHelper.hoc / GABAABHelper.hoc are used for
          excitatory / inhibitory synapses. The value of this field determines
-         the prefix of the helper file to use e.g. "Newfun" would lead to
-         NewfunHelper.hoc being used. Exceptionally, passing "GluSynapse" will
-         lead to GluSynapse.hoc being used. That helper will use the additional
+         the prefix of the helper file to use e.g. "GluSynapse" would lead to
+         GluSynapseHelper.hoc being used. That helper will use the additional
          parameters of the plastic synapse model read from the SONATA edges
          file using Neurodamus. This is required when using the GluSynapse.mod
          model and will fail for other models, or if the parameters are not
