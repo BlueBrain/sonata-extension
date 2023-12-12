@@ -86,7 +86,7 @@ Parameters defining global simulation settings. As NEURON is the engine used for
    ionchannel_seed                 integer    Optional    A non-negative integer used for seeding stochastic ion channels, default is 0.
    minis_seed                      integer    Optional    A non-negative integer used for seeding the Poisson processes that drive the minis, default is 0.
    synapse_seed                    integer    Optional    A non-negative integer used for seeding stochastic synapses, default is 0.
-   electrodes_file                 text       Optional    Path to the weights file describing the scaling factors for the contributions of each compartment's transmembrane current to the LFP/EEG. Format description in sonata_tech.rst
+   electrodes_file                 text       Optional*   Path to the weights file describing the scaling factors for the contributions of each compartment's transmembrane current to the LFP/EEG. Format description in sonata_tech.rst. This field is **mandatory** if there are ``lfp`` reports in the simulation configuration.
    =============================== ========== =========== ====================================
 
 example::
