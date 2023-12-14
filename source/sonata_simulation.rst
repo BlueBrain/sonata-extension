@@ -297,7 +297,7 @@ Spike events are created from the cells indicated in a file and delivered to the
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    spike_file                     text       Mandatory    Indicates the location of the file with the spike info for injection.
-   source                         text       Optional     The node set to replay spikes from.
+   source                         text       Optional     The node set to replay spikes from, recommended in case of multiple populations. By default, replay spikes are applied to the cells in all the populations that match the ids in the "spike_file".
    ============================== ========== ============ ==========================================
 
 Note: Spike files can be the :ref:`.h5 spikes files <sonata_spike_files>` output by Neurodamus. Although it is not recommended, you may
