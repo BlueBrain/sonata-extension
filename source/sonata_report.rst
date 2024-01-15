@@ -48,8 +48,9 @@ Compartment report
                                                                                     Units is defined by the ``units`` attribute.
     /report/{population_name}/mapping   node_ids           uint64     Mandatory     The set of node ids (no duplicate).
     /report/{population_name}/mapping   index_pointers     uint64     Mandatory     The offset for each node in the data field.
-    /report/{population_name}/mapping   element_ids        uint32     Mandatory     The id of the compartments as in NEURON.
-                                                                                    Ordered by compartment ids and grouped by nodes.
+    /report/{population_name}/mapping   element_ids        uint32     Mandatory     Represent the compartments as in NEURON, ordered
+                                                                                    by compartment IDs and grouped by nodes.
+                                                                                    For the 'lfp' report type, it represent the electrode IDs.
     /report/{population_name}/mapping   time               float64    Mandatory     3 values defining start time, end time, and time step.
                                                                                     end time is not part of the report.
     =================================== ================== ========== ============= =========================================================================================
@@ -86,6 +87,11 @@ Synapse report
 
 In that case, the element_ids are the synapse ids with no particular order / grouping.
 The node_ids are the one of the post synaptic cells.
+
+LFP report
+^^^^^^^^^^
+
+In this case, the element_ids are the electrode ids described in the electrodes_file :ref:`here <sonata_tech>`.
 
 Bloodflow report
 ^^^^^^^^^^^^^^^^
