@@ -126,7 +126,7 @@ A list of rules that are used to determine how synapse distributions are calcula
 pathways, and used to reduce the structural connectome to a functional one.
 
 Each rule may have properties corresponding to :ref:`selection`. In addition to the
-selection attributes, exactly one set of constraints have to be used:
+selection attributes, exactly one set of parameters have to be used:
 
 - ``mean_syns_connection``, ``stdev_syns_connection``, and ``active_fraction``
 - ``bouton_reduction_factor``, ``cv_syns_connection``, and ``active_fraction``
@@ -134,12 +134,12 @@ selection attributes, exactly one set of constraints have to be used:
 - ``bouton_reduction_factor``, ``cv_syns_connection``, and ``probability``
 - ``bouton_reduction_factor``, ``pMu_A``, and ``p_A``
 
-Where the constraints signify:
+Where the parameters signify:
 
 .. table::
 
    =============================== ===
-   Property                        Description
+   Parameter                       Description
    =============================== ===
    ``active_fraction``             The fraction of synapses to be removed in the third pruning step.
    ``bouton_reduction_factor``     The fraction of synapses to be removed in all three pruning steps.
@@ -197,25 +197,40 @@ properties:
 
 *Optional*, used by Functionalizer.
 
+Settings to generate synaptic properties for appositions.  Each apposition is classified
+by rules and synaptic properties are generated per cell-cell connection following the
+parameters of the property configuration.
+
+.. table::
+
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``rules``                       Mandatory   Rules to classify synapses
+   ``properties``                  Mandatory   Maxiumum spine length, in µm.
+   =============================== =========== ===
+
 ``rules``
 ~~~~~~~~~
 
-- ``type`` a name that will be referenced by the
-  SynapsesClassification.
+Each rule may have properties corresponding to :ref:`selection`. In addition to the
+selection attributes, the following parameters may be present:
 
-  .. note::
+.. table::
 
-     The type has to start with either ``E`` for excitatory connections or
-     ``I`` for inhibitory connections.
-
-- ``neuralTransmitterReleaseDelay`` with a default of 0.1 ms
-- ``axonalConductionVelocity`` with a default of 300 μm/ms
+   ==================================== =========== ===
+   Property                             Requirement Description
+   ==================================== =========== ===
+   ``type``                             Mandatory   A name that will be referenced by ``properties``.  It has to start with either ``E`` for excitatory connections or ``I`` for inhibitory connections.
+   ``neural_transmitter_release_delay`` Optional    Defaults to 0.1 ms
+   ``axonal_conduction_velocity``       Optional    Defaults to 300 μm/ms
+   ==================================== =========== ===
 
 ``properties``
 ~~~~~~~~~~~~~~
 
-Here, the ``id`` field has to match a ``type`` value of the
-SynapsesProperties. The properties are assigned using the following
+Here, the ``type`` field has to match a ``type`` value of the
+``rules``. The properties are assigned using the following
 random number distributions, using a mean `m` and standard deviation `sd`:
 
 - A Gamma-distribution, with shape parameter equal to `m² / sd²`, and
@@ -231,30 +246,38 @@ The following properties are supported, with the mean specified by the
 property name, and the standard deviation by appending ``SD`` to the
 property name:
 
-- `gsyn`, the peak conductance (in nS) for a single synaptic contact, following a Gamma distribution
-- `d`, time constant (in ms) for recovery from depression, following a Gamma distribution
-- `f`, time constant (in ms) for recovery from facilitation, following a Gamma distribution
-- `u`, utilization of synaptic efficacy, following a truncated Normal distribution
-- `dtc`, decay time constant (in ms), following a truncated Normal distribution
-- `nrrp`, number of vesicles in readily releasable pool, following a Poisson distribution
+.. table::
+
+   ==================================== =========== ===
+   Property                             Requirement Description
+   ==================================== =========== ===
+   ``gsyn``                             Mandatory   The peak conductance (in nS) for a single synaptic contact, following a Gamma distribution.
+   ``gsyn_sd``                          Mandatory   Standard deviation of ``gsyn``.
+   ``d``                                Mandatory   Time constant (in ms) for recovery from depression, following a Gamma distribution.
+   ``d_sd``                             Mandatory   Standard deviation of ``d``.
+   ``f``                                Mandatory   Time constant (in ms) for recovery from facilitation, following a Gamma distribution.
+   ``f_sd``                             Mandatory   Standard deviation of ``f``.
+   ``u``                                Mandatory   Utilization of synaptic efficacy, following a truncated Normal distribution.
+   ``u_sd``                             Mandatory   Standard deviation of ``u``.
+   ``dtc``                              Mandatory   Decay time constant (in ms), following a truncated Normal distribution.
+   ``dtc_sd``                           Mandatory   Standard deviation of ``dtc``.
+   ``nrrp``                             Mandatory   Number of vesicles in readily releasable pool, following a Poisson distribution.
+
+   ``gsyn_srsf``                        Optional    The scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'.
+   ``u_hill_coefficient``               Optional    A coefficient describing the scaling of `u` to be done by the simulator.
+   ==================================== =========== ===
 
 Truncated Normal distributions are limited to the central value ±σ and are
 re-rolled until positive values has been obtained.
 
-Two optional attributes can be specified, where each attribute will have to
-be given for all `SynapsesClassification` elements:
+The ``u_hill_coefficient`` is used as follows:
 
-- `gsynSRSF`, the scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'
-- `uHillCoefficient`, a coefficient describing the scaling of `u` to be
-  done by the simulator:
+.. math::
 
-  .. math::
+   u_\text{final} = u \cdot y \cdot \frac{ca^4}{u_\text{Hill}^4 + ca^4}
 
-     u_\text{final} = u \cdot y \cdot \frac{ca^4}{u_\text{Hill}^4 + ca^4}
-
-  where :math:`ca` denotes the simulated calcium concentration in
-  millimolar and :math:`y` a scalar such that at
-  :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
+where :math:`ca` denotes the simulated calcium concentration in millimolar and :math:`y` a
+scalar such that at :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
 
 These attributes will be copied for each synapse corresponding to its
 classification.  If they are not specified, no corresponding columns will
