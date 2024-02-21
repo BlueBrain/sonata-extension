@@ -263,7 +263,7 @@ Group column represents the HDF group where the dataset is located under /<popul
     /0            ``efferent_surface_[x|y|z]``  float32    Mandatory   Same as ``efferent_center_[x|y|z]``, but the for the synapse location on the axon surface.
     /0            ``efferent_section_id``       uint32     Mandatory   Same as ``afferent_section_id``, but for source node.
     /0            ``efferent_section_pos``      float32    Mandatory   Same as ``afferent_section_pos``, but for source node.
-    /0            ``efferent_section_type``     uint32     Mandatory   Neurite or soma type of the afferent.
+    /0            ``efferent_section_type``     uint32     Mandatory   Type of the efferent.
     /0            ``efferent_segment_id``       uint32     Mandatory   Numerical index of the section of the cell (soma is index 0).
     /0            ``efferent_segment_offset``   float32    Mandatory   If triple synapse addressing is being used, the offset within the segment in µm.  See :ref:`faq`.
     /0            ``conductance``               float32    Mandatory   The conductance of the synapse (nanosiemens); also referred to as ``g_syn``
