@@ -104,21 +104,6 @@ Distances used when transforming touch regions into synapse candidates.
    ``region_gap``                  Mandatory   The maximum distance between two touch regions at which they are merged.
    =============================== =========== ===
 
-``circuit``
-^^^^^^^^^^^
-
-*Required* by Functionalizer when using Pandas DataFrames.
-
-.. table::
-
-   =============================== =========== ===
-   Property                        Requirement Description
-   =============================== =========== ===
-   configuration_file              Mandatory   The circuit configuration file to use.
-   source_population               Mandatory   Source node population to use.
-   target_population               Mandatory   Target node population to use.
-   =============================== =========== ===
-
 ``connection_rules``
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -221,15 +206,19 @@ selection attributes, the following parameters may be present:
    ==================================== =========== ===
    Property                             Requirement Description
    ==================================== =========== ===
-   ``type``                             Mandatory   A name that will be referenced by ``properties``.  It has to start with either ``E`` for excitatory connections or ``I`` for inhibitory connections.
+   ``class``                            Mandatory   A name that will be referenced by ``properties``.  It has to start with either ``E`` for excitatory connections or ``I`` for inhibitory connections.
    ``neural_transmitter_release_delay`` Optional    Defaults to 0.1 ms
    ``axonal_conduction_velocity``       Optional    Defaults to 300 μm/ms
    ==================================== =========== ===
 
-``properties``
-~~~~~~~~~~~~~~
+Please note that contrary to the legacy XML recipe, precedence is handled very strict:
+later rules always override earlier ones.  There is no special treatment for more general
+rules to not override more specialized ones.
 
-Here, the ``type`` field has to match a ``type`` value of the
+``classes``
+~~~~~~~~~~~
+
+Here, the ``class`` field has to match a ``class`` value of the
 ``rules``. The properties are assigned using the following
 random number distributions, using a mean `m` and standard deviation `sd`:
 
@@ -293,13 +282,16 @@ be created in the output.
    =============================== =========== ===
    ``src_mtype``                   Mandatory   The MType of the source cell.
    ``dst_mtype``                   Mandatory   The MType of the target cell.
-   ``type``                        Mandatory   Has to be ``AIS``.
+   ``class``                       Mandatory   Has to be ``AIS``.
    =============================== =========== ===
 
 ``touch_rules``
 ^^^^^^^^^^^^^^^
 
 *Optional*, used by Functionalizer.
+
+Determines which touches are allowed, depending on source and target node population
+MType, as well the section type on either the source or target side of the touch.
 
 .. table::
 
@@ -310,4 +302,24 @@ be created in the output.
    ``dst_mtype``                   Mandatory   The MType of the target cell.
    ``afferent_section_type``       Optional    The section type of the target cell
    ``efferent_section_type``       Optional    The section type of the source cell.
+   =============================== =========== ===
+
+The ``afferent_section_type`` and ``efferent_section_type`` may take the values ``soma``,
+``axon``, ``apical``, and ``basal``.  A special value ``dendrite`` may be used to signify
+both ``apical`` and ``basal`` types.
+
+``touch_reduction``
+^^^^^^^^^^^^^^^^^^^
+
+*Optional*, used by Functionalizer.
+
+Used to cut touches according to a flat survival rate set by the user.  Affects all
+touches the same way.
+
+.. table::
+
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``survival_rate``               Mandatory   A flat survival probability of touches.
    =============================== =========== ===
