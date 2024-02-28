@@ -28,7 +28,7 @@ example or a TouchDetector configuration may look like:
 Generic pathway selection
 -------------------------
 
-Some of the recipe rules may apply only to certain "pathways".  These rules select the
+One can create rules that only apply to certain ``pathways``.
 synapses they apply to by restricting attributes of source and target node populations.
 As such, the rules have properties that are prefixed with `src_` to match attributes from
 the source node population, and likewise prefixed with `dst_` to match target node
