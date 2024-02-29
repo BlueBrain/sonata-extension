@@ -28,8 +28,8 @@ example or a TouchDetector configuration may look like:
 Generic pathway selection
 -------------------------
 
-One can create rules that only apply to certain ``pathways``.
-synapses they apply to by restricting attributes of source and target node populations.
+One can create rules that only apply to certain "pathways" by restricting attributes of
+source and target node populations.
 As such, the rules have properties that are prefixed with `src_` to match attributes from
 the source node population, and likewise prefixed with `dst_` to match target node
 population attributes.  All attributes are described in :ref:`node_file`, the currently
@@ -40,7 +40,9 @@ supported ones are:
 - ``region``
 - ``synapse_class``
 
-All supported attributes support the use of simple wild cards.  The following rule matches all synapses connecting cells of MType starting with ``L6_`` to ones with MType ``L1_PYR``, from any source region to the target region ``SPYR``:
+All supported attributes support the use of simple wild cards.  The following rule matches
+all synapses connecting cells of MType starting with ``L6_`` to ones with MType
+``L1_PYR``, from any source region to the target region ``SPYR``:
 
 .. code:: yaml
 
