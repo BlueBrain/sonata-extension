@@ -83,8 +83,8 @@ Synapses with less than the specified distance will be removed by Functionalizer
    =============================== =========== ===
    Property                        Requirement Description
    =============================== =========== ===
-   ``excitatory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic excitatory cells. Defaults to 5µm.
-   ``inhibitory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic inhibitory cells. Defaults to 25µm.
+   ``excitatory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic excitatory cells in µm. Defaults to 5µm.
+   ``inhibitory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic inhibitory cells in µm. Defaults to 25µm.
    =============================== =========== ===
 
 ``bouton_interval``
@@ -99,9 +99,9 @@ Distances used when transforming touch regions into synapse candidates.
    =============================== =========== ===
    Property                        Requirement Description
    =============================== =========== ===
-   ``min_distance``                Mandatory   The minimum distance at which two synapse candidates are placed from each other.
-   ``max_distance``                Mandatory   The maximum distance at which two synapse candidates are placed from each other.
-   ``region_gap``                  Mandatory   The maximum distance between two touch regions at which they are merged.
+   ``min_distance``                Mandatory   The minimum distance at which two synapse candidates are placed from each other in µm.
+   ``max_distance``                Mandatory   The maximum distance at which two synapse candidates are placed from each other in µm.
+   ``region_gap``                  Mandatory   The maximum distance between two touch regions at which they are merged in µm.
    =============================== =========== ===
 
 ``connection_rules``
@@ -148,7 +148,7 @@ A global default setting for the conductance produced by Functionalizer.
    =============================== =========== ===
    Property                        Requirement Description
    =============================== =========== ===
-   gsyn                            Optional    The conductance to be used by all synapses. Defaults to 0.2.
+   conductance                     Optional    The conductance to be used by all synapses. Defaults to 0.2.
    =============================== =========== ===
 
 ``seed``
@@ -232,7 +232,7 @@ The same drawn number is reused for all synapses within the same source to
 target cell connection.
 
 The following properties are supported, with the mean specified by the
-property name, and the standard deviation by appending ``SD`` to the
+property name, and the standard deviation by appending ``_sd`` to the
 property name:
 
 .. table::
@@ -240,19 +240,19 @@ property name:
    ==================================== =========== ===
    Property                             Requirement Description
    ==================================== =========== ===
-   ``gsyn``                             Mandatory   The peak conductance (in nS) for a single synaptic contact, following a Gamma distribution.
-   ``gsyn_sd``                          Mandatory   Standard deviation of ``gsyn``.
-   ``d``                                Mandatory   Time constant (in ms) for recovery from depression, following a Gamma distribution.
-   ``d_sd``                             Mandatory   Standard deviation of ``d``.
-   ``f``                                Mandatory   Time constant (in ms) for recovery from facilitation, following a Gamma distribution.
-   ``f_sd``                             Mandatory   Standard deviation of ``f``.
-   ``u``                                Mandatory   Utilization of synaptic efficacy, following a truncated Normal distribution.
-   ``u_sd``                             Mandatory   Standard deviation of ``u``.
-   ``dtc``                              Mandatory   Decay time constant (in ms), following a truncated Normal distribution.
-   ``dtc_sd``                           Mandatory   Standard deviation of ``dtc``.
-   ``nrrp``                             Mandatory   Number of vesicles in readily releasable pool, following a Poisson distribution.
+   ``conductance``                      Mandatory   The peak conductance (in nS) for a single synaptic contact, following a Gamma distribution.
+   ``conductance_sd``                   Mandatory   Standard deviation of ``conductance``.
+   ``depression_time``                  Mandatory   Time constant (in ms) for recovery from depression, following a Gamma distribution.
+   ``depression_time_sd``               Mandatory   Standard deviation of ``depression_time``.
+   ``facilitation_time``                Mandatory   Time constant (in ms) for recovery from facilitation, following a Gamma distribution.
+   ``facilitation_time_sd``             Mandatory   Standard deviation of ``f``.
+   ``u_syn``                            Mandatory   Utilization of synaptic efficacy, following a truncated Normal distribution.
+   ``u_syn_sd``                         Mandatory   Standard deviation of ``u``.
+   ``decay_time``                       Mandatory   Decay time constant (in ms), following a truncated Normal distribution.
+   ``decay_time_sd``                    Mandatory   Standard deviation of ``dtc``.
+   ``n_rrp_vesicles``                   Mandatory   Number of vesicles in readily releasable pool, following a Poisson distribution.
 
-   ``gsyn_srsf``                        Optional    The scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'.
+   ``conductance_scale_factor``         Optional    The scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'.
    ``u_hill_coefficient``               Optional    A coefficient describing the scaling of `u` to be done by the simulator.
    ==================================== =========== ===
 
