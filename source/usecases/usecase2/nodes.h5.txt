@@ -285,6 +285,13 @@ GROUP "/" {
                   0, 0
                }
             }
+            DATASET "model_template" {
+               DATATYPE  H5T_STD_U32LE
+               DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+               DATA {
+                  "NULL"
+               }
+            }
          }
          DATASET "node_type_id" {
             DATATYPE  H5T_STD_I64LE

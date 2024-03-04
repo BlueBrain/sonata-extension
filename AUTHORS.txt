@@ -15,6 +15,7 @@ Jean Jacquemier
 Jean-Denis Courcol
 Joni Herttuainen
 Jorge Blanco Alonso
+Kerem Kurban
 King James Gonzalo
 Matthias Wolf
 Michael Gevaert
