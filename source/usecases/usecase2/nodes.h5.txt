@@ -289,7 +289,7 @@ GROUP "/" {
                DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
                DATA {
-                  NULL
+                  "NULL"
                }
             }
          }
