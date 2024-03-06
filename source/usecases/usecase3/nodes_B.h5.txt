@@ -11,9 +11,9 @@ GROUP "/" {
                      CSET H5T_CSET_UTF8;
                      CTYPE H5T_C_S1;
                   }
-                  DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+                  DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
                   DATA {
-                     "dNAC", "dSTUT"
+                     "dSTUT"
                   }
                }
                DATASET "hemisphere" {
@@ -23,9 +23,33 @@ GROUP "/" {
                      CSET H5T_CSET_UTF8;
                      CTYPE H5T_C_S1;
                   }
+                  DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+                  DATA {
+                     "right"
+                  }
+               }
+               DATASET "layer" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+                  DATA {
+                     "LC"
+                  }
+               }
+               DATASET "model_template" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
                   DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                   DATA {
-                     "left", "right"
+                     "hoc:bAC_IN", "hoc:cNAD_noscltb"
                   }
                }
                DATASET "model_type" {
@@ -47,9 +71,22 @@ GROUP "/" {
                      CSET H5T_CSET_UTF8;
                      CTYPE H5T_C_S1;
                   }
-                  DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+                  DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                   DATA {
-                     "PYR"
+                     "INT", "PYR"
+                  }
+               }
+               DATASET "morphology" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+                  DATA {
+                     "dend-jy180406_B_idC_axon-jy171019_B_10x_resta_idB_-_Scale_x1.000_y0.950_z1.000_-_Clone_1",
+                     "dend-jy180406_C_idB_axon-04752-04764-X11537-Y13753_final_-_Clone_3"
                   }
                }
                DATASET "mtype" {
@@ -61,7 +98,7 @@ GROUP "/" {
                   }
                   DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                   DATA {
-                     "L4_MC", "L5_PC"
+                     "L4_PC", "L5_PC"
                   }
                }
                DATASET "region" {
@@ -83,32 +120,32 @@ GROUP "/" {
                      CSET H5T_CSET_UTF8;
                      CTYPE H5T_C_S1;
                   }
-                  DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+                  DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
                   DATA {
-                     "EXC", "INH"
+                     "EXC"
                   }
                }
             }
             GROUP "dynamics_params" {
                DATASET "AIS_scaler" {
-                  DATATYPE  H5T_IEEE_F64LE
+                  DATATYPE  H5T_IEEE_F32LE
                   DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                   DATA {
-                     1.44171, 1.97959
+                     1.83794, 1.0961
                   }
                }
                DATASET "holding_current" {
-                  DATATYPE  H5T_IEEE_F64LE
+                  DATATYPE  H5T_IEEE_F32LE
                   DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                   DATA {
-                     1.45116, 1.01999
+                     1.82099, 1.0971
                   }
                }
                DATASET "threshold_current" {
-                  DATATYPE  H5T_IEEE_F64LE
+                  DATATYPE  H5T_IEEE_F32LE
                   DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                   DATA {
-                     1.50962, 1.05571
+                     1.19658, 1.36873
                   }
                }
             }
@@ -116,45 +153,35 @@ GROUP "/" {
                DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  1, 0
+                  0, 0
                }
             }
             DATASET "hemisphere" {
                DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  1, 0
+                  0, 0
                }
             }
             DATASET "layer" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
-               }
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  "LA", "LB"
+                  0, 0
                }
             }
             DATASET "minis" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  35.9444, 48.0894
+                  65.633, 13.8183
                }
             }
             DATASET "model_template" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
-               }
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  "hoc:bAC_IN", "hoc:bAC_IN"
+                  0, 1
                }
             }
             DATASET "model_type" {
@@ -168,55 +195,49 @@ GROUP "/" {
                DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  0, 0
+                  0, 1
                }
             }
             DATASET "morphology" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
-               }
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  "dend-jy180406_C_idB_axon-04752-04764-X11537-Y13753_final_-_Clone_3",
-                  "dend-jy180406_B_idC_axon-jy171019_B_10x_resta_idB_-_Scale_x1.000_y0.950_z1.000_-_Clone_1"
+                  0, 1
                }
             }
             DATASET "mtype" {
                DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  1, 0
+                  0, 1
                }
             }
             DATASET "orientation_w" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  0.270118, 0.990599
+                  -0.582246, -0.677381
                }
             }
             DATASET "orientation_x" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  0.163701, -0.171263
+                  0.306217, -0.493417
                }
             }
             DATASET "orientation_y" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  -0.050605, 0.24702
+                  -0.0673785, -0.511149
                }
             }
             DATASET "orientation_z" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  -0.323985, 0.349505
+                  -0.682061, -0.77925
                }
             }
             DATASET "region" {
@@ -230,28 +251,28 @@ GROUP "/" {
                DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  0, 1
+                  0, 0
                }
             }
             DATASET "x" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  215.661, -349.906
+                  -369.143, -272.578
                }
             }
             DATASET "y" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  -923.149, 268.548
+                  140.394, -122.797
                }
             }
             DATASET "z" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
-                  917.899, 305.581
+                  976.748, -795.91
                }
             }
          }
