@@ -103,12 +103,17 @@ tested:
             assert len(h5[f"nodes/{name_a}/node_type_id"]) == node_a_size
             assert np.unique(h5[f"nodes/{name_a}/node_type_id"]) == np.array([-1])
 
-            assert set(h5[f"nodes/{name_a}/0"]) == {'a', 'b', 'c', 'd'}
+            assert set(h5[f"nodes/{name_a}/0"]) == {'@library', 'a', 'b', 'c', 'd'}
+            assert set(h5[f"nodes/{name_a}/0/@library"]) == {'d'}
+            assert h5[f"nodes/{name_a}/0/@library/d"].asstr()[:].dtype == object
             assert h5[f"nodes/{name_a}/0/a"].dtype == np.int64
             assert h5[f"nodes/{name_a}/0/b"].dtype == np.float32
             assert h5[f"nodes/{name_a}/0/c"].dtype == np.float32
-            assert h5[f"nodes/{name_a}/0/d"].asstr()[:].dtype == object
+            assert h5[f"nodes/{name_a}/0/d"].dtype == np.uint32
 
+            assert len(h5[f"nodes/{name_a}/0/@library/d"]) == len(
+                np.unique(h5[f"nodes/{name_a}/0/d"])
+            )
             assert len(h5[f"nodes/{name_a}/0/a"]) == node_a_size
             assert len(h5[f"nodes/{name_a}/0/b"]) == node_a_size
             assert len(h5[f"nodes/{name_a}/0/c"]) == node_a_size
@@ -120,7 +125,9 @@ tested:
             assert np.all((h5[f"nodes/{name_a}/0/b"][:] >= 1.0)
                           & (h5[f"nodes/{name_a}/0/b"][:] <= 10.0))
 
-            assert np.all(np.isin(h5[f"nodes/{name_a}/0/d"].asstr()[:], ["v1", "v2", "v3"]))
+            assert np.all(
+                np.isin(h5[f"nodes/{name_a}/0/@library/d"].asstr()[:], ["v1", "v2", "v3"])
+            )
 
 
 def test_bad_properties():

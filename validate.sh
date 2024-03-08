@@ -17,7 +17,7 @@ exit_code=0
 for file in ${files[@]}
 do
     echo "Validating $file ..."
-    if ! $bluepysnap validate $file
+    if ! $bluepysnap validate-circuit $file
     then
         exit_code=1
     fi

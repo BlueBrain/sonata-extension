@@ -41,8 +41,8 @@ def create_simple_morph(directory, morph_name="test_morph.swc"):
         return PointLevel(points, [1, 1, 1])
 
     morpho = Morphology()
-    morpho.soma.points = [[0, 0, 0]]
-    morpho.soma.diameters = [0.5]
+    morpho.soma.points = [[0, 0, 0], [1,1,1]]
+    morpho.soma.diameters = [0.5, 0.5]
     add_perimeters = Path(morph_name).suffix == ".h5"
     section = morpho.append_root_section(
         _create_pointlevel([[10, 0, 0], [20, 0, 0], [30, 0, 0]], add_perimeters),
@@ -79,3 +79,8 @@ def create_node(dirpath, pop_name, pop_size, morph_name="test_morph"):
         prop.create_dataset('orientation_x', data=np.full(pop_size, fill_value=0), dtype=np.float32)
         prop.create_dataset('orientation_y', data=np.full(pop_size, fill_value=1), dtype=np.float32)
         prop.create_dataset('orientation_z', data=np.full(pop_size, fill_value=0), dtype=np.float32)
+
+
+def get_from_library(property_group, property_):
+    library = np.array(property_group[f'@library/{property_}'].asstr())
+    return library[property_group[property_][:]]

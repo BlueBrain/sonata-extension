@@ -25,10 +25,10 @@ setup(
         "libsonata>=0.1.8",
         "morph_tool>=2.4.3,<3.0.0",
         "cached-property>=1.5.2",
-        "vascpy>=0.1.1"
+        "astrovascpy>=0.1.1"
     ],
     packages=find_packages(),
-    python_requires=">=3.7",
+    python_requires=">=3.10",
     entry_points={
         'console_scripts': [
             'sonata-generator=sonata_generator.app.__main__:main'

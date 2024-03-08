@@ -5,6 +5,7 @@ import libsonata
 import numpy as np
 
 from sonata_generator.exceptions import GeneratorError
+LIBRARY = "@library"
 
 TYPE_DISPATCH = {
     "float": np.float32,
@@ -93,7 +94,17 @@ class Generator:
             properties_group = population_group.create_group("0")
             for prop_name, prop_data in self.data.items():
                 type_ = self.property_config[prop_name]["type"]
-                prop_data = np.asarray(prop_data).astype(TYPE_DISPATCH[type_])
+                if type_ == "text" and self._population_type == "nodes":
+                    if LIBRARY not in properties_group:
+                        library = properties_group.create_group(LIBRARY)
+                    else:
+                        library = properties_group[LIBRARY]
+                    lib_data = np.sort(np.unique(prop_data)).astype(TYPE_DISPATCH[type_])
+                    library.create_dataset(prop_name, data=lib_data)
+
+                    prop_data = np.searchsorted(lib_data, prop_data).astype(np.uint32)
+                else:
+                    prop_data = np.asarray(prop_data).astype(TYPE_DISPATCH[type_])
                 properties_group.create_dataset(prop_name, data=prop_data)
 
 

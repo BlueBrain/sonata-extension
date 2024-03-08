@@ -107,7 +107,13 @@ def load_morphology(node_population, node_id, morph_type=".swc", transform=False
     }
 
     with h5py.File(node_population.filepath, "r") as h5:
-        filename = h5[f'nodes/{node_population.name}/0/morphology'].asstr()[node_id] + morph_type
+        if f"nodes/{node_population.name}/0/@library/morphology" in h5:
+            morph_lib = h5[f"nodes/{node_population.name}/0/@library/morphology"].asstr()
+            morph_name = morph_lib[h5[f"nodes/{node_population.name}/0/morphology"][node_id]]
+        else:
+            morph_name = h5[f"nodes/{node_population.name}/0/morphology"].asstr()[node_id]
+
+        filename = morph_name + morph_type
         filepath = Path(dispath[morph_type], filename)
         morph = Morphology(filepath)
         if transform:

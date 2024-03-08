@@ -10,7 +10,7 @@ import yaml
 from sonata_generator.utils import collect_node_populations, collect_edge_populations
 import sonata_generator.ngv_generators as tested
 
-from utils import tmp_file, create_simple_morph, create_node
+from utils import create_node, create_simple_morph, get_from_library, tmp_file
 
 TEST_DIR = Path(__file__).resolve().parent
 TEST_DATA_DIR = TEST_DIR / 'data'
@@ -184,8 +184,10 @@ astrocyte:
             assert "model_template" in observed
 
             # other values are tested in the normal generator tests (uniform or choice variables)
-            assert np.all(np.isin(h5[f"nodes/{name_a}/0/model_template"].asstr()[:], ["hoc:cADpyr_L2TPC", "hoc:cNAC_L23BTC"]))
-            assert np.all(np.isin(h5[f"nodes/{name_a}/0/morphology"].asstr()[:], ["GLIA_0000000000000", "GLIA_0000000000001"]))
+            model_template = get_from_library(h5[f"nodes/{name_a}/0"], "model_template")
+            morphology = get_from_library(h5[f"nodes/{name_a}/0"], "morphology")
+            assert np.all(np.isin(model_template, ["hoc:cADpyr_L2TPC", "hoc:cNAC_L23BTC"]))
+            assert np.all(np.isin(morphology, ["GLIA_0000000000000", "GLIA_0000000000001"]))
 
 
 ELECTRICAL = """

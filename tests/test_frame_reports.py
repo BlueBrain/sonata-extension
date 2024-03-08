@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 import sonata_generator.report_generators as tested
 
-from utils import tmp_file
+from utils import get_from_library, tmp_file
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_DATA_DIR = os.path.join(TEST_DIR, "data")
@@ -27,9 +27,16 @@ def create_node(dirpath, pop_name, pop_size):
         pop_group.create_dataset("node_type_id", data=[-1] * pop_size)
         prop = pop_group.create_group("0")
         string_dtype = h5py.special_dtype(vlen=str)
-        prop.create_dataset('morphology', shape=(pop_size,), dtype=string_dtype)
-        prop["morphology"][:] = np.random.choice(
-            ["C270106C_-_Scale_x1.000_y1.050_z1.000", "sm100330b1-2_idB", "vd130423_idC"], pop_size)
+        morphlib = prop.create_dataset(
+            '@library/morphology',
+            data=["C270106C_-_Scale_x1.000_y1.050_z1.000", "sm100330b1-2_idB", "vd130423_idC"],
+            dtype=string_dtype,
+        )
+        prop.create_dataset(
+            'morphology',
+            data=np.random.choice(range(len(morphlib)), pop_size),
+            dtype=np.uint32,
+        )
 
 
 @patch('numpy.random.randint', return_value=3)
@@ -121,7 +128,7 @@ simulations:
         def get_compartments_counts(pop_name):
             nb_compartments = []
             with h5py.File(os.path.join(dirpath, "nodes.h5")) as node_h5:
-                morph_names = node_h5[f'nodes/{pop_name}/0/morphology'].asstr()[:].tolist()
+                morph_names = get_from_library(node_h5[f'nodes/{pop_name}/0'], 'morphology')
                 morph_files = [os.path.join(dirpath, morph_path, morph_name + ".swc") for morph_name in morph_names]
                 for morph_file in morph_files:
                     nb_compartments.append(len(morphio.Morphology(morph_file).sections))
