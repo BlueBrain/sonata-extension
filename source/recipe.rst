@@ -242,17 +242,17 @@ property name:
    ==================================== =========== ===
    Property                             Requirement Description
    ==================================== =========== ===
-   ``conductance``                      Mandatory   The peak conductance (in nS) for a single synaptic contact, following a Gamma distribution.
+   ``conductance_mu``                   Mandatory   The central value for the peak conductance (in nS) for a single synaptic contact, following a Gamma distribution.
    ``conductance_sd``                   Mandatory   Standard deviation of ``conductance``.
-   ``depression_time``                  Mandatory   Time constant (in ms) for recovery from depression, following a Gamma distribution.
+   ``depression_time_mu``               Mandatory   Central value for the time constant (in ms) for recovery from depression, following a Gamma distribution.
    ``depression_time_sd``               Mandatory   Standard deviation of ``depression_time``.
-   ``facilitation_time``                Mandatory   Time constant (in ms) for recovery from facilitation, following a Gamma distribution.
+   ``facilitation_time_mu``             Mandatory   Central value for the time constant (in ms) for recovery from facilitation, following a Gamma distribution.
    ``facilitation_time_sd``             Mandatory   Standard deviation of ``f``.
-   ``u_syn``                            Mandatory   Utilization of synaptic efficacy, following a truncated Normal distribution.
+   ``u_syn_mu``                         Mandatory   Central value for the utilization of synaptic efficacy, following a truncated Normal distribution.
    ``u_syn_sd``                         Mandatory   Standard deviation of ``u``.
-   ``decay_time``                       Mandatory   Decay time constant (in ms), following a truncated Normal distribution.
+   ``decay_time_mu``                    Mandatory   Central value for the decay time constant (in ms), following a truncated Normal distribution.
    ``decay_time_sd``                    Mandatory   Standard deviation of ``dtc``.
-   ``n_rrp_vesicles``                   Mandatory   Number of vesicles in readily releasable pool, following a Poisson distribution.
+   ``n_rrp_vesicles_mu``                Mandatory   Central value for the number of vesicles in readily releasable pool, following a Poisson distribution.
 
    ``conductance_scale_factor``         Optional    The scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'.
    ``u_hill_coefficient``               Optional    A coefficient describing the scaling of `u` to be done by the simulator.
