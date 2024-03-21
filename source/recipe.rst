@@ -1,198 +1,165 @@
 .. _recipe:
 
-Recipe Description
+Recipe description
 ==================
 
-.. highlight:: xml
+.. highlight:: json
 
-This document should specify all parameters required to generate the
-connectome of a circuit.
+This document specifies all parameters required to generate the connectome of a circuit.
 
-File Format
------------
+Components of the recipe are used by TouchDetector and Functionalizer as noted.  An
+example or a TouchDetector configuration may look like:
 
-The recipe is specified in XML, and normally stored in a directory named
-`bioname`.  Customarily, the recipe is split into two files:
+.. code:: yaml
 
-- `builderRecipeAllPathways.xml`
-- `builderConnectivityRecipeAllPathways.xml`
+   recipe:
+     bouton_distances:
+       min_distance: 0.1
+       max_distance: 10.0
+       region_gap: 5.0
+     structural_spine_lengths:
+       - mtype: L7_A
+         spine_length: 5.0
+       - mtype: L9_DKE
+         spine_length: 12.3
 
-The latter is usually included in the former via the entity
-``&connectivityRecipe`` and describes the connectivity sampling contained
-in `ConnectionRules`_.
+.. _selection:
 
-Components
-----------
+Generic pathway selection
+-------------------------
 
-Seeds
-~~~~~
+One can create rules that only apply to certain "pathways" by restricting attributes of
+source and target node populations.
+As such, the rules have properties that are prefixed with `src_` to match attributes from
+the source node population, and likewise prefixed with `dst_` to match target node
+population attributes.  All attributes are described in :ref:`node_file`, the currently
+supported ones are:
 
-Part of the connectome building uses statistical sampling, with random
-numbers seeded by the following optional property::
+- ``etype``
+- ``mtype``
+- ``region``
+- ``synapse_class``
 
-    <Seeds recipeSeed="837632" columnSeed="2906729" synapseSeed="4236279"/>
+All supported attributes support the use of simple wild cards.  The following rule matches
+all synapses connecting cells of MType starting with ``L6_`` to ones with MType
+``L1_PYR``, from any source region to the target region ``SPYR``:
 
-Where the possible attributes are:
+.. code:: yaml
 
-- ``recipeSeed``, with a default of 0. Not used.
-- ``columnSeed``, with a default of 0. Not used.
-- ``synapseSeed``, with a default of 0. Used to sample reduce and cut
-  survival and synapse properties.
+   - src_mtype: "L6_*"
+     src_region: "*"
+     dst_mtype: "L1_PYR"
+     dst_region: "SPYR"
 
-InterBoutonInterval
-~~~~~~~~~~~~~~~~~~~
-
-The `InterBoutonInterval` is used to re-distribute touches in a more
-physical way. A typical specification::
-
-    <InterBoutonInterval minDistance="5.0" maxDistance="7.0" regionGap="5.0"/>
-
-All distances are specified in μm.
-
-Following touch detection, `TouchDetector` groups touches into regions
-along a pre-synaptic branch - any two touches closer than ``regionGap``
-will be grouped into a region. New touches will be created on the
-pre-synaptic branch, spaced between ``minDistance`` and ``maxDistance``
-apart. `TouchDetector` will assign the post-synaptic side of the new
-touches based on the previously detected ones.
-
-Thus the parameters are:
-
-- ``minDistance``: minimum distance between two synapses
-- ``maxDistance``: maximum distance between two synapses in a `touch
-  region`
-- ``regionGap``: the minimum distance between two areas designated as
-  `touch regions`.
-
-StructuralSpineLengths
-~~~~~~~~~~~~~~~~~~~~~~
-
-The `StructuralSpineLengths` group is used to determine the initial
-*maximum* distance for spines, measured in µm.
-`TouchDetector` will use these attributes to enlarge the radius of the
-cylindrical representation of branches identified as dendrites.
-Touches will then be generated along the intersecting parts of cylinders
-from different cells.
-
-To specify the spine length allowed for a morphological type, use the
-following form:
-::
-
-      <StructuralSpineLengths>
-          <rule mType="L6_CHC" spineLength="2.5"/>
-      </StructuralSpineLengths>
-
-.. note::
-   The legacy format contained more information and may require pruning.
-   The following structure is also acceptable:
-   ::
-
-      <NeuronTypes>
-          <StructuralType id="L6_CHC" spineLength="2.5"/>
-      </NeuronTypes>
-
-   Where the value of ``id`` identifies the morphology type to be
-   associated with the spine length.
+When a component can be stored as a Pandas DataFrame, all used attributes have to be
+referred to with a ``_i`` suffix and stored as numerical values corresponding to the index
+of the attribute value in the `@library` field of the node files.  Wildcards are no longer
+allowed, but a numerical value of ``-1`` may be used to match all possible values.
 
 .. warning::
-   No pattern expansion will be performed for this part of the recipe.
-   One rule per `mtype` present in the circuit is required.
 
-InitialBoutonInterval
-~~~~~~~~~~~~~~~~~~~~~
+   Storing recipe components in DataFrames ties the recipe strongly to one circuit.  Only
+   if the order in the used `@library` fields matches exactly may the recipe be reused
+   for a different circuit.
 
-An *optional* XML attribute that specifies the minimum distance in μm that a
-synapse needs to have from the soma. It takes the following form::
+Given MType values of ``L1_PYR``, ``L2_FOO``, ``L6_SPAM``, ``L6_HAM``, ``L6_EGGS``, and
+region values of ``BLARGH``, ``SPYR``, the above rule then turns into:
 
-    <InitialBoutonInterval inhibitorySynapsesDistance="5.0" excitatorySynapsesDistance="25.0" />
+.. table::
 
-The attributes are defined as follows:
+   =========== ============ =========== ============
+   src_mtype_i src_region_i dst_mtype_i dst_region_i
+   =========== ============ =========== ============
+   3           -1           0           1
+   4           -1           0           1
+   5           -1           0           1
+   =========== ============ =========== ============
 
-- ``inhibitorySynapsesDistance`` the minimum distance for a synapse for
-  post-synaptic inhibitory cells (default value: 5.0 μm)
-- ``excitatorySynapsesDistance`` the minimum distance for a synapse for
-  post-synaptic excitatory cells (default value: 5.0 μm)
+Generic Components
+------------------
 
+``version``
+^^^^^^^^^^^
 
-TouchRules
-~~~~~~~~~~
+*Required*.
 
-The `TouchRules` create a filter to refine the touch space used by
-`TouchDetector`. They take the following form::
+An integer representing the current version of the recipe.  This document describes
+version 1.
 
-    <TouchRules>
-        <touchRule fromMType="*PC" toMType="*" fromBranchType="*" toBranchType="soma" />
-        <touchRule fromMType="*PC" toMType="*" fromBranchType="*" toBranchType="dendrite" />
-    </TouchRules>
+Components specific to TouchDetector
+------------------------------------
 
-where ``*`` denotes a wildcard to match anything. In this example, touches
-are allowed between all layers, but only originating from cells with
-`mtype` ending in ``PC``. The former rule matches all synapses with a soma
-on the post-synaptic side, while the latter matches with a dendrite on the
-post-synaptic side.
+Both components are *required* when running TouchDetector.
 
-Allowed parameters:
+``bouton_interval``
+^^^^^^^^^^^^^^^^^^^
 
-- ``fromMType`` the `mtype` of the pre-synaptic cell
-- ``toMType`` the `mtype` of the post-synaptic cell
-- ``fromBranchType`` the classification of the pre-synaptic branch. May be one of
-  the following:
-  - ``*`` to match all branches
-  - ``soma`` to match the soma
-  - ``dendrite`` to match all dendrites
-  - ``basal`` for basal dendrites
-  - ``apical`` for apical dendrites
-- ``toBranchType`` the classification of the post-synaptic branch. May
-  also be referred to as ``type``, for backwards compatibility.
+*Required*.
 
-ConnectionRules
-~~~~~~~~~~~~~~~
+Distances used when transforming touch regions into synapse candidates.
 
-These rules determine the distribution of synapses. They may take the
-following form::
+.. table::
 
-    <ConnectionRules>
-      <rule fromMType="L1_NGC-DA" toMType="*" bouton_reduction_factor= "0.114" active_fraction= "0.50" cv_syns_connection= "0.25" />
-      <rule fromMType="L1_HAC" toMType="L1_DAC" bouton_reduction_factor= "0.13" active_fraction= "0.50" cv_syns_connection= "0.25" />
-    </ConnectionRules>
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``min_distance``                Mandatory   The minimum distance at which two synapse candidates are placed from each other in µm.
+   ``max_distance``                Mandatory   The maximum distance at which two synapse candidates are placed from each other in µm.
+   ``region_gap``                  Mandatory   The maximum distance between two touch regions at which they are merged in µm.
+   =============================== =========== ===
 
-.. note::
-   In older recipes, the rules take the form of:
-   ::
+``structural_spine_lengths``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-      <mTypeRule from="L1_HAC" to="L1_DAC" />
+*Required*.
 
-   which will be translated into:
-   ::
+A list that specified how long the spines for certain MTypes may be. Requires that all
+MTypes have a spine length assigned. Each item of the list must have the following
+properties:
 
-      <rule fromMType="L1_HAC" toMType="L1_DAC" />
+.. table::
 
-   automatically.
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``mtype``                       Mandatory   The MType to apply the spine length to.
+   ``spine_length``                Mandatory   Maxiumum spine length, in µm.
+   =============================== =========== ===
 
-Every rule can be used to select a subset of connections using attributes
-with the prefixes:
+Components specific to Functionalizer
+-------------------------------------
 
-- ``from`` for the pre-synaptic matching requirement
-- ``to`` for the post-synaptic matching requirement
+Components used by Functionalizer may only be required when the corresponding filter is
+used. I.e., if only the `SynapseProperties` filter is used, only the
+``synapse_properties`` part of the recipe is required.
 
-And the following stems:
+``bouton_distances``
+^^^^^^^^^^^^^^^^^^^^
 
-- ``MType`` to filter by the `mtype` column of the node file(s)
-- ``EType`` to filter by the `etype` column of the node file(s)
-- ``SClass`` to filter by the synaptic classification of the cell
-  (customarily either ``EXC`` or ``INH``)
-- ``Region`` to filter by the `region` column of the node file(s)
+*Optional*.
 
-The order of the rules matters, later rules may override earlier ones if
-they are at least as specific as the earlier ones.
-I.e., the number of wildcards matching all of an attribute needs to be less
-or equal the rule to be overwritten.
-For example, ``<rule fromMType="bar" …/>`` will be superseded by ``<rule
-fromMType="b*" …?>`` as the constraints are similar, but it will not be
-replaced by ``<rule fromMType="*" …/>``, as that one is broader.
+Minimum distances for synapses, as measured along the branch length, starting at the soma.
+Synapses with less than the specified distance will be removed by Functionalizer.
 
-In addition to the selection attributes, exactly one set of constraints have to
-be used:
+.. table::
+
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``excitatory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic excitatory cells in µm. Defaults to 5µm.
+   ``inhibitory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic inhibitory cells in µm. Defaults to 25µm.
+   =============================== =========== ===
+
+``connection_rules``
+^^^^^^^^^^^^^^^^^^^^
+
+*Required*.
+
+A list of rules that are used to determine how synapse distributions are calculated for
+pathways, and used to reduce the structural connectome to a functional one.
+
+Each rule may have properties corresponding to :ref:`selection`. In addition to the
+selection attributes, exactly one set of parameters have to be used:
 
 - ``mean_syns_connection``, ``stdev_syns_connection``, and ``active_fraction``
 - ``bouton_reduction_factor``, ``cv_syns_connection``, and ``active_fraction``
@@ -200,99 +167,89 @@ be used:
 - ``bouton_reduction_factor``, ``cv_syns_connection``, and ``probability``
 - ``bouton_reduction_factor``, ``pMu_A``, and ``p_A``
 
-Where the constraints signify:
+Where the parameters signify:
 
-.. _active_fraction:
+.. table::
 
-- ``active_fraction``, the fraction of synapses to be removed in the third pruning step
+   =============================== ===
+   Parameter                       Description
+   =============================== ===
+   ``active_fraction``             The fraction of synapses to be removed in the third pruning step.
+   ``bouton_reduction_factor``     The fraction of synapses to be removed in all three pruning steps.
+   ``cv_syns_connection``          The target value for the coefficient of variation of the distribution of synapses per connection distribution of synapses per connections.
+   ``mean_syns_connection``        The target value for the mean of the distribution of synapses per connections.
+   ``p_A``                         The reduction factor.
+   ``pMu_A``                       Used as input to the survival rate.
+   ``probability``                 The target connection probability. To be deprecated.
+   ``stdev_syns_connection``       The target value for the standard deviation of the distribution of synapses per connection.
+   =============================== ===
 
-.. _bouton_reduction_factor:
+``gap_junction_properties``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``bouton_reduction_factor``, the fraction of synapses to be removed in all three pruning steps
+*Optional*.
 
-.. _cv_syns_connection:
+A global default setting for the conductance produced by Functionalizer.
 
-- ``cv_syns_connection``, the target value for the coefficient of variation of the distribution of synapses per connection distribution of synapses per connections
+.. table::
 
-.. _mean_syns_connection:
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   conductance                     Optional    The conductance to be used by all synapses. Defaults to 0.2.
+   =============================== =========== ===
 
-- ``mean_syns_connection``, the target value for the mean of the distribution of synapses per connections
+``seed``
+^^^^^^^^
 
-.. _p_A:
+*Optional*.
 
-- ``p_A``, the reduction factor
+One of the random number seeds to be used when drawing distributions to cut synapses or
+determine properties.
 
-.. _pMu_A:
+``synapse_properties``
+^^^^^^^^^^^^^^^^^^^^^^
 
-- ``pMu_A``, used as input to the survival rate
+*Required*.
 
-.. _probability:
+Settings to generate synaptic properties for appositions.  Each apposition is classified
+by rules and synaptic properties are generated per cell-cell connection following the
+parameters of the property configuration.
 
-- ``probability``, the target connection probability. To be deprecated.
+.. table::
 
-.. _stdev_syns_connection:
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``rules``                       Mandatory   Rules to classify synapses
+   ``properties``                  Mandatory   Maxiumum spine length, in µm.
+   =============================== =========== ===
 
-- ``stdev_syns_connection``, the target value for the standard deviation of the distribution of synapses per connection
+``rules``
+~~~~~~~~~
 
-SynapsesProperties
-~~~~~~~~~~~~~~~~~~
+Each rule may have properties corresponding to :ref:`selection`. In addition to the
+selection attributes, the following parameters may be present:
 
-The list of `SynapsesProperties` is used to determine which property
-classification is assigned to synapses. It takes the form::
+.. table::
 
-    <SynapsesProperties>
-        <synapse fromSClass="EXC" toSClass="EXC" type="E2" axonalConductionVelocity="0" />
-        <synapse fromSClass="INH" toSClass="INH" type="I2" />
-        <synapse fromSClass="EXC" toMType="L*_ChC" type="E2_PT" />
-        <synapse fromMType="L6_MC" toMType="L6_IPC" toEType="*" type="I1_L6_MC-L6_IPC" />
-    </SynapsesProperties>
+   ==================================== =========== ===
+   Property                             Requirement Description
+   ==================================== =========== ===
+   ``class``                            Mandatory   A name that will be referenced by ``properties``.  It has to start with either ``E`` for excitatory connections or ``I`` for inhibitory connections.
+   ``neural_transmitter_release_delay`` Optional    Defaults to 0.1 ms
+   ``axonal_conduction_velocity``       Optional    Defaults to 300 μm/ms
+   ==================================== =========== ===
 
-Each element within the list of `SynapsesProperties` selects a connection
-given by source and target cell selection criteria. Multiple selections are
-possible:
+Please note that contrary to the legacy XML recipe, precedence is handled very strict:
+later rules always override earlier ones.  There is no special treatment for more general
+rules to not override more specialized ones.
 
-- ``fromSClass`` to select the pre-synaptic cell class
-- ``toSClass`` to select the post-synaptic cell class
-- ``fromMType`` to select the pre-synaptic `mtype` type
-- ``toMType`` to select the post-synaptic `mtype` type
-- ``fromEType`` to select the pre-synaptic `etype` type
-- ``toEType`` to select the post-synaptic `etype` type
+``classes``
+~~~~~~~~~~~
 
-In case selections overlap, the last specified assignment takes precedence.
-To assign synapse properties, the classification field needs to be set:
-
-- ``type`` a name that will be referenced by the
-  `SynapsesClassification`_.
-
-  .. note::
-
-     The type has to start with either ``E`` for excitatory connections or
-     ``I`` for inhibitory connections.
-
-Two optional attributes may be set:
-
-- ``neuralTransmitterReleaseDelay`` with a default of 0.1 ms
-- ``axonalConductionVelocity`` with a default of 300 μm/ms
-
-These two attributes may also be present in the ``SynapsesProperties``
-element, setting default values for all ``synapse`` elements::
-
-    <SynapsesProperties neuralTransmitterReleaseDelay="10.5" axonalConductionVelocity="123.0">
-
-.. _recipe_properties:
-
-SynapsesClassification
-~~~~~~~~~~~~~~~~~~~~~~
-
-Once a classification is assigned to connections, properties are assigned
-to connections by using the `SynapsesClassification` section::
-
-    <SynapsesClassification>
-      <class id="E2"  gsyn="0.792" gsynSD="0.528" nsyn="5.00" nsynSD="2.00" dtc="1.74" dtcSD="0.18" u="0.50" uSD="0.02" d="671" dSD="17" f="017" fSD="5" nrrp="1" />
-    </SynapsesClassification>
-
-Here, the ``id`` field has to match a ``type`` value of the
-`SynapsesProperties`. The properties are assigned using the following
+Here, the ``class`` field has to match a ``class`` value of the
+``rules``. The properties are assigned using the following
 random number distributions, using a mean `m` and standard deviation `sd`:
 
 - A Gamma-distribution, with shape parameter equal to `m² / sd²`, and
@@ -305,69 +262,96 @@ The same drawn number is reused for all synapses within the same source to
 target cell connection.
 
 The following properties are supported, with the mean specified by the
-property name, and the standard deviation by appending ``SD`` to the
+property name, and the standard deviation by appending ``_sd`` to the
 property name:
 
-- `gsyn`, the peak conductance (in nS) for a single synaptic contact, following a Gamma distribution
-- `d`, time constant (in ms) for recovery from depression, following a Gamma distribution
-- `f`, time constant (in ms) for recovery from facilitation, following a Gamma distribution
-- `u`, utilization of synaptic efficacy, following a truncated Normal distribution
-- `dtc`, decay time constant (in ms), following a truncated Normal distribution
-- `nrrp`, number of vesicles in readily releasable pool, following a Poisson distribution
+.. table::
+
+   ==================================== =========== ===
+   Property                             Requirement Description
+   ==================================== =========== ===
+   ``conductance_mu``                   Mandatory   The central value for the peak conductance (in nS) for a single synaptic contact, following a Gamma distribution.
+   ``conductance_sd``                   Mandatory   Standard deviation of ``conductance``.
+   ``depression_time_mu``               Mandatory   Central value for the time constant (in ms) for recovery from depression, following a Gamma distribution.
+   ``depression_time_sd``               Mandatory   Standard deviation of ``depression_time``.
+   ``facilitation_time_mu``             Mandatory   Central value for the time constant (in ms) for recovery from facilitation, following a Gamma distribution.
+   ``facilitation_time_sd``             Mandatory   Standard deviation of ``f``.
+   ``u_syn_mu``                         Mandatory   Central value for the utilization of synaptic efficacy, following a truncated Normal distribution.
+   ``u_syn_sd``                         Mandatory   Standard deviation of ``u``.
+   ``decay_time_mu``                    Mandatory   Central value for the decay time constant (in ms), following a truncated Normal distribution.
+   ``decay_time_sd``                    Mandatory   Standard deviation of ``dtc``.
+   ``n_rrp_vesicles_mu``                Mandatory   Central value for the number of vesicles in readily releasable pool, following a Poisson distribution.
+
+   ``conductance_scale_factor``         Optional    The scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'.
+   ``u_hill_coefficient``               Optional    A coefficient describing the scaling of `u` to be done by the simulator.
+   ==================================== =========== ===
 
 Truncated Normal distributions are limited to the central value ±σ and are
 re-rolled until positive values has been obtained.
 
-Two optional attributes can be specified, where each attribute will have to
-be given for all `SynapsesClassification` elements:
+The ``u_hill_coefficient`` is used as follows:
 
-- `gsynSRSF`, the scale factor for the conductance; `SRSF`: 'synaptic receptor scaling factor'
-- `uHillCoefficient`, a coefficient describing the scaling of `u` to be
-  done by the simulator:
+.. math::
 
-  .. math::
+   u_\text{final} = u \cdot y \cdot \frac{ca^4}{u_\text{Hill}^4 + ca^4}
 
-     u_\text{final} = u \cdot y \cdot \frac{ca^4}{u_\text{Hill}^4 + ca^4}
-
-  where :math:`ca` denotes the simulated calcium concentration in
-  millimolar and :math:`y` a scalar such that at
-  :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
+where :math:`ca` denotes the simulated calcium concentration in millimolar and :math:`y` a
+scalar such that at :math:`ca = 2.0:\ u_\text{final} = u`. (Markram et al., 2015)
 
 These attributes will be copied for each synapse corresponding to its
 classification.  If they are not specified, no corresponding columns will
 be created in the output.
 
-SynapsesReposition
-~~~~~~~~~~~~~~~~~~
+``synapse_reposition``
+^^^^^^^^^^^^^^^^^^^^^^
 
-The `SynapsesReposition` section allows to shift the post-synaptic side of
-touches, e.g., for chandelier cells from the soma to the first axon
-section::
+*Required*.
 
-    <SynapsesReposition>
-        <shift fromMType="L*_CHC" toMType="*" type="AIS"/>
-        <shift fromMType="SP_AA" toMType="*" type="AIS"/>
-    </SynapsesReposition>
+.. table::
 
-Allowed properties are:
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``src_mtype``                   Mandatory   The MType of the source cell.
+   ``dst_mtype``                   Mandatory   The MType of the target cell.
+   ``class``                       Mandatory   Has to be ``AIS``.
+   =============================== =========== ===
 
-- ``fromMType`` to select the pre-synaptic cell `mtype`
-- ``toMType`` to select the post-synaptic cell `mtype`
-- ``type`` for the kind of shift. Currently only ``AIS`` for shifts to the
-  first axon section from the soma is supported.
+``touch_rules``
+^^^^^^^^^^^^^^^
 
-Consumers and invocation order
-------------------------------
+*Required*.
 
-- TouchDetector. Uses the following parts:
-   - `StructuralSpineLengths`_
-   - `InterBoutonInterval`_
-- Spykfunc. Uses the following parts:
-   - `Seeds`_
-   - `InitialBoutonInterval`_, used by the `BoutonDistance` filter
-   - `TouchRules`_, used by the similarly named filter (functional execution only)
-   - `ConnectionRules`_, used by the filter `ReduceAndCut` (functional execution only)
-   - `SynapsesProperties`_, used to assign synapses classification
-   - `SynapsesClassification`_, used to assign synapses properties
-   - `SynapsesReposition`_, used to shift post-synaptic segments away from
-     the soma
+Determines which touches are allowed, depending on source and target node population
+MType, as well the section type on either the source or target side of the touch.
+
+.. table::
+
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``src_mtype``                   Mandatory   The MType of the source cell.
+   ``dst_mtype``                   Mandatory   The MType of the target cell.
+   ``afferent_section_type``       Optional    The section type of the target cell
+   ``efferent_section_type``       Optional    The section type of the source cell.
+   =============================== =========== ===
+
+The ``afferent_section_type`` and ``efferent_section_type`` may take the values ``soma``,
+``axon``, ``apical``, and ``basal``.  A special value ``dendrite`` may be used to signify
+both ``apical`` and ``basal`` types.
+
+``touch_reduction``
+^^^^^^^^^^^^^^^^^^^
+
+*Required*.
+
+Used to cut touches according to a flat survival rate set by the user.  Affects all
+touches the same way.
+
+.. table::
+
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``survival_rate``               Mandatory   A flat survival probability of touches.
+   =============================== =========== ===
