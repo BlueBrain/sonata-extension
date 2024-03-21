@@ -48,7 +48,6 @@ Spike replay files are commonly named "input.dat", after a rename of the "out.da
     }
 
 
-.. _dat_spike_files:
 
 .dat Spike Files
 ~~~~~~~~~~~~~~~~
@@ -66,13 +65,8 @@ Example:
 015.8726     221285
 ```
 
-**SONATA COMPAT NOTE**: The <cell-id> is a 1-based NEURON cell Id, which is consistent
-with legacy MVD formats. In turn, SONATA uses 0-based cell Ids and therefore,
-in case you use SONATA node sets, you will need to OFFSET EVERY CELL ID BY 1.
-
-Building on the previous example, the first spike would go out at 15.7384ms on cell with
-SONATA Node Id 221085.
-
+**NOTE**: The <cell-id> is a 1-based NEURON cell Id, which is consistent
+with legacy MVD formats.
 
 Example Generating a .dat Spikes File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

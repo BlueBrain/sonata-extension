@@ -296,12 +296,8 @@ Spike events are created from the cells indicated in a file and delivered to the
    ============================== ========== ============ ==========================================
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
-   spike_file                     text       Mandatory    Indicates the location of the file with the spike info for injection.
-   source                         text       Optional     The node set to replay spikes from.
+   spike_file                     text       Mandatory    Indicates the location of the file with the spike info for injection. Spikes files are the :ref:`.h5 spikes files <sonata_spike_files>`.
    ============================== ========== ============ ==========================================
-
-Note: Spike files can be the :ref:`.h5 spikes files <sonata_spike_files>` output by Neurodamus. Although it is not recommended, you may
-also use previous .dat files with their caveats. See :ref:`.dat spike files <dat_spike_files>`.
 
 seclamp (voltage_clamp)
 ~~~~~~~~~~~~~~~~~~~~~~~
