@@ -56,6 +56,12 @@ referred to with a ``_i`` suffix and stored as numerical values corresponding to
 of the attribute value in the `@library` field of the node files.  Wildcards are no longer
 allowed, but a numerical value of ``-1`` may be used to match all possible values.
 
+.. warning::
+
+   Storing recipe components in DataFrames ties the recipe strongly to one circuit.  Only
+   if the order in the used `@library` fields matches exactly may the recipe be reused
+   for a different circuit.
+
 Given MType values of ``L1_PYR``, ``L2_FOO``, ``L6_SPAM``, ``L6_HAM``, ``L6_EGGS``, and
 region values of ``BLARGH``, ``SPYR``, the above rule then turns into:
 
@@ -69,30 +75,26 @@ region values of ``BLARGH``, ``SPYR``, the above rule then turns into:
    5           -1           0           1
    =========== ============ =========== ============
 
-Components
-----------
+Generic Components
+------------------
 
-``bouton_distances``
-^^^^^^^^^^^^^^^^^^^^
+``version``
+^^^^^^^^^^^
 
-*Optional*, used by Functionalizer.
+*Required*.
 
-Minimum distances for synapses, as measured along the branch length, starting at the soma.
-Synapses with less than the specified distance will be removed by Functionalizer.
+An integer representing the current version of the recipe.  This document describes
+version 1.
 
-.. table::
+Components specific to TouchDetector
+------------------------------------
 
-   =============================== =========== ===
-   Property                        Requirement Description
-   =============================== =========== ===
-   ``excitatory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic excitatory cells in µm. Defaults to 5µm.
-   ``inhibitory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic inhibitory cells in µm. Defaults to 25µm.
-   =============================== =========== ===
+Both components are *required* when running TouchDetector.
 
 ``bouton_interval``
 ^^^^^^^^^^^^^^^^^^^
 
-*Required*, used by TouchDetector.
+*Required*.
 
 Distances used when transforming touch regions into synapse candidates.
 
@@ -106,8 +108,52 @@ Distances used when transforming touch regions into synapse candidates.
    ``region_gap``                  Mandatory   The maximum distance between two touch regions at which they are merged in µm.
    =============================== =========== ===
 
+``structural_spine_lengths``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+*Required*.
+
+A list that specified how long the spines for certain MTypes may be. Requires that all
+MTypes have a spine length assigned. Each item of the list must have the following
+properties:
+
+.. table::
+
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``mtype``                       Mandatory   The MType to apply the spine length to.
+   ``spine_length``                Mandatory   Maxiumum spine length, in µm.
+   =============================== =========== ===
+
+Components specific to Functionalizer
+-------------------------------------
+
+Components used by Functionalizer may only be required when the corresponding filter is
+used. I.e., if only the `SynapseProperties` filter is used, only the
+``synapse_properties`` part of the recipe is required.
+
+``bouton_distances``
+^^^^^^^^^^^^^^^^^^^^
+
+*Optional*.
+
+Minimum distances for synapses, as measured along the branch length, starting at the soma.
+Synapses with less than the specified distance will be removed by Functionalizer.
+
+.. table::
+
+   =============================== =========== ===
+   Property                        Requirement Description
+   =============================== =========== ===
+   ``excitatory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic excitatory cells in µm. Defaults to 5µm.
+   ``inhibitory_synapse_distance`` Optional    The minimum distance from the soma for a synapse of post-synaptic inhibitory cells in µm. Defaults to 25µm.
+   =============================== =========== ===
+
 ``connection_rules``
 ^^^^^^^^^^^^^^^^^^^^
+
+*Required*.
 
 A list of rules that are used to determine how synapse distributions are calculated for
 pathways, and used to reduce the structural connectome to a functional one.
@@ -141,7 +187,7 @@ Where the parameters signify:
 ``gap_junction_properties``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-*Optional*, used by Functionalizer.
+*Optional*.
 
 A global default setting for the conductance produced by Functionalizer.
 
@@ -156,33 +202,15 @@ A global default setting for the conductance produced by Functionalizer.
 ``seed``
 ^^^^^^^^
 
-*Optional*, used by Functionalizer.
+*Optional*.
 
 One of the random number seeds to be used when drawing distributions to cut synapses or
 determine properties.
 
-``structural_spine_lengths``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-*Required*, used by TouchDetector.
-
-A list that specified how long the spines for certain MTypes may be. Requires that all
-MTypes have a spine length assigned. Each item of the list must have the following
-properties:
-
-.. table::
-
-   =============================== =========== ===
-   Property                        Requirement Description
-   =============================== =========== ===
-   ``mtype``                       Mandatory   The MType to apply the spine length to.
-   ``spine_length``                Mandatory   Maxiumum spine length, in µm.
-   =============================== =========== ===
-
 ``synapse_properties``
 ^^^^^^^^^^^^^^^^^^^^^^
 
-*Optional*, used by Functionalizer.
+*Required*.
 
 Settings to generate synaptic properties for appositions.  Each apposition is classified
 by rules and synaptic properties are generated per cell-cell connection following the
@@ -277,6 +305,8 @@ be created in the output.
 ``synapse_reposition``
 ^^^^^^^^^^^^^^^^^^^^^^
 
+*Required*.
+
 .. table::
 
    =============================== =========== ===
@@ -290,7 +320,7 @@ be created in the output.
 ``touch_rules``
 ^^^^^^^^^^^^^^^
 
-*Optional*, used by Functionalizer.
+*Required*.
 
 Determines which touches are allowed, depending on source and target node population
 MType, as well the section type on either the source or target side of the touch.
@@ -313,7 +343,7 @@ both ``apical`` and ``basal`` types.
 ``touch_reduction``
 ^^^^^^^^^^^^^^^^^^^
 
-*Optional*, used by Functionalizer.
+*Required*.
 
 Used to cut touches according to a flat survival rate set by the user.  Affects all
 touches the same way.
