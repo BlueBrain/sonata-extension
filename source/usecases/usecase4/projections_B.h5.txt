@@ -4,150 +4,157 @@ GROUP "/" {
       GROUP "VirtualPopB__NodeB__chemical" {
          GROUP "0" {
             DATASET "afferent_center_x" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  322.771, 210.287, 136.276, -350.876
+                  -254.69, -328.874, -363.427, -369.345
                }
             }
             DATASET "afferent_center_y" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  -760.545, -953.93, -1086.83, 110.792
+                  -193.209, 141.191, 106.731, 15.9907
                }
             }
             DATASET "afferent_center_z" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  967.537, 941.617, 940.241, 274.759
+                  -781.974, 985.505, 973.581, 949.529
                }
             }
             DATASET "afferent_section_id" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  9, 16, 19, 4
+                  151, 60, 68, 72
+               }
+            }
+            DATASET "afferent_section_pos" {
+               DATATYPE  H5T_IEEE_F32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  0.502183, 0.94632, 0.90669, 0.173241
                }
             }
             DATASET "afferent_section_type" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  3, 3, 3, 3
+                  2, 2, 2, 2
                }
             }
             DATASET "afferent_segment_id" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  199, 10, 9, 58
+                  6, 9, 21, 3
                }
             }
             DATASET "afferent_segment_offset" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  0.200852, 1.93692, 3.7929, 6.27117
+                  1.23413, 0.125325, 0.143727, 0.17851
                }
             }
             DATASET "afferent_surface_x" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  322.387, 210.829, 136.43, -350.638
+                  -253.029, -329.066, -361.965, -369.205
                }
             }
             DATASET "afferent_surface_y" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  -760.32, -953.792, -1086.96, 110.82
+                  -192.9, 142.951, 106.89, 15.1928
                }
             }
             DATASET "afferent_surface_z" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  967.277, 942.154, 940.33, 274.658
+                  -781.974, 985.505, 973.581, 949.529
                }
             }
             DATASET "conductance" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  0.134, 0.137783, 0.353443, 0.479719
+                  0.37601, 0.379849, 0.231088, 0.402711
                }
             }
             DATASET "conductance_scale_factor" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  0.590132, 0.129219, 0.622137, 0.79398
+                  0.481629, 0.332816, 0.864134, 0.129974
                }
             }
             DATASET "decay_time" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  1.96837, 1.72369, 1.86385, 1.87112
+                  1.81803, 1.62001, 1.58027, 1.8982
                }
             }
             DATASET "delay" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  3.10068, 8.31519, 8.07023, 6.40024
+                  6.8027, 6.09178, 0.98478, 0.920276
                }
             }
             DATASET "depression_time" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  630.699, 611.977, 644.388, 639.177
+                  695.917, 645.814, 659.098, 685.772
+               }
+            }
+            DATASET "efferent_section_type" {
+               DATATYPE  H5T_STD_U32LE
+               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+               DATA {
+                  1, 1, 1, 1
                }
             }
             DATASET "facilitation_time" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  15.637, 21.9072, 15.7255, 18.6054
+                  14.1445, 24.0375, 16.515, 21.4153
                }
             }
             DATASET "n_rrp_vesicles" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  3, 1, 3, 1
-               }
-            }
-            DATASET "spine_length" {
-               DATATYPE  H5T_IEEE_F64LE
-               DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
-               DATA {
-                  8395.15, 5223.75, 5130.8, 6498.35
+                  4, 2, 3, 1
                }
             }
             DATASET "syn_type_id" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  25, 21, 45, 101
+                  56, 65, 64, 69
                }
             }
             DATASET "u_hill_coefficient" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  1.37623, 1.49102, 1.98164, 1.24465
+                  1.95898, 1.35537, 1.35671, 1.01633
                }
             }
             DATASET "u_syn" {
-               DATATYPE  H5T_IEEE_F64LE
+               DATATYPE  H5T_IEEE_F32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  0.530459, 0.504924, 0.504601, 0.502798
+                  0.545442, 0.540776, 0.507971, 0.531445
                }
             }
          }
@@ -191,8 +198,8 @@ GROUP "/" {
                   DATATYPE  H5T_STD_U64LE
                   DATASPACE  SIMPLE { ( 2, 2 ) / ( 2, 2 ) }
                   DATA {
-                     0, 3,
-                     3, 4
+                     1, 4,
+                     0, 1
                   }
                }
             }
@@ -220,7 +227,7 @@ GROUP "/" {
             DATATYPE  H5T_STD_U64LE
             DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
             DATA {
-               0, 0, 0, 1
+               1, 0, 0, 0
             }
             ATTRIBUTE "node_population" {
                DATATYPE  H5T_STRING {

@@ -7,10 +7,10 @@
                 "populations": {
                     "NodeA": {
                         "type": "biophysical",
-                        "morphologies_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/morphologies/swc",
-                        "biophysical_neuron_models_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/hoc",
+                        "morphologies_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/CircuitA/morphologies/swc",
+                        "biophysical_neuron_models_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/CircuitA/hoc",
                         "alternate_morphologies": {
-                            "neurolucida-asc": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/morphologies/asc"
+                            "neurolucida-asc": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/CircuitA/morphologies/asc"
                         }
                     },
                     "VirtualPopA": {

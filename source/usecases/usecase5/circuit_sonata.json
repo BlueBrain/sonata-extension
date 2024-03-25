@@ -7,10 +7,10 @@
                 "populations": {
                     "nodeA": {
                         "type": "biophysical",
-                        "morphologies_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/morphologies/swc",
-                        "biophysical_neuron_models_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/hoc",
+                        "morphologies_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/CircuitA/morphologies/swc",
+                        "biophysical_neuron_models_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/CircuitA/hoc",
                         "alternate_morphologies": {
-                            "neurolucida-asc": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/CircuitA/morphologies/asc"
+                            "neurolucida-asc": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/CircuitA/morphologies/asc"
                         }
                     }
                 }
@@ -20,8 +20,8 @@
                 "populations": {
                     "vasculatureA": {
                         "type": "vasculature",
-                        "vasculature_file": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/NGV/vasculature/vasculature_morphology.h5",
-                        "vasculature_mesh": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/NGV/vasculature/vasculature_mesh.obj"
+                        "vasculature_file": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/NGV/vasculature/vasculature_morphology.h5",
+                        "vasculature_mesh": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/NGV/vasculature/vasculature_mesh.obj"
                     }
                 }
             },
@@ -30,9 +30,9 @@
                 "populations": {
                     "astrocyteA": {
                         "type": "astrocyte",
-                        "morphologies_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/NGV/astrocyte_morphologies_h5",
-                        "biophysical_neuron_models_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/components/NGV/astrocyte_hoc",
-                        "microdomains_file": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v2/usecase5/microdomains/microdomains.h5"
+                        "morphologies_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/NGV/astrocyte_morphologies_h5",
+                        "biophysical_neuron_models_dir": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/components/NGV/astrocyte_hoc",
+                        "microdomains_file": "/gpfs/bbp.cscs.ch/project/proj12/example_data/sonata/v3/usecase5/microdomains/microdomains.h5"
                     }
                 }
             }
@@ -49,8 +49,8 @@
             {
                 "edges_file": "glialglial.h5",
                 "populations": {
-                    "astrocyteA__astrocyteA__electrical_synapse": {
-                        "type": "electrical_synapse"
+                    "astrocyteA__astrocyteA__glialglial": {
+                        "type": "glialglial"
                     }
                 }
             },
