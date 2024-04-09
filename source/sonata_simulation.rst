@@ -368,6 +368,7 @@ Note: fields marked Mandatory* depend on which shot_noise version is selected.
    reversal                       float      Optional     Reversal potential for conductance injection in mV. Default is 0.
    dt                             float      Optional     Timestep of generated signal in ms. Default is 0.25 ms.
    random_seed                    integer    Optional     Override the random seed (to introduce correlations between cells).
+   uses_SEClamp                   boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON SEClamp mechanism. The SEClamp produces an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `uses_SEClamp` should be set to False, in which case the signal will be implemented using a ConductanceSource mechanism, which is identical to SEClamp but produces a membrane current, which is included in the calculation of the extracellular signal. Relevant only for conductance sources, not current_clamp. 
    ============================== ========== ============ ==========================================
 
 ornstein_uhlenbeck and relative_ornstein_uhlenbeck (current_clamp or conductance)
@@ -390,6 +391,7 @@ Note: fields marked Mandatory* depend on which ornstein_uhlenbeck version is sel
    reversal                       float      Optional     Reversal potential for conductance injection in mV. Default is 0.
    dt                             float      Optional     Timestep of generated signal in ms. Default is 0.25 ms.
    random_seed                    integer    Optional     Override the random seed (to introduce correlations between cells).
+   uses_SEClamp                   boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON SEClamp mechanism. The SEClamp produces an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `uses_SEClamp` should be set to False, in which case the signal will be implemented using a ConductanceSource mechanism, which is identical to SEClamp but produces a membrane current, which is included in the calculation of the extracellular signal. Relevant only for conductance sources, not current_clamp.
    ============================== ========== ============ ==========================================
 
 reports
@@ -416,6 +418,7 @@ Dictionary of dictionaries with each member describing one data collection durin
    end_time                       float      Mandatory    Time to stop reporting in milliseconds.
    file_name                      text       Optional     Specify report file name to be written in the :ref:`output_dir <output_config>`. The '.h5' extension will be added if not provided. The default file name is <report_name>.h5 where 'report_name' is the key name of the current dictionary.
    enabled                        boolean    Optional     Allows for supressing a report so that it is not created. Useful for reducing output temporarily. Possible values are true/false. Default is true.
+   current_clamp_in_lfp           boolean    Optional     Default is True. If True, the currents produced by current_clamp mechanisms will be added to the membrane currents when extracellular signals are calculated. This should be the case if the current_clamp mechanisms are used to simulate synaptic inputs. If they are used to simulate physical electrodes, then the parameter should be set to False. Note that the value applies to all current_clamp mechanisms. If you want to represent both physical electrodes and synaptic inputs with curreent_clamps, we recommend you instead use a ConductanceSource to represent the synaptic input
    ============================== ========== ============ ==========================================
 
 More on type summation
