@@ -227,6 +227,7 @@ A continuous injection of current.
    ============================== ========== ============ ==========================================
    amp_start                      float      Mandatory    The amount of current initially injected when the stimulus activates. Given in nA.
    amp_end                        float      Optional     If given, current is interpolated such that current reaches this value when the stimulus concludes. Otherwise, current stays at amp_start. Given in nA.
+   represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
    ============================== ========== ============ ==========================================
 
 relative_linear (current_clamp)
@@ -241,6 +242,7 @@ A continues injection of current, regulated according to the current a cell requ
    ============================== ========== ============ ==========================================
    percent_start                  float      Mandatory    The percentage of a cell's threshold current to inject when the stimulus activates.
    percent_end                    float      Optional     If given, The percentage of a cell's threshold current is interpolated such that the percentage reaches this value when the stimulus concludes. Otherwise, stays at percent_start.
+   represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
    ============================== ========== ============ ==========================================
 
 pulse (current_clamp)
@@ -257,6 +259,7 @@ Series of current pulse injections.
    amp_end                        float      Optional     If given, current is interpolated such that current reaches this value when the stimulus concludes. Otherwise, current stays at amp_start. Given in nA.
    width                          float      Mandatory    The length of time each pulse lasts. Given in ms.
    frequency                      float      Mandatory    The frequency of pulse trains. Given in Hz.
+   represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
    ============================== ========== ============ ==========================================
 
 subthreshold (current_clamp)
@@ -270,6 +273,7 @@ A continuous injections of current, adjusted from the current a cell requires to
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    percent_less                   integer    Mandatory    A percentage adjusted from 100 of a cell's threshold current. E.g. 20 will apply 80% of the threshold current. Using a negative value will give more than 100. E.g. -20 will inject 120% of the threshold current.
+   represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
    ============================== ========== ============ ==========================================
 
 hyperpolarizing (current_clamp)
@@ -283,7 +287,7 @@ Note: No additional parameter are needed when using module "hyperpolarizing". Th
    ============================== ========== ============ ==========================================
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
-   N/A                            N/A        N/A          N/A
+   represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
    ============================== ========== ============ ==========================================
 
 synapse_replay (spikes)
