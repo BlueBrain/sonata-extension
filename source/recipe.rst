@@ -222,7 +222,7 @@ parameters of the property configuration.
    Property                        Requirement Description
    =============================== =========== ===
    ``rules``                       Mandatory   Rules to classify synapses
-   ``properties``                  Mandatory   Maxiumum spine length, in µm.
+   ``classes``                     Mandatory   Synapse classes used to assign properties
    =============================== =========== ===
 
 ``rules``
@@ -236,7 +236,7 @@ selection attributes, the following parameters may be present:
    ==================================== =========== ===
    Property                             Requirement Description
    ==================================== =========== ===
-   ``class``                            Mandatory   A name that will be referenced by ``properties``.  It has to start with either ``E`` for excitatory connections or ``I`` for inhibitory connections.
+   ``class``                            Mandatory   A name that will be referenced by ``classes``.  It has to start with either ``E`` for excitatory connections or ``I`` for inhibitory connections.
    ``neural_transmitter_release_delay`` Optional    Defaults to 0.1 ms
    ``axonal_conduction_velocity``       Optional    Defaults to 300 μm/ms
    ==================================== =========== ===
