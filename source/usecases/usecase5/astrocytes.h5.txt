@@ -3,54 +3,94 @@ GROUP "/" {
    GROUP "nodes" {
       GROUP "astrocyteA" {
          GROUP "0" {
-            DATASET "model_template" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
+            GROUP "@library" {
+               DATASET "model_template" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+                  DATA {
+                     "hoc:astrocyte"
+                  }
                }
+               DATASET "model_type" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
+                  DATA {
+                     "astrocyte"
+                  }
+               }
+               DATASET "morphology" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+                  DATA {
+                     "GLIA_0000000000000", "GLIA_0000000000001"
+                  }
+               }
+               DATASET "mtype" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+                  DATA {
+                     "L3_ASTRO", "L5_ASTRO"
+                  }
+               }
+               DATASET "region" {
+                  DATATYPE  H5T_STRING {
+                     STRSIZE H5T_VARIABLE;
+                     STRPAD H5T_STR_NULLTERM;
+                     CSET H5T_CSET_UTF8;
+                     CTYPE H5T_C_S1;
+                  }
+                  DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
+                  DATA {
+                     "RA", "RB"
+                  }
+               }
+            }
+            DATASET "model_template" {
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  "hoc:astrocyte", "hoc:astrocyte", "hoc:astrocyte",
-                  "hoc:astrocyte"
+                  0, 0, 0, 0
                }
             }
             DATASET "model_type" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
-               }
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  "astrocyte", "astrocyte", "astrocyte", "astrocyte"
+                  0, 0, 0, 0
                }
             }
             DATASET "morphology" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
-               }
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  "GLIA_0000000000001", "GLIA_0000000000000",
-                  "GLIA_0000000000000", "GLIA_0000000000000"
+                  0, 1, 1, 1
                }
             }
             DATASET "mtype" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
-               }
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  "L5_ASTRO", "L3_ASTRO", "L5_ASTRO", "L5_ASTRO"
+                  1, 0, 1, 1
                }
             }
             DATASET "orientation_w" {
@@ -89,15 +129,10 @@ GROUP "/" {
                }
             }
             DATASET "region" {
-               DATATYPE  H5T_STRING {
-                  STRSIZE H5T_VARIABLE;
-                  STRPAD H5T_STR_NULLTERM;
-                  CSET H5T_CSET_UTF8;
-                  CTYPE H5T_C_S1;
-               }
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
                DATA {
-                  "RB", "RA", "RA", "RB"
+                  1, 0, 0, 1
                }
             }
             DATASET "x" {

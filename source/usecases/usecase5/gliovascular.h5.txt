@@ -4,7 +4,7 @@ GROUP "/" {
       GROUP "vasculatureA__astrocyteA__endfoot" {
          GROUP "0" {
             DATASET "astrocyte_section_id" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
                   62, 8
@@ -32,7 +32,7 @@ GROUP "/" {
                }
             }
             DATASET "endfoot_id" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U64LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
                   0, 1
@@ -60,14 +60,14 @@ GROUP "/" {
                }
             }
             DATASET "vasculature_section_id" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
                   32, 2
                }
             }
             DATASET "vasculature_segment_id" {
-               DATATYPE  H5T_STD_I64LE
+               DATATYPE  H5T_STD_U32LE
                DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
                DATA {
                   3, 23
@@ -707,7 +707,7 @@ GROUP "/" {
             }
          }
          DATASET "source_node_id" {
-            DATATYPE  H5T_STD_I64LE
+            DATATYPE  H5T_STD_U64LE
             DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
             DATA {
                254, 80
@@ -726,7 +726,7 @@ GROUP "/" {
             }
          }
          DATASET "target_node_id" {
-            DATATYPE  H5T_STD_I64LE
+            DATATYPE  H5T_STD_U64LE
             DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }
             DATA {
                2, 1
