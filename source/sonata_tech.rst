@@ -359,9 +359,9 @@ This type of connectivity happens between astrocytes. The properties are similar
 ``source_node_id`` and ``target_node_id`` datasets have an HDF5 attribute of type string named ``node_population`` defining the source and target node population name respectively.
 
 
-Fields for electrical_synapse connection type edges
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Connection type is ``electrical_synapse``. Used for gap junctions between neurons
+Fields for electrical connection type edges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Connection type is ``electrical``. Used for gap junctions between neurons
 
 .. table::
 
