@@ -256,7 +256,6 @@ Series of current pulse injections.
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
    amp_start                      float      Mandatory    The amount of current initially injected when each pulse activates. Given in nA.
-   amp_end                        float      Optional     If given, current is interpolated such that current reaches this value when the stimulus concludes. Otherwise, current stays at amp_start. Given in nA.
    width                          float      Mandatory    The length of time each pulse lasts. Given in ms.
    frequency                      float      Mandatory    The frequency of pulse trains. Given in Hz.
    represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
