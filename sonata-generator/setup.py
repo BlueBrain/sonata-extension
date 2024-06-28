@@ -17,7 +17,7 @@ setup(
     url="https://bbpteam.epfl.ch/documentation/projects/my-project",
     license="BBP-internal-confidential",
     install_requires=[
-        "numpy",
+        "numpy<2",
         "h5py>=3,<4",
         "morphio>=3,<4",
         "click>=7.1.2",
@@ -25,7 +25,7 @@ setup(
         "libsonata>=0.1.8",
         "morph_tool>=2.4.3,<3.0.0",
         "cached-property>=1.5.2",
-        "astrovascpy>=0.1.1"
+        "astrovascpy>=0.1.4"
     ],
     packages=find_packages(),
     python_requires=">=3.10",
