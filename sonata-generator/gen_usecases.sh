@@ -7,7 +7,7 @@ source sg-venv/bin/activate
 
 echo Install library
 pip install -U pip setuptools
-pip install -i https://bbpteam.epfl.ch/repository/devpi/simple/ -e .
+pip install -e .
 
 for usecase_id in {1..5}
 do
