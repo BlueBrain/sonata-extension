@@ -3,4 +3,6 @@
 *.egg-info
 build/
 venv/
+results/
+sg-venv/
 .tox/
