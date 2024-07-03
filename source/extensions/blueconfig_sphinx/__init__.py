@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 from collections import namedtuple
 from docutils.parsers.rst import Directive, directives
 from docutils import nodes

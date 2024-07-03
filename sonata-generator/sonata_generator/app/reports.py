@@ -1,4 +1,5 @@
 """CLI for the Report creation."""
+# SPDX-License-Identifier: Apache-2.0
 import logging
 
 import click

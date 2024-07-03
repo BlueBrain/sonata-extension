@@ -1,4 +1,5 @@
 """Utility functions for cli."""
+# SPDX-License-Identifier: Apache-2.0
 import logging
 
 import click

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 from cached_property import cached_property
 
 from morphio import SectionType
