@@ -1,0 +1,46 @@
+{load_file("Cell.hoc")}
+begintemplate Astrocyte
+
+public gid, CellRef, getThreshold, geom_nseg, glutList, netconList
+objref this, CellRef, glutList, netconList
+
+proc init(/* args: gid, morphology_path */) { local gluSyn, glusynsoma
+    CellRef = new Cell($1, $s1)
+    CellRef.setCCell(this)
+    gid = CellRef.gid
+    geom_nseg()   //This function is called to have count of actual axon sections
+
+    netconList = new List()
+
+    glutList = new List()
+    forsec CellRef.all  {
+      insert mcd
+      gluSyn = new GlutReceive(0.5)
+      setpointer glu2_mcd(0), gluSyn.glut
+      glutList.append(gluSyn)
+    }
+
+    access CellRef.soma {
+      insert glia_2013
+      glusynsoma = new GlutReceiveSoma(0.5)
+      setpointer glu2_glia_2013(0), glusynsoma.glut
+      glutList.append(glusynsoma)
+    }
+
+}
+
+func getThreshold(){ return (0.114648) }
+
+proc geom_nseg() {
+    CellRef.geom_nseg_fixed(40)
+    CellRef.geom_nsec() //To count all sections
+}
+
+obfunc getCell(){
+    return CellRef
+}
+
+proc delete_axon(){
+}
+
+endtemplate Astrocyte
