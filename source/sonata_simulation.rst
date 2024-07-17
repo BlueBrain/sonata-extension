@@ -367,11 +367,11 @@ Note: fields marked Mandatory* depend on which shot_noise version is selected.
    rate                           float      Mandatory*   For shot_noise, rate of Poisson events in Hz.
    amp_mean                       float      Mandatory*   For shot_noise, mean of gamma-distributed amplitudes in nA (current_clamp) or uS (conductance).
    amp_var                        float      Mandatory*   For shot_noise, variance of gamma-distributed amplitudes in nA^2 (current_clamp) or uS^2 (conductance).
-   amp_cv                         float      Mandatory*   For relative_shot_noise and absolute_shot_noise, coefficient of variation (sd/mean) of gamma-distributed amplitudes.
    mean_percent                   float      Mandatory*   For relative_shot_noise, signal mean as percentage of a cell's threshold current (current_clamp) or inverse input resistance (conductance).
    sd_percent                     float      Mandatory*   For relative_shot_noise, signal std dev as percentage of a cell's threshold current (current_clamp) or inverse input resistance (conductance).
    mean                           float      Mandatory*   For absolute_shot_noise, signal mean in nA (current_clamp) or uS (conductance).
    sigma                          float      Mandatory*   For absolute_shot_noise, signal std dev in nA (current_clamp) or uS (conductance).
+   relative_skew                  float      Optional     For relative_shot_noise and absolute_shot_noise, signal skewness as a fraction in [0, 1]. This fraction represents a value between the minimum and maximum skewness values compatible with the given signal mean and std dev. Default is 0.5.
    reversal                       float      Optional     Reversal potential for conductance injection in mV. Default is 0.
    dt                             float      Optional     Timestep of generated signal in ms. Default is 0.25 ms.
    random_seed                    integer    Optional     Override the random seed (to introduce correlations between cells).
