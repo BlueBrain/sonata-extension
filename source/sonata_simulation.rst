@@ -263,6 +263,21 @@ Series of current pulse injections.
    frequency                      float      Mandatory    The frequency of pulse trains. Given in Hz.
    represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
    ============================== ========== ============ ==========================================
+   
+sinusoidal (current_clamp)
+~~~~~~~~~~~~~~~~~~~~~
+
+Series of current pulse injections.
+
+.. table::
+
+   ============================== ========== ============ ==========================================
+   Property                       Type       Requirement  Description
+   ============================== ========== ============ ==========================================
+   amp_start                      float      Mandatory    The peak amplitude of the sinusoid. Given in nA.
+   frequency                      float      Mandatory    The frequency of the waveform. Given in Hz.
+   represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
+   ============================== ========== ============ ==========================================
 
 subthreshold (current_clamp)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
