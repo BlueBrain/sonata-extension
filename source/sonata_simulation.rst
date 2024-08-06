@@ -209,7 +209,7 @@ Dictionary of dictionaries with each member describing one pattern of stimulus t
    ============================== ========== ============ ==========================================
    Property                       Type       Requirement  Description
    ============================== ========== ============ ==========================================
-   module                         text       Mandatory    The type of stimulus dictating additional parameters (see addtional tables below). Supported values: "linear", "relative_linear", "pulse", "subthreshold", "hyperpolarizing", "synapse_replay", "seclamp", "noise", "shot_noise", "relative_shot_noise", "absolute_shot_noise", "ornstein_uhlenbeck", "relative_ornstein_uhlenbeck".
+   module                         text       Mandatory    The type of stimulus dictating additional parameters (see addtional tables below). Supported values: "linear", "relative_linear", "pulse", "sinusoidal", "subthreshold", "hyperpolarizing", "synapse_replay", "seclamp", "noise", "shot_noise", "relative_shot_noise", "absolute_shot_noise", "ornstein_uhlenbeck", "relative_ornstein_uhlenbeck".
    input_type                     text       Mandatory    The type of the input with the reserved values : "spikes", "extracellular_stimulation", "current_clamp", "voltage_clamp", "conductance". Should correspond according to the module (see additional tables below). Currently, not validated by BBP simulation which will use the appropriate input_type regardless of the string passed.
    delay                          float      Mandatory    Time in ms when input is activated.
    duration                       float      Mandatory    Time duration in ms for how long input is activated.
@@ -261,6 +261,22 @@ Series of current pulse injections.
    amp_start                      float      Mandatory    The amount of current initially injected when each pulse activates. Given in nA.
    width                          float      Mandatory    The length of time each pulse lasts. Given in ms.
    frequency                      float      Mandatory    The frequency of pulse trains. Given in Hz.
+   represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
+   ============================== ========== ============ ==========================================
+   
+sinusoidal (current_clamp)
+~~~~~~~~~~~~~~~~~~~~~
+
+Series of current pulse injections.
+
+.. table::
+
+   ============================== ========== ============ ==========================================
+   Property                       Type       Requirement  Description
+   ============================== ========== ============ ==========================================
+   amp_start                      float      Mandatory    The peak amplitude of the sinusoid. Given in nA.
+   frequency                      float      Mandatory    The frequency of the waveform. Given in Hz.
+   dt                             float      Optional     Timestep of generated signal in ms. Default is 0.025 ms.
    represents_physical_electrode  boolean    Optional     Default is False. If True, the signal will be implemented using a NEURON IClamp mechanism. The IClamp produce an electrode current which is not included in the calculation of extracellular signals, so this option should be used to represent a physical electrode. If the noise signal represents synaptic input, `represents_physical_electrode` should be set to False, in which case the signal will be implemented using a  MembraneCurrentSource mechanism, which is identical to IClamp, but produce a membrane current, which is included in the calculation of the extracellular signal. 
    ============================== ========== ============ ==========================================
 
