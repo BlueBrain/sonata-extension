@@ -265,7 +265,7 @@ Series of current pulse injections.
    ============================== ========== ============ ==========================================
    
 sinusoidal (current_clamp)
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Series of current pulse injections.
 
