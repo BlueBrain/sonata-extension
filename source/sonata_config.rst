@@ -78,9 +78,6 @@ They can be found also under :ref:`populations <population_config_dict>` where i
                                                     Only for `endfoot` edge populations where it is mandatory.
    microdomains_file               Optional         Path to the .h5 storing microdomain data.
                                                     Only for `astrocyte` node populations where it is mandatory.
-   spine_morphologies_dir          Optional         Path to the directory containing the dendritic spine morphologies.
-                                                    This path is used in conjonction with the spine_morphology property (see :doc:`sonata_tech`) to find the spine_morphology.
-                                                    By default, the concatenation of the spine_morphologies_dir + spine_morphology_property + ".h5" extension.
    provenance                      Optional         Dictionary containing provenance metadata (e.g. bioname).
    =============================== ================ ====================================
 
@@ -294,4 +291,7 @@ There is also one additional field `type` used to denote the population type.
                                                Default is `chemical`.
    spatial_synapse_index_dir      Optional     Path to the directory containing the spatial index files.
                                                Only for `chemical` edge populations.
+   spine_morphologies_dir         Optional     Path to the directory containing the dendritic spine morphologies.
+                                               This path is used in conjonction with the spine_morphology property (see :doc:`sonata_tech`) to find the spine_morphology.
+                                               By default, the concatenation of the spine_morphologies_dir + spine_morphology_property + ".h5" extension.
    ============================== ============ ==========================================
