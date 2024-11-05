@@ -443,25 +443,7 @@ Dictionary of dictionaries with each member describing one data collection durin
    enabled                        boolean    Optional     Allows for supressing a report so that it is not created. Useful for reducing output temporarily. Possible values are true/false. Default is true.
    ============================== ========== ============ ==========================================
 
-More on type summation
-~~~~~~~~~~~~~~~~~~~~~~
-
-This type of report is intended to accommodate related variables that exist in a section. For example, various electrical current sources.
-Depending on the sections value, the behavior of the summation adapts. Given "soma", the values are summed across the whole cell and stored as a single value. For other sections value (e.g. "all"), values are only summed within the same compartment and stored per compartment.
-
-.. image:: images/summation_imembrane.png
-    :align: left
-    :alt: gid data for imembrane variable
-
-.. image:: images/summation_iclamp.png
-    :align: left
-    :alt: gid data for iclamp variable
-
-If the user has requested summation with sections soma, then the resultant single value written is [68]. Computed from (1 -10 +2+3+4+5+6+7+8+9+10+11+12).
-
-If the user has requested summation with sections all, then the resultant data is [-9, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]. Computed from (1-10, 2+0, 3+0, etc.)
-
-example::
+Examples::
 
   "reports": {
        "soma": {
