@@ -70,7 +70,7 @@ This field is not implemented.
 The ``time`` field has a property ``units`` of type string.
 Hardcoded to ``ms``.
 
-For a full compartment reports, you need to specify both ``"sections": "all"`` and ``"compartments": "all"`` in the configuration:
+For a full compartment reports, you need to specify both ``"sections": "all"`` and ``"compartments": "all"`` in the configuration::
 
     "reports": {
         "full_compartment_report": {
@@ -158,6 +158,7 @@ The summation behavior changes based on the "sections" parameter:
     :alt: gid data for iclamp variable
 
 Important Notes:
+
 * Variables are summed during simulation runtime
 * Multiple current sources can be combined in a single report
 * The report uses the same HDF5 structure as compartment reports
@@ -166,6 +167,7 @@ Synapse report
 ^^^^^^^^^^^^^
 
 A specialized report for monitoring synaptic dynamics and plasticity. The report structure uses:
+
 * ``element_ids``: Individual synapse identifiers (no specific ordering)
 * ``node_ids``: Identifiers of the post-synaptic cells.
 
@@ -208,7 +210,8 @@ LFP report
 ^^^^^^^^^^
 
 A specialized report for recording Local Field Potentials (LFPs) that captures the aggregate electrical activity of neural populations. The report structure uses:
-* ``element_ids``: Electrode identifiers defined in the electrodes_file :ref:`here <sonata_tech>`
+
+* ``element_ids``: Electrode identifiers defined in the electrodes_file (:ref:`sonata_tech`)
 * ``node_ids``: Identifiers of the contributing cells
 
 LFP reports require pre-calculated weight file (or electrodes file) that define the contribution of each compartment to the LFP signal at each electrode position.
@@ -234,6 +237,7 @@ For lfp reports, you need to specify ``"type": "lfp"`` and ``"target_simulator":
     }
 
 Important Notes:
+
 * Electrode positions must be defined before simulation
 * Uses same HDF5 structure as compartment reports
 * element_ids correspond to electrode positions
