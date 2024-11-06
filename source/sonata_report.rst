@@ -104,7 +104,7 @@ Summation report is similar to a compartment report. It usually reports a membra
 The report uses ALU (Arithmetic Logic Unit) objects to sum multiple variables during simulation runtime.
 
 Supported Variables
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 The report can handle various current sources:
 
@@ -127,11 +127,21 @@ For summation reports, you need to specify ``"type": "summation"`` in the config
          "dt": 0.1,
          "start_time": 0,
          "end_time": 1000
+       },
+      "synaptic_current": {
+         "cells": "Column",
+         "variable_name": "ProbAMPANMDA_EMS.i",
+         "sections": "all",
+         "type": "summation",
+         "unit": "nA",
+         "dt": 0.1,
+         "start_time": 0,
+         "end_time": 1000
        }
     }
 
 Reporting Behavior
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 The summation behavior changes based on the "sections" parameter:
 
@@ -164,7 +174,7 @@ Important Notes:
 * The report uses the same HDF5 structure as compartment reports
 
 Synapse report
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 A specialized report for monitoring synaptic dynamics and plasticity. The report structure uses:
 
